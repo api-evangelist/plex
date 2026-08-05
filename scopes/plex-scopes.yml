@@ -1,0 +1,75 @@
+generated: '2026-08-05'
+method: searched
+source: https://plex.tv/.well-known/oauth-authorization-server
+docs: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
+summary: 'Plex exposes two distinct, unrelated scope vocabularies. The OAuth 2.1 /
+  OIDC authorization server published at plex.tv exists only to authorize the Plex
+  MCP server and supports exactly one scope. Separately, the device-JWT authentication
+  flow used by Plex clients carries a comma-separated "scope" claim naming which
+  account attributes are embedded in the issued JWT — these are claim-release scopes,
+  not API permissions, and they do not gate any Plex Media Server operation.'
+schemes:
+- name: plex-mcp-oauth
+  kind: oauth2
+  source: https://plex.tv/.well-known/oauth-authorization-server
+  issuer: https://plex.tv
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://plex.tv/admin/mcp/authorize
+    tokenUrl: https://plex.tv/internal/mcp/oauth/token
+    revocationUrl: https://plex.tv/internal/mcp/oauth/revoke
+    registrationUrl: https://plex.tv/internal/mcp/oauth/register
+    pkce: S256
+- name: plex-device-jwt
+  kind: jwt-claim-scope
+  source: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
+  note: The scope field of the device JWT presented to
+    POST https://clients.plex.tv/api/v2/auth/token.
+scopes:
+- scope: mcp
+  description: Access to the Plex MCP server at https://plex.tv/internal/mcp.
+  schemes:
+  - plex-mcp-oauth
+  flows:
+  - authorizationCode
+  sources:
+  - https://plex.tv/.well-known/oauth-authorization-server
+  - https://plex.tv/.well-known/openid-configuration
+  - https://plex.tv/.well-known/oauth-protected-resource
+- scope: username
+  description: Include the user's username in the issued Plex JWT.
+  schemes:
+  - plex-device-jwt
+- scope: email
+  description: Include the user's email address in the issued Plex JWT.
+  schemes:
+  - plex-device-jwt
+- scope: friendly_name
+  description: Include the user's friendly name in the issued Plex JWT.
+  schemes:
+  - plex-device-jwt
+- scope: restricted
+  description: Include the user's restricted (managed/child account) status in the
+    issued Plex JWT.
+  schemes:
+  - plex-device-jwt
+- scope: anonymous
+  description: Include the user's anonymous status in the issued Plex JWT.
+  schemes:
+  - plex-device-jwt
+- scope: joinedAt
+  description: Include the user's account creation timestamp in the issued Plex JWT.
+  schemes:
+  - plex-device-jwt
+x-notes:
+- The Plex Media Server OpenAPI declares a single apiKey security scheme
+  (X-Plex-Token header) with no oauth2 flows and therefore no operation-level
+  scopes. Authorization on PMS is by token identity and server ownership, not by
+  scope.
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/oauth-authorization-server
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://developer.plex.tv/pms/
+  http_status: 200

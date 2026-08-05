@@ -1,0 +1,75 @@
+generated: '2026-08-05'
+method: generated
+source: openapi/plex-media-server-openapi.json + conventions/plex-conventions.yml
+note: >-
+  Packaged agent skills for the Plex surface. Every operationId named in every skill
+  was verified against openapi/plex-media-server-openapi.json before it was written.
+  Plex publishes no first-party AGENTS.md or agent skills of its own. A community
+  agent skill does exist at
+  https://plexapi.dev/.well-known/agent-skills/plex/skill.md, published by the
+  community documentation site PlexAPI.dev — it is not a Plex artifact and is not
+  mirrored here.
+skills:
+- file: plex-connect-and-browse-libraries.md
+  name: Connect to a Plex Media Server and browse its libraries
+  api: openapi/plex-media-server-openapi.json
+  operations:
+  - getIdentity
+  - getSlash
+  - libraryGetSections
+  - librarySectionGetSection
+  - librarySectionGetAll
+  - libraryMetadataGetSlash
+- file: plex-search-and-build-a-playlist.md
+  name: Search a Plex server and build a playlist from the results
+  api: openapi/plex-media-server-openapi.json
+  operations:
+  - hubsGetSearch
+  - libraryMetadataGetSlash
+  - playlistPostSlash
+  - playlistGetSlash
+  - playlistGetPlaylist
+  - playlistPutItems
+  - playlistGetItems
+  - playlistPutItemsMove
+  - playlistPutPlaylist
+  - playlistDeleteItems
+  - playlistDeletePlaylist
+- file: plex-monitor-sessions-and-history.md
+  name: Monitor Plex playback sessions and playback history
+  api: openapi/plex-media-server-openapi.json
+  operations:
+  - statusGetSlash
+  - statusGetBackground
+  - statusGetHistoryAll
+  - statusGetHistory
+  - statusPostTerminate
+  - activitiesGetSlash
+  - activitiesDeleteActivity
+  - livetvSessionsGetSlash
+- file: plex-administer-server-maintenance.md
+  name: Administer Plex server maintenance, scans and updates
+  api: openapi/plex-media-server-openapi.json
+  operations:
+  - libraryGetSections
+  - librarySectionPostRefresh
+  - librarySectionDeleteRefresh
+  - libraryPostSectionsRefresh
+  - libraryDeleteSectionsAllRefresh
+  - librarySectionPutAnalyze
+  - butlerGetSlash
+  - butlerPostTask
+  - butlerDeleteTask
+  - preferencesGetSlash
+  - preferencesGetGet
+  - preferencesPutSlash
+  - updaterGetStatus
+  - updaterPutCheck
+  - activitiesGetSlash
+- file: plex-authenticate-a-new-device.md
+  name: Authenticate a new device with Plex using the JWT PIN flow
+  api: openapi/plex-media-server-openapi.json
+  operations:
+  - getIdentity
+  - securityPostToken
+  - securityGetResources

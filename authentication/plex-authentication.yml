@@ -1,0 +1,128 @@
+generated: '2026-08-05'
+method: searched
+source: openapi/plex-media-server-openapi.json
+docs: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
+summary:
+  types:
+  - apiKey
+  - jwt
+  - oauth2
+  api_key_in:
+  - header
+  - query
+  oauth2_flows:
+  - authorizationCode
+  note: 'Three separate authentication models operate across the Plex surface. Plex
+    Media Server itself accepts only the X-Plex-Token header (or query parameter),
+    whose value may be a legacy long-lived token or a 7-day Plex JWT. The plex.tv
+    account API issues those credentials through a public-key (Ed25519/JWK) device
+    flow. The Plex MCP server is the only surface using OAuth 2.1 / OIDC.'
+schemes:
+- name: user_token
+  type: apiKey
+  in: header
+  parameter: X-Plex-Token
+  description: The token which identifies the user accessing the PMS. This is typically
+    provided to the client by plex.tv. This can be either a traditional access token
+    or a JWT token obtained through the JWT authentication flow.
+  sources:
+  - openapi/plex-media-server-openapi.json
+  applies_to: Plex Media Server API
+- name: user_token_query
+  type: apiKey
+  in: query
+  parameter: X-Plex-Token
+  description: The same token may be sent as a query parameter for quick browser
+    testing. Plex documentation warns that this exposes the token in server logs
+    and browser history and recommends the header form.
+  sources:
+  - https://developer.plex.tv/pms/#section/API-Info/Auth
+  applies_to: Plex Media Server API
+- name: plex-device-jwt
+  type: jwt
+  algorithms:
+  - EdDSA
+  - RS256
+  key_type: Ed25519 (OKP) JWK; RSA also accepted
+  lifetime: 7 days
+  jwks_uri: https://plex.tv/api/v2/auth/keys
+  description: Recommended authentication as of the September 2025 API release. A
+    device registers a public key (JWK) with plex.tv, then repeatedly exchanges a
+    self-signed device JWT for a short-lived Plex JWT.
+  sources:
+  - https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
+  applies_to: Plex Account and Authentication API
+- name: plex-mcp-oauth
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://plex.tv/admin/mcp/authorize
+    tokenUrl: https://plex.tv/internal/mcp/oauth/token
+    scopes: 1
+  pkce: S256
+  dynamic_client_registration: https://plex.tv/internal/mcp/oauth/register
+  sources:
+  - https://plex.tv/.well-known/oauth-authorization-server
+  applies_to: Plex MCP Server
+flows:
+  jwt_pin_flow:
+    description: PIN authentication flow — recommended for new applications; needs
+      no pre-existing token.
+    steps:
+    - order: 1
+      call: POST https://clients.plex.tv/api/v2/pins
+      headers:
+      - X-Plex-Client-Identifier
+      body: '{ "jwk": { "kty": "OKP", "crv": "Ed25519", "x": "...", "kid": "...",
+        "alg": "EdDSA" }, "strong": true }'
+    - order: 2
+      call: Send the user to https://app.plex.tv/auth#?clientID=<clientIdentifier>&code=<pinCode>
+      note: For 4-digit PINs use https://plex.tv/link/?pin=<code>.
+    - order: 3
+      call: GET https://clients.plex.tv/api/v2/pins/<pinID>?deviceJWT=<signedJWT>
+      note: The signed JWT must carry aud=plex.tv, iss=<clientIdentifier>, and kid
+        + alg in the header. The Plex JWT is returned in the authToken field.
+  jwt_registration_flow:
+    description: Register a public key using an existing legacy token.
+    steps:
+    - order: 1
+      call: POST https://clients.plex.tv/api/v2/auth/jwk
+      headers:
+      - X-Plex-Client-Identifier
+      - X-Plex-Token
+  jwt_refresh_flow:
+    description: Refresh the Plex JWT — required every 7 days.
+    steps:
+    - order: 1
+      call: GET https://clients.plex.tv/api/v2/auth/nonce
+      note: Returns a nonce valid for 5 minutes.
+    - order: 2
+      call: Sign a device JWT containing the nonce, scope, aud=plex.tv and
+        iss=<client_identifier> with the device private key.
+    - order: 3
+      call: POST https://clients.plex.tv/api/v2/auth/token
+required_headers:
+- name: X-Plex-Client-Identifier
+  description: An opaque identifier unique to the client. Typically required on
+    every request.
+- name: X-Plex-Token
+  description: The authentication token, obtained from plex.tv.
+- name: X-Plex-Product
+  description: The name of the client product.
+- name: X-Plex-Version
+  description: The version of the client application.
+- name: X-Plex-Platform
+  description: The platform of the client.
+- name: X-Plex-Device
+  description: A relatively friendly name for the client device.
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://developer.plex.tv/pms/
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://plex.tv/api/v2/auth/keys
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://clients.plex.tv/api/v2/auth/nonce
+  http_status: 422
+  note: Live endpoint; 422 because the probe sent no X-Plex-Client-Identifier.

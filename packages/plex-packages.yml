@@ -1,0 +1,135 @@
+generated: '2026-08-05'
+method: searched
+source: registry probes of npm, PyPI and pkg.go.dev plus
+  https://plexapi.dev/SDKs and https://github.com/plexinc
+summary:
+  first_party_published_sdks: 0
+  note: 'Plex, Inc. publishes no client SDK to any package registry. This was probed
+    directly, not assumed: the three packages listed as "official SDKs" on the
+    community documentation site plexapi.dev — @plexapi/sdk on npm, plexapi-sdk on
+    PyPI and github.com/plexapi/plexapi-go — all return 404 on their registries.
+    Every working Plex client library below is community-maintained. No SDKs pointer
+    is emitted in apis.yml, because emitting one would credit Plex with an SDK
+    programme it does not have.'
+packages:
+- language: python
+  registry: pypi
+  name: PlexAPI
+  url: https://pypi.org/project/PlexAPI/
+  install: pip install PlexAPI
+  source: https://github.com/pkkid/python-plexapi
+  official: false
+  maintainer: pkkid (community)
+  status: active
+  note: The long-standing de-facto Python client for Plex Media Server and plex.tv,
+    predating the official API documentation by years.
+- language: python
+  registry: pypi
+  name: plex-api-client
+  version_seen: 0.35.0
+  url: https://pypi.org/project/plex-api-client/
+  install: pip install plex-api-client
+  source: https://github.com/LukasParke/plexpy
+  official: false
+  maintainer: LukasParke / LukeHagar (community)
+  status: legacy
+  note: Speakeasy-generated from the community plexapi.dev specification. The
+    plexapi.dev SDK page lists it under "Legacy community SDKs" and states it is not
+    aligned with the current canonical specification.
+- language: javascript
+  registry: npm
+  name: '@lukehagar/plexjs'
+  url: https://www.npmjs.com/package/@lukehagar/plexjs
+  install: npm install @lukehagar/plexjs
+  source: https://github.com/LukasParke/plexjs
+  official: false
+  maintainer: LukeHagar (community)
+  status: legacy
+- language: javascript
+  registry: npm
+  name: plex-api
+  version_seen: 5.3.2
+  url: https://www.npmjs.com/package/plex-api
+  install: npm install plex-api
+  source: https://github.com/phillipj/node-plex-api
+  official: false
+  maintainer: phillipj (community)
+  status: active
+  note: Plex, Inc. maintains a fork of this repository at
+    https://github.com/plexinc/node-plex-api, but the npm package is published by
+    the original community author, not by Plex.
+- language: go
+  registry: pkg.go.dev
+  name: github.com/LukeHagar/plexgo
+  url: https://pkg.go.dev/github.com/LukeHagar/plexgo
+  install: go get github.com/LukeHagar/plexgo
+  official: false
+  maintainer: LukeHagar (community)
+  status: legacy
+registries_probed:
+- registry: npm
+  package: '@plexapi/sdk'
+  status: 404
+  note: Listed as an official SDK on plexapi.dev but not published.
+- registry: pypi
+  package: plexapi-sdk
+  status: 404
+  note: Listed as an official SDK on plexapi.dev but not published.
+- registry: pkg.go.dev
+  package: github.com/plexapi/plexapi-go
+  status: 404
+  note: Listed as an official SDK on plexapi.dev but not published.
+- registry: npm
+  package: '@lukehagar/plexjs'
+  status: 200
+- registry: npm
+  package: plex-api
+  status: 200
+- registry: pypi
+  package: PlexAPI
+  status: 200
+- registry: pypi
+  package: plex-api-client
+  status: 200
+- registry: pkg.go.dev
+  package: github.com/LukeHagar/plexgo
+  status: 200
+first_party_repositories:
+- name: plexinc/pms-docker
+  url: https://github.com/plexinc/pms-docker
+  description: The official Plex Media Server Docker image.
+  language: Go Template
+- name: plexinc/plex-for-kodi
+  url: https://github.com/plexinc/plex-for-kodi
+  description: Official Plex for Kodi add-on releases.
+  language: Python
+- name: plexinc/webhooks-home-automation
+  url: https://github.com/plexinc/webhooks-home-automation
+  description: Reference implementation using Plex webhooks to control home lighting.
+- name: plexinc/webhooks-notifications
+  url: https://github.com/plexinc/webhooks-notifications
+  description: Reference implementation using Plex webhooks for desktop
+    notifications and playback control.
+- name: plexinc/webhooks-slack
+  url: https://github.com/plexinc/webhooks-slack
+  description: Reference implementation pushing Plex media notifications into Slack.
+- name: plexinc/node-plex-api
+  url: https://github.com/plexinc/node-plex-api
+  description: Plex's fork of the community Node.js module used to query the Plex
+    Media Server HTTP API. Not published to npm by Plex.
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://registry.npmjs.org/@plexapi%2Fsdk
+  http_status: 404
+- fetched: '2026-08-05'
+  url: https://pypi.org/pypi/plexapi-sdk/json
+  http_status: 404
+- fetched: '2026-08-05'
+  url: https://pkg.go.dev/github.com/plexapi/plexapi-go
+  http_status: 404
+- fetched: '2026-08-05'
+  url: https://plexapi.dev/SDKs.md
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://api.github.com/orgs/plexinc
+  http_status: 200

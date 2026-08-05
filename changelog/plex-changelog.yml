@@ -1,0 +1,81 @@
+generated: '2026-08-05'
+method: searched
+source: https://developer.plex.tv/pms/#section/API-Info/API-Changes
+docs: https://developer.plex.tv/pms/#section/API-Info/API-Changes
+scheme: semver
+current_version: 1.2.2
+location: 'The API changelog is not a dated page. It is an "API Changes" section
+  inside the OpenAPI info.description rendered at https://developer.plex.tv/pms/,
+  keyed by API version and the minimum Plex Media Server build that supports it —
+  no calendar dates are published. Plex Media Server product release notes are a
+  separate, dated stream in the Plex forums.'
+dated: false
+entries:
+- version: 1.2.2
+  requires: PMS >= 1.43.2
+  breaking: false
+  additions:
+  - Added audioLayout endpoint (PM-5118).
+  - Added videoCodec, audioCodec and subtitleCodec endpoints (PM-5117).
+- version: 1.2.1
+  requires: PMS >= 1.43.1
+  breaking: false
+  additions:
+  - Added /tv.plex.providers.epg.{identifier}:{deviceId} endpoints (PM-4017).
+  - Added a new state to the itemsGeneratorItems endpoint (PM-3475).
+- version: 1.2.0
+  requires: PMS >= 1.43.0
+  breaking: false
+  additions:
+  - Added squareArt as an additional element type for image assets (PM-2959).
+  - Added /media/providers/metadata endpoints (PM-1012).
+  - Added a delete method for /library/metadata/{id}/{element} (PM-4094).
+  - Documented Metadata-type Media Providers (PM-3051).
+- version: 1.1.1
+  requires: PMS >= 1.42.2
+  breaking: false
+  additions:
+  - Added the metadataAgentProviderGroupId query parameter to create and edit
+    library section (PM-3577).
+  fixes:
+  - Fixed the Add library section method type.
+- version: 1.1.0
+  requires: PMS >= 1.42.0
+  breaking: true
+  additions:
+  - Added the ability to filter the /media/providers/metadata endpoint by metadata
+    types (PM-3702).
+  - Documented the /photo/:/transcode endpoints.
+  changes:
+  - 'BREAKING: types in /playlists/{playlistId}/items changed to an array of
+    integers.'
+  fixes:
+  - Fixed serialization of MetadataType objects for /media/providers/metadata
+    calls.
+- version: 1.0.0
+  requires: PMS >= 1.41.9
+  breaking: true
+  highlights:
+  - First public release of the Plex Media Server API documentation.
+  additions:
+  - Added /downloadQueue endpoints.
+  changes:
+  - 'BREAKING: includeFields renamed to includeOptionalFields. includeFields now
+    means "include only these fields", where previously it meant "add these fields
+    you would not normally include". Changed for consistency with the cloud provider
+    API.'
+related:
+- kind: announcement
+  title: 'Plex Pro Week ''25: API Unlocked'
+  date: '2025-09-21'
+  url: https://www.plex.tv/blog/plex-pro-week-25-api-unlocked/
+- kind: product-release-notes
+  title: Plex Media Server forum category (dated product release notes)
+  url: https://forums.plex.tv/c/plex-media-server/114
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://developer.plex.tv/pms/
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://www.plex.tv/blog/plex-pro-week-25-api-unlocked/
+  http_status: 200

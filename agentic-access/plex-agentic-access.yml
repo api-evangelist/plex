@@ -1,0 +1,4057 @@
+generated: '2026-08-05'
+method: generated
+source: openapi/plex-media-server-openapi.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 258
+  by_action_class:
+    connected: 128
+    acting: 130
+  by_consequence:
+    read: 128
+    write: 119
+    safety-critical: 9
+    physical: 2
+  human_in_the_loop_required: 9
+operations:
+- path: /
+  method: get
+  operationId: getSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /:/eventsource/notifications
+  method: get
+  operationId: eventsourceGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /:/prefs
+  method: get
+  operationId: preferencesGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /:/prefs
+  method: put
+  operationId: preferencesPutSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /:/prefs/get
+  method: get
+  operationId: preferencesGetGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /:/rate
+  method: put
+  operationId: putRate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /:/scrobble
+  method: put
+  operationId: putScrobble
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /:/timeline
+  method: post
+  operationId: timelinePostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /:/unscrobble
+  method: put
+  operationId: putUnscrobble
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /:/websocket/notifications
+  method: get
+  operationId: websocketGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /activities
+  method: get
+  operationId: activitiesGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /activities/{activityId}
+  method: delete
+  operationId: activitiesDeleteActivity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /butler
+  method: get
+  operationId: butlerGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /butler
+  method: post
+  operationId: butlerPostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /butler
+  method: delete
+  operationId: butlerDeleteSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /butler/{task}
+  method: post
+  operationId: butlerPostTask
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /butler/{task}
+  method: delete
+  operationId: butlerDeleteTask
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /downloadQueue
+  method: post
+  operationId: downloadQueuePost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}
+  method: get
+  operationId: downloadQueueGetQueue
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}/add
+  method: post
+  operationId: downloadQueuePostQueueAdd
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}/item/{itemId}/media
+  method: get
+  operationId: downloadQueueGetQueueItemItemMedia
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}/item/{itemId}/decision
+  method: get
+  operationId: downloadQueueGetQueueItemItemDecision
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}/items
+  method: get
+  operationId: downloadQueueGetQueueItems
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}/items/{itemId}
+  method: get
+  operationId: downloadQueueGetQueueItemsItem
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}/items/{itemId}
+  method: delete
+  operationId: downloadQueueDeleteQueueItemsItem
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /downloadQueue/{queueId}/items/{itemId}/restart
+  method: post
+  operationId: downloadQueuePostQueueItemsItemRestart
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /identity
+  method: get
+  operationId: getIdentity
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /hubs
+  method: get
+  operationId: hubsGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/items
+  method: get
+  operationId: hubsGetItems
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/continueWatching
+  method: get
+  operationId: hubsGetContinueWatching
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/promoted
+  method: get
+  operationId: hubsGetPromoted
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/metadata/{metadataId}
+  method: get
+  operationId: hubsGetMetadataMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/metadata/{metadataId}/related
+  method: get
+  operationId: hubsGetMetadataMetadataRelated
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/metadata/{metadataId}/postplay
+  method: get
+  operationId: hubsGetMetadataMetadataPostplay
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/search
+  method: get
+  operationId: hubsGetSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/search/voice
+  method: get
+  operationId: hubsSearchGetVoice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/sections/{sectionId}
+  method: get
+  operationId: hubsGetSection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /hubs/sections/{sectionId}/manage
+  method: get
+  operationId: hubsSectionsSectionManageGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /hubs/sections/{sectionId}/manage
+  method: delete
+  operationId: hubsSectionsSectionManageDeleteSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /hubs/sections/{sectionId}/manage
+  method: post
+  operationId: hubsSectionsSectionManagePostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /hubs/sections/{sectionId}/manage/move
+  method: put
+  operationId: hubsSectionsSectionManagePutMove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /hubs/sections/{sectionId}/manage/{identifier}
+  method: put
+  operationId: hubsSectionsSectionManagePutIdentifier
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /hubs/sections/{sectionId}/manage/{identifier}
+  method: delete
+  operationId: hubsSectionsSectionManageDeleteIdentifier
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/all
+  method: get
+  operationId: libraryGetAll
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/caches
+  method: delete
+  operationId: libraryDeleteCaches
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/clean/bundles
+  method: put
+  operationId: libraryPutCleanBundles
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/collections
+  method: post
+  operationId: libraryCollectionPostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/collections/{collectionId}/composite/{updatedAt}
+  method: get
+  operationId: libraryCollectionCollectionGetComposite
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/collections/{collectionId}/items
+  method: get
+  operationId: libraryCollectionCollectionGetItems
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/collections/{collectionId}/items
+  method: put
+  operationId: libraryCollectionCollectionPutItems
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/collections/{collectionId}/items/{itemId}
+  method: put
+  operationId: libraryCollectionCollectionPutItemsItem
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/collections/{collectionId}/items/{itemId}/move
+  method: put
+  operationId: libraryCollectionCollectionPutItemsItemMove
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/file
+  method: post
+  operationId: libraryPostFile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/matches
+  method: get
+  operationId: libraryGetMatches
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/media/{mediaId}/chapterImages/{chapter}
+  method: get
+  operationId: libraryGetMediaMediaChapterImagesChapter
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}
+  method: get
+  operationId: libraryMetadataGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}
+  method: put
+  operationId: libraryMetadataPutSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}
+  method: delete
+  operationId: libraryMetadataDeleteSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/addetect
+  method: put
+  operationId: libraryMetadataPutAddetect
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/allLeaves
+  method: get
+  operationId: libraryMetadataGetAllLeaves
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/analyze
+  method: put
+  operationId: libraryMetadataPutAnalyze
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/chapterThumbs
+  method: put
+  operationId: libraryMetadataPutChapterThumbs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/credits
+  method: put
+  operationId: libraryMetadataPutCredits
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/extras
+  method: get
+  operationId: libraryMetadataGetExtras
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/extras
+  method: post
+  operationId: libraryMetadataPostExtras
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/file
+  method: get
+  operationId: libraryMetadataGetFile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/index
+  method: put
+  operationId: libraryMetadataPutIndex
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/intro
+  method: put
+  operationId: libraryMetadataPutIntro
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/marker
+  method: post
+  operationId: libraryMetadataPostMarker
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/marker/{marker}
+  method: delete
+  operationId: libraryMetadataDeleteMarkerMarker
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/marker/{marker}
+  method: put
+  operationId: libraryMetadataPutMarkerMarker
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/match
+  method: put
+  operationId: libraryMetadataPutMatch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/matches
+  method: put
+  operationId: libraryMetadataGetMatches
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/media/{mediaItem}
+  method: delete
+  operationId: libraryMetadataDeleteMediaMediaItem
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/merge
+  method: put
+  operationId: libraryMetadataPutMerge
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/nearest
+  method: get
+  operationId: libraryMetadataGetNearest
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/prefs
+  method: put
+  operationId: libraryMetadataPutPrefs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/refresh
+  method: put
+  operationId: libraryMetadataPutRefresh
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/related
+  method: get
+  operationId: libraryMetadataGetRelated
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/similar
+  method: get
+  operationId: libraryMetadataGetSimilar
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/split
+  method: put
+  operationId: libraryMetadataPutSplit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/subtitles
+  method: get
+  operationId: libraryMetadataPostSubtitles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /library/metadata/{ids}/tree
+  method: get
+  operationId: libraryMetadataGetTree
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/unmatch
+  method: put
+  operationId: libraryMetadataPutUnmatch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/users/top
+  method: get
+  operationId: libraryMetadataGetUsersTop
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /library/metadata/{ids}/voiceActivity
+  method: put
+  operationId: libraryMetadataPutVoiceActivity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/metadata/{ids}/{element}
+  method: post
+  operationId: libraryMetadataPostElement
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/{element}
+  method: put
+  operationId: libraryMetadataPutElement
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/{element}
+  method: delete
+  operationId: libraryMetadataDeleteElement
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/{ids}/{element}/{timestamp}
+  method: get
+  operationId: libraryMetadataGetElement
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/metadata/augmentations/{augmentationId}
+  method: get
+  operationId: libraryGetMetadataAugmentationsAugmentation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/optimize
+  method: put
+  operationId: libraryPutOptimize
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/parts/{partId}
+  method: put
+  operationId: libraryPutPartsPart
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/parts/{partId}/indexes/{index}
+  method: get
+  operationId: libraryGetPartsPartIndexesIndex
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/parts/{partId}/indexes/{index}/{offset}
+  method: get
+  operationId: libraryGetPartsPartIndexesIndexOffset
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/parts/{partId}/{changestamp}/{filename}
+  method: get
+  operationId: libraryGetPartsPartChangestampFilename
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/people/{personId}
+  method: get
+  operationId: libraryGetPeoplePerson
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/people/{personId}/media
+  method: get
+  operationId: libraryGetPeoplePersonMedia
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/randomArtwork
+  method: get
+  operationId: libraryGetRandomArtwork
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/all
+  method: get
+  operationId: libraryGetSections
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/all
+  method: post
+  operationId: libraryPostSection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/all/refresh
+  method: delete
+  operationId: libraryDeleteSectionsAllRefresh
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /library/sections/prefs
+  method: get
+  operationId: libraryGetSectionsPrefs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /library/sections/refresh
+  method: post
+  operationId: libraryPostSectionsRefresh
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}
+  method: get
+  operationId: librarySectionGetSection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}
+  method: delete
+  operationId: libraryDeleteSection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}
+  method: put
+  operationId: librarySectionPutSection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/all
+  method: get
+  operationId: librarySectionGetAll
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/all
+  method: put
+  operationId: librarySectionPutAll
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/allLeaves
+  method: get
+  operationId: librarySectionGetAllLeaves
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/arts
+  method: get
+  operationId: librarySectionGetArts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/albums
+  method: get
+  operationId: librarySectionGetAlbums
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/analyze
+  method: put
+  operationId: librarySectionPutAnalyze
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/autocomplete
+  method: get
+  operationId: librarySectionGetAutocomplete
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/categories
+  method: get
+  operationId: librarySectionGetCategories
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/cluster
+  method: get
+  operationId: librarySectionGetCluster
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/collections
+  method: get
+  operationId: librarySectionGetCollections
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/collection/{collectionId}
+  method: delete
+  operationId: librarySectionDeleteCollectionCollection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/common
+  method: get
+  operationId: librarySectionGetCommon
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/composite/{updatedAt}
+  method: get
+  operationId: librarySectionGetComposite
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /library/sections/{sectionId}/computePath
+  method: get
+  operationId: librarySectionGetComputePath
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/emptyTrash
+  method: put
+  operationId: librarySectionPutEmptyTrash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/audioLayout
+  method: get
+  operationId: librarySectionGetAudioLayouts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/videoCodec
+  method: get
+  operationId: librarySectionGetVideoCodecs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/audioCodec
+  method: get
+  operationId: librarySectionGetAudioCodecs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/subtitleCodec
+  method: get
+  operationId: librarySectionGetSubtitleCodecs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/filters
+  method: get
+  operationId: librarySectionGetFilters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /library/sections/{sectionId}/firstCharacters
+  method: get
+  operationId: librarySectionGetFirstCharaters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/indexes
+  method: delete
+  operationId: librarySectionDeleteIndexes
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/intros
+  method: delete
+  operationId: librarySectionDeleteIntros
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/location
+  method: get
+  operationId: librarySectionGetLocations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/nearest
+  method: get
+  operationId: librarySectionGetNearest
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/moment
+  method: get
+  operationId: librarySectionGetMoment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/prefs
+  method: get
+  operationId: librarySectionGetPrefs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/sections/{sectionId}/prefs
+  method: put
+  operationId: librarySectionPutPrefs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/refresh
+  method: post
+  operationId: librarySectionPostRefresh
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/refresh
+  method: delete
+  operationId: librarySectionDeleteRefresh
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /library/sections/{sectionId}/sorts
+  method: get
+  operationId: librarySectionGetSorts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/streams/{streamId}.{ext}
+  method: get
+  operationId: libraryGetStreamsStream
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/streams/{streamId}.{ext}
+  method: put
+  operationId: libraryPutStreamsStream
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/streams/{streamId}.{ext}
+  method: delete
+  operationId: libraryDeleteStreamsStream
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /library/streams/{streamId}/loudness
+  method: get
+  operationId: libraryGetStreamsStreamLoudness
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/streams/{streamId}/levels
+  method: get
+  operationId: libraryGetStreamsStreamLevels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /library/tags
+  method: get
+  operationId: libraryGetTags
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/dvrs
+  method: get
+  operationId: livetvDvrGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/dvrs
+  method: post
+  operationId: livetvDvrPostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}
+  method: get
+  operationId: livetvDvrGetDVR
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/dvrs/{dvrId}
+  method: delete
+  operationId: livetvDvrDeleteDVR
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}/channels/{channel}/tune
+  method: post
+  operationId: livetvDvrPostChannelsChannelTune
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /livetv/dvrs/{dvrId}/devices/{deviceId}
+  method: put
+  operationId: livetvDvrPutDvrDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}/devices/{deviceId}
+  method: delete
+  operationId: livetvDvrDeleteDvrDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}/lineups
+  method: put
+  operationId: livetvDvrPutLineup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}/lineups
+  method: delete
+  operationId: livetvDvrDeleteLineup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}/prefs
+  method: put
+  operationId: livetvDvrPutPrefs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}/reloadGuide
+  method: post
+  operationId: livetvDvrPostReloadGuide
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /livetv/dvrs/{dvrId}/reloadGuide
+  method: delete
+  operationId: livetvDvrDeleteReloadGuide
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /livetv/epg/channelmap
+  method: get
+  operationId: livetvEpgGetChannelmap
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/channels
+  method: get
+  operationId: livetvEpgGetChannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/countries
+  method: get
+  operationId: livetvEpgGetCountries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/countries/{country}/{epgId}/lineups
+  method: get
+  operationId: livetvEpgGetCountriesCountryLineups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/countries/{country}/{epgId}/regions
+  method: get
+  operationId: livetvEpgGetCountriesCountryRegions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/countries/{country}/{epgId}/regions/{region}/lineups
+  method: get
+  operationId: livetvEpgGetCountriesCountryRegionsRegionLineups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/languages
+  method: get
+  operationId: livetvEpgGetLanguages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/lineup
+  method: get
+  operationId: livetvEpgGetLineup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/epg/lineupchannels
+  method: get
+  operationId: livetvEpgGetLineupchannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/sessions
+  method: get
+  operationId: livetvSessionsGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/sessions/{sessionId}
+  method: get
+  operationId: livetvSessionsGetSession
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/sessions/{sessionId}/{consumerId}/index.m3u8
+  method: get
+  operationId: livetvSessionsGetSessionConsumerIndex
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /livetv/sessions/{sessionId}/{consumerId}/{segmentId}
+  method: get
+  operationId: livetvSessionsGetSessionConsumerSegment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /log
+  method: put
+  operationId: logPutSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /log
+  method: post
+  operationId: logPostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /log/networked
+  method: post
+  operationId: logPostPapertrail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/grabbers
+  method: get
+  operationId: mediaGrabberGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /media/grabbers/devices
+  method: get
+  operationId: mediaGrabberGetDevices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/grabbers/devices
+  method: post
+  operationId: mediaGrabberPostDevices
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/grabbers/devices/discover
+  method: post
+  operationId: mediaGrabberPostDeviceDiscover
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/grabbers/devices/{deviceId}
+  method: get
+  operationId: mediaGrabberDevicesDeviceGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/grabbers/devices/{deviceId}
+  method: delete
+  operationId: mediaGrabberDevicesDeviceDeleteSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/grabbers/devices/{deviceId}
+  method: put
+  operationId: mediaGrabberDevicesDevicePutSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /media/grabbers/devices/{deviceId}/channelmap
+  method: put
+  operationId: mediaGrabberDevicesDevicePutChannelmap
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/grabbers/devices/{deviceId}/channels
+  method: get
+  operationId: mediaGrabberDevicesDeviceGetChannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/grabbers/devices/{deviceId}/prefs
+  method: put
+  operationId: mediaGrabberDevicesDevicePutPrefs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/grabbers/devices/{deviceId}/scan
+  method: post
+  operationId: mediaGrabberDevicesDevicePostScan
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/grabbers/devices/{deviceId}/scan
+  method: delete
+  operationId: mediaGrabberDeleteDevicesDeviceScan
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/grabbers/devices/{deviceId}/thumb/{version}
+  method: get
+  operationId: mediaGrabberDevicesDeviceGetThumbVersion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/grabbers/operations/{operationId}
+  method: delete
+  operationId: mediaGrabberDeleteOperationsOperation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/providers
+  method: get
+  operationId: getMediaProviders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /media/providers
+  method: post
+  operationId: postMediaProviders
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/providers/refresh
+  method: post
+  operationId: postMediaProvidersRefresh
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/providers/{provider}
+  method: delete
+  operationId: deleteMediaProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/providers/metadata
+  method: get
+  operationId: getMetadataAgentProviders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/providers/metadata
+  method: post
+  operationId: postMetadataAgentProviders
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/providers/metadata/{providerId}
+  method: get
+  operationId: getMetadataAgentProvider
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/providers/metadata/{providerId}
+  method: put
+  operationId: putMetadataAgentProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/providers/metadata/{providerId}
+  method: delete
+  operationId: deleteMetadataAgentProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/providers/metadata/group
+  method: get
+  operationId: getMetadataAgentProviderGroups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/providers/metadata/group
+  method: post
+  operationId: postMetadataAgentProviderGroups
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/providers/metadata/group/{groupId}
+  method: get
+  operationId: getMetadataAgentProviderGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /media/providers/metadata/group/{groupId}
+  method: put
+  operationId: putMetadataAgentProviderGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/providers/metadata/group/{groupId}
+  method: delete
+  operationId: deleteMetadataAgentProviderGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/providers/metadata/group/{groupId}/items/{providerId}
+  method: put
+  operationId: putMetadataAgentProviderGroupItem
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/providers/metadata/group/{groupId}/items/{providerId}
+  method: delete
+  operationId: deleteMetadataAgentProviderGroupItem
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/subscriptions
+  method: get
+  operationId: mediaSubscriptionsGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /media/subscriptions
+  method: post
+  operationId: mediaSubscriptionsPostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/subscriptions/process
+  method: post
+  operationId: mediaSubscriptionsPostProcess
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/subscriptions/{subscriptionId}
+  method: get
+  operationId: mediaSubscriptionsGetSubscription
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /media/subscriptions/{subscriptionId}
+  method: delete
+  operationId: mediaSubscriptionsDeleteSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/subscriptions/{subscriptionId}
+  method: put
+  operationId: mediaSubscriptionsPutSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /media/subscriptions/{subscriptionId}/move
+  method: put
+  operationId: mediaSubscriptionsPutSubscriptionMove
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /media/subscriptions/scheduled
+  method: get
+  operationId: mediaSubscriptionsGetScheduled
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /media/subscriptions/template
+  method: get
+  operationId: mediaSubscriptionsGetTemplate
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /photo/:/transcode
+  method: get
+  operationId: imageTranscode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playlists
+  method: get
+  operationId: playlistGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playlists
+  method: post
+  operationId: playlistPostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}
+  method: get
+  operationId: playlistGetPlaylist
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}
+  method: delete
+  operationId: playlistDeletePlaylist
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}
+  method: put
+  operationId: playlistPutPlaylist
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items
+  method: get
+  operationId: playlistGetItems
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items
+  method: delete
+  operationId: playlistDeleteItems
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items
+  method: put
+  operationId: playlistPutItems
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items/{generatorId}
+  method: get
+  operationId: playlistGetItemsGenerator
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items/{generatorId}
+  method: delete
+  operationId: playlistDeleteItemsGenerator
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items/{generatorId}
+  method: put
+  operationId: playlistPutItemsGenerator
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items/{generatorId}/items
+  method: get
+  operationId: playlistGetItemsGeneratorItems
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items/{generatorId}/{metadataId}/{action}
+  method: put
+  operationId: playlistPutItemsGeneratorReprocess
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/items/{playlistItemId}/move
+  method: put
+  operationId: playlistPutItemsMove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playlists/{playlistId}/generators
+  method: get
+  operationId: playlistGetGenerators
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playlists/upload
+  method: post
+  operationId: playlistPostUpload
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /playQueues
+  method: post
+  operationId: playQueuePostSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}
+  method: get
+  operationId: playQueueQueueGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}
+  method: put
+  operationId: playQueueQueuePutSlash
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}/items
+  method: delete
+  operationId: playQueueQueueDeleteItems
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}/items/{playQueueItemId}
+  method: delete
+  operationId: playQueueQueueDeleteItemsItem
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}/items/{playQueueItemId}/move
+  method: put
+  operationId: playQueueQueuePutItemsMove
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}/reset
+  method: put
+  operationId: playQueuePlayQueueReset
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}/shuffle
+  method: put
+  operationId: playQueueQueuePutItemsShuffle
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /playQueues/{playQueueId}/unshuffle
+  method: put
+  operationId: playQueueQueuePutItemsUnshuffle
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /security/resources
+  method: get
+  operationId: securityGetResources
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /security/token
+  method: post
+  operationId: securityPostToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /services/ultrablur/colors
+  method: get
+  operationId: ultraBlurGetColors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /services/ultrablur/image
+  method: get
+  operationId: ultraBlurGetImage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /status/sessions
+  method: get
+  operationId: statusGetSlash
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /status/sessions/background
+  method: get
+  operationId: statusGetBackground
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /status/sessions/history/all
+  method: get
+  operationId: statusGetHistoryAll
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /status/sessions/history/{historyId}
+  method: get
+  operationId: statusGetHistory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /status/sessions/history/{historyId}
+  method: delete
+  operationId: statusDeleteHistory
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /status/sessions/terminate
+  method: post
+  operationId: statusPostTerminate
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /tv.plex.providers.epg.{identifier}:{deviceId}/lineups/dvr/channels
+  method: get
+  operationId: mediaProviderEpgChannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /tv.plex.providers.epg.{identifier}:{deviceId}/grid
+  method: get
+  operationId: mediaProviderEpgGrid
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /tv.plex.providers.epg.{identifier}:{deviceId}/watchnow
+  method: get
+  operationId: mediaProviderEpgWatchnow
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /tv.plex.providers.epg.{identifier}:{deviceId}/watchnow/all
+  method: get
+  operationId: mediaProviderEpgWatchnowAll
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /{transcodeType}/:/transcode/universal/decision
+  method: get
+  operationId: transcodeDecision
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /{transcodeType}/:/transcode/universal/fallback
+  method: post
+  operationId: transcodeFallback
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - admin
+    - shared user
+- path: /{transcodeType}/:/transcode/universal/start.*
+  method: get
+  operationId: transcodeStart
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /{transcodeType}/:/transcode/universal/subtitles
+  method: get
+  operationId: transcodeSubtitles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - admin
+    - shared user
+- path: /updater/status
+  method: get
+  operationId: updaterGetStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /updater/check
+  method: put
+  operationId: updaterPutCheck
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /updater/apply
+  method: put
+  operationId: updaterPutApply
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

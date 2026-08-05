@@ -42,5 +42,14 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Plex is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/plex-systems_stock/
+Plex, Inc. builds Plex Media Server — self-hosted software that organizes, transcodes and streams a
+person's own movies, TV, music and photos to Plex apps on nearly every platform — alongside a free
+ad-supported live TV and on-demand catalog, Discover, Rentals, the Plexamp music player and the paid
+Plex Pass tier. In September 2025 Plex published official documentation for the Plex Media Server HTTP
+API for the first time: an OpenAPI 3.1 contract of 258 operations, a public-key JWT authentication flow
+on plex.tv, Plex Pass webhooks, and an OAuth-protected remote MCP server for agents.
+
+- Website: https://www.plex.tv/
+- Developer portal: https://developer.plex.tv/
+- API reference: https://developer.plex.tv/pms/
+- Secondary-market listing: https://forgeglobal.com/plex_stock/

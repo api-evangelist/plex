@@ -1,0 +1,138 @@
+generated: '2026-08-05'
+method: searched
+source: https://support.plex.tv/articles/115002267687-webhooks/
+spec_type: none
+spec_note: Plex publishes no AsyncAPI, no CloudEvents mapping and no machine-readable
+  event schema. The webhook catalogue below is captured from the support article;
+  the streaming surfaces are declared operations in the Plex Media Server OpenAPI.
+surface: webhooks + server-push streams
+webhooks:
+  docs: https://support.plex.tv/articles/115002267687-webhooks/
+  configuration: Account settings in the Plex Web App (user menu, top right).
+  requirements:
+  - An active Plex Pass subscription.
+  - Tied to the admin/owner account of the Plex Media Server.
+  transport: HTTP POST
+  content_type: multipart/form-data
+  payload_field: payload (JSON)
+  attachment: For events flagged below, a JPEG thumbnail is included as a second
+    part of the multipart POST.
+  signing: none documented
+  retries: none documented
+  payload_shape:
+    top_level:
+    - event
+    - user
+    - owner
+    objects:
+    - name: Account
+      fields:
+      - id
+      - title
+      - thumb
+    - name: Server
+      fields:
+      - title
+      - uuid
+    - name: Player
+      fields:
+      - title
+      - uuid
+      - publicAddress
+      - local
+    - name: Metadata
+      fields: Full metadata object for the item, as returned by the library API.
+  events:
+  - event: library.on.deck
+    group: new content
+    description: A new item is added that appears in the user's On Deck.
+    thumbnail: true
+  - event: library.new
+    group: new content
+    description: A new item is added to a library to which the user has access.
+    thumbnail: true
+  - event: media.pause
+    group: playback
+    description: Media playback pauses.
+    thumbnail: false
+  - event: media.play
+    group: playback
+    description: Media starts playing.
+    thumbnail: true
+  - event: media.rate
+    group: playback
+    description: Media is rated.
+    thumbnail: true
+  - event: media.resume
+    group: playback
+    description: Media playback resumes.
+    thumbnail: false
+  - event: media.scrobble
+    group: playback
+    description: Media is viewed past the 90% mark.
+    thumbnail: false
+  - event: media.stop
+    group: playback
+    description: Media playback stops.
+    thumbnail: false
+  - event: admin.database.backup
+    group: server owner
+    description: A database backup completed successfully.
+    owner_only: true
+    thumbnail: false
+  - event: admin.database.corrupted
+    group: server owner
+    description: Database corruption was detected.
+    owner_only: true
+    thumbnail: false
+  - event: device.new
+    group: server owner
+    description: A device accesses the owner's server.
+    owner_only: true
+    thumbnail: false
+  - event: playback.started
+    group: server owner
+    description: Playback is started by a shared user for the owner's server.
+    owner_only: true
+    thumbnail: true
+streaming:
+  source: openapi/plex-media-server-openapi.json
+  channels:
+  - operationId: websocketGetSlash
+    path: /:/websocket/notifications
+    protocol: WebSocket
+    summary: Connect to WebSocket
+    tag: Events
+  - operationId: eventsourceGetSlash
+    path: /:/eventsource/notifications
+    protocol: SSE
+    summary: Connect to Eventsource
+    tag: Events
+  note: Both are declared operations in the published OpenAPI but carry no message
+    schema — the notification payloads they emit are not described anywhere public.
+examples:
+  first_party_reference_implementations:
+  - name: webhooks-home-automation
+    url: https://github.com/plexinc/webhooks-home-automation
+    description: Use Plex webhooks to control lighting in your home.
+  - name: webhooks-notifications
+    url: https://github.com/plexinc/webhooks-notifications
+    description: Use Plex webhooks to display desktop notifications and control
+      playback.
+  - name: webhooks-slack
+    url: https://github.com/plexinc/webhooks-slack
+    description: Use Plex webhooks to push media notifications into Slack.
+gaps:
+- No AsyncAPI document for the webhook catalogue or the WebSocket/SSE streams.
+- No payload JSON Schema, so consumers reverse-engineer the shape from examples.
+- No webhook signature or shared secret is documented, so receivers cannot verify
+  origin.
+- The webhook catalogue lives in the support knowledge base, not in the developer
+  documentation, and is not linked from the OpenAPI.
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://support.plex.tv/articles/115002267687-webhooks/
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://github.com/plexinc
+  http_status: 200

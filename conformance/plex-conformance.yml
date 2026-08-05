@@ -1,0 +1,120 @@
+generated: '2026-08-05'
+method: derived
+source: openapi/plex-media-server-openapi.json + live /.well-known probes of plex.tv
+docs: https://developer.plex.tv/pms/
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi/plex-media-server-openapi.json declares openapi 3.1.0 with 205
+    paths, 258 operations, 64 component schemas, unique operationIds and summaries
+    on every operation.
+- id: oauth2
+  conforms: true
+  scope: Plex MCP server only
+  evidence: https://plex.tv/.well-known/oauth-authorization-server declares
+    authorization_code + refresh_token grants against issuer https://plex.tv.
+- id: oauth2.1-pkce
+  conforms: true
+  scope: Plex MCP server only
+  evidence: code_challenge_methods_supported = [S256] in the RFC 8414 metadata.
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: https://plex.tv/.well-known/oauth-authorization-server returns 200
+    application/json.
+- id: rfc9728-protected-resource-metadata
+  conforms: true
+  evidence: https://plex.tv/.well-known/oauth-protected-resource returns 200 and
+    names https://plex.tv/internal/mcp; the 401 from that resource carries a
+    conformant WWW-Authenticate Bearer challenge with resource_metadata and scope.
+- id: oidc-discovery
+  conforms: true
+  scope: Plex MCP server only
+  evidence: https://plex.tv/.well-known/openid-configuration returns 200 with
+    issuer, jwks_uri, subject_types_supported and
+    id_token_signing_alg_values_supported = [EdDSA].
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://plex.tv/internal/mcp/oauth/register is
+    advertised in both the RFC 8414 and OIDC discovery documents.
+- id: rfc7517-jwks
+  conforms: true
+  evidence: https://plex.tv/api/v2/auth/keys returns an Ed25519 (OKP/EdDSA) JWK set.
+- id: rfc7519-jwt
+  conforms: true
+  evidence: Plex device authentication issues 7-day JWTs signed EdDSA (Ed25519) or
+    RS256; documented at
+    https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: https://plex.tv/.well-known/security.txt returns 200 with Contact,
+    Encryption, Preferred-Languages and Policy fields.
+- id: mcp
+  conforms: true
+  evidence: A first-party remote MCP server is operated at
+    https://plex.tv/internal/mcp; anonymous tools/list returns a JSON-RPC 2.0 error
+    object, confirming JSON-RPC transport behind an OAuth wall.
+- id: jsonrpc-2.0
+  conforms: true
+  scope: MCP surface only
+  evidence: '{"jsonrpc":"2.0","error":{"code":-32000,"message":"Unauthorized"},"id":null}'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No operation declares application/problem+json. Error responses declare
+    text/html or no content. See errors/plex-problem-types.yml.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header is documented; breaking changes are
+    gated behind the X-Plex-Pms-Api-Version request header instead.
+- id: asyncapi
+  conforms: false
+  evidence: Plex documents a 12-event webhook catalogue and ships WebSocket and SSE
+    notification endpoints but publishes no AsyncAPI and no message schemas. See
+    asyncapi/plex-webhooks.yml.
+- id: a2a
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on
+    plex.tv, www.plex.tv and developer.plex.tv.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: https://plex.tv/.well-known/api-catalog returns 404.
+- id: graphql
+  conforms: false
+  evidence: No GraphQL endpoint is published or documented.
+- id: json-api
+  conforms: false
+  evidence: Responses use the Plex MediaContainer envelope, not the JSON:API media
+    type.
+- id: odata
+  conforms: false
+- id: scim
+  conforms: false
+- id: fhir
+  conforms: false
+compliance_program:
+  published: false
+  trust_center: null
+  certifications: []
+  note: Plex publishes no trust centre and names no security certification (SOC 2,
+    ISO 27001, PCI DSS, HIPAA, FedRAMP) on any public page found by probe. No
+    Compliance pointer is emitted in apis.yml. Plex does publish a privacy and legal
+    hub at https://www.plex.tv/about/privacy-legal/ and a vulnerability-reporting
+    policy at https://support.plex.tv/articles/reporting-security-issues/.
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/openid-configuration
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/oauth-authorization-server
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/oauth-protected-resource
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/security.txt
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/api-catalog
+  http_status: 404
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/agent-card.json
+  http_status: 404

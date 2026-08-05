@@ -1,0 +1,349 @@
+generated: '2026-08-05'
+method: derived
+source: openapi/plex-media-server-openapi.json + mcp/plex-mcp.yml
+surfaces:
+  openapi:
+    file: openapi/plex-media-server-openapi.json
+    title: Plex Media Server
+    version: 1.2.2
+    operations: 258
+    gated: false
+    note: Harvested from the Redoc SSR state embedded in https://developer.plex.tv/pms/. No raw spec file
+      is served at a stable URL.
+  graphql:
+    endpoint: null
+    note: Plex publishes no GraphQL surface.
+  mcp:
+    url: https://plex.tv/internal/mcp
+    gated: true
+    note: tools/list returns HTTP 401 (OAuth bearer, scope "mcp"). Tool names and inputSchemas are not
+      knowable anonymously.
+crosswalk: []
+mcp_only: []
+rest_only:
+- capability: Activities
+  operations:
+  - activitiesDeleteActivity
+  - activitiesGetSlash
+- capability: Butler
+  operations:
+  - butlerDeleteSlash
+  - butlerDeleteTask
+  - butlerGetSlash
+  - butlerPostSlash
+  - butlerPostTask
+- capability: Collections
+  operations:
+  - libraryCollectionPostSlash
+- capability: Content
+  operations:
+  - libraryCollectionCollectionGetComposite
+  - libraryCollectionCollectionGetItems
+  - libraryMetadataGetSlash
+  - librarySectionGetAlbums
+  - librarySectionGetAll
+  - librarySectionGetAllLeaves
+  - librarySectionGetArts
+  - librarySectionGetCategories
+  - librarySectionGetCluster
+  - librarySectionGetComputePath
+  - librarySectionGetLocations
+  - librarySectionGetMoment
+  - librarySectionGetNearest
+- capability: DVRs
+  operations:
+  - livetvDvrDeleteDVR
+  - livetvDvrDeleteDvrDevice
+  - livetvDvrDeleteLineup
+  - livetvDvrDeleteReloadGuide
+  - livetvDvrGetDVR
+  - livetvDvrGetSlash
+  - livetvDvrPostChannelsChannelTune
+  - livetvDvrPostReloadGuide
+  - livetvDvrPostSlash
+  - livetvDvrPutDvrDevice
+  - livetvDvrPutLineup
+  - livetvDvrPutPrefs
+- capability: Devices
+  operations:
+  - mediaGrabberDeleteDevicesDeviceScan
+  - mediaGrabberDevicesDeviceDeleteSlash
+  - mediaGrabberDevicesDeviceGetChannels
+  - mediaGrabberDevicesDeviceGetSlash
+  - mediaGrabberDevicesDeviceGetThumbVersion
+  - mediaGrabberDevicesDevicePostScan
+  - mediaGrabberDevicesDevicePutChannelmap
+  - mediaGrabberDevicesDevicePutPrefs
+  - mediaGrabberDevicesDevicePutSlash
+  - mediaGrabberGetDevices
+  - mediaGrabberGetSlash
+  - mediaGrabberPostDeviceDiscover
+  - mediaGrabberPostDevices
+- capability: Download Queue
+  operations:
+  - downloadQueueDeleteQueueItemsItem
+  - downloadQueueGetQueue
+  - downloadQueueGetQueueItemItemDecision
+  - downloadQueueGetQueueItemItemMedia
+  - downloadQueueGetQueueItems
+  - downloadQueueGetQueueItemsItem
+  - downloadQueuePost
+  - downloadQueuePostQueueAdd
+  - downloadQueuePostQueueItemsItemRestart
+- capability: EPG
+  operations:
+  - livetvEpgGetChannelmap
+  - livetvEpgGetChannels
+  - livetvEpgGetCountries
+  - livetvEpgGetCountriesCountryLineups
+  - livetvEpgGetCountriesCountryRegions
+  - livetvEpgGetCountriesCountryRegionsRegionLineups
+  - livetvEpgGetLanguages
+  - livetvEpgGetLineup
+  - livetvEpgGetLineupchannels
+  - mediaProviderEpgChannels
+  - mediaProviderEpgGrid
+  - mediaProviderEpgWatchnow
+  - mediaProviderEpgWatchnowAll
+- capability: Events
+  operations:
+  - eventsourceGetSlash
+  - websocketGetSlash
+- capability: General
+  operations:
+  - getIdentity
+  - getSlash
+  - securityGetResources
+  - securityPostToken
+- capability: Hubs
+  operations:
+  - hubsGetContinueWatching
+  - hubsGetItems
+  - hubsGetMetadataMetadata
+  - hubsGetMetadataMetadataPostplay
+  - hubsGetMetadataMetadataRelated
+  - hubsGetPromoted
+  - hubsGetSection
+  - hubsGetSlash
+  - hubsSectionsSectionManageDeleteIdentifier
+  - hubsSectionsSectionManageDeleteSlash
+  - hubsSectionsSectionManageGetSlash
+  - hubsSectionsSectionManagePostSlash
+  - hubsSectionsSectionManagePutIdentifier
+  - hubsSectionsSectionManagePutMove
+- capability: Library
+  operations:
+  - libraryDeleteCaches
+  - libraryDeleteSection
+  - libraryDeleteSectionsAllRefresh
+  - libraryDeleteStreamsStream
+  - libraryGetAll
+  - libraryGetMatches
+  - libraryGetMediaMediaChapterImagesChapter
+  - libraryGetMetadataAugmentationsAugmentation
+  - libraryGetPartsPartChangestampFilename
+  - libraryGetPartsPartIndexesIndex
+  - libraryGetPartsPartIndexesIndexOffset
+  - libraryGetPeoplePerson
+  - libraryGetPeoplePersonMedia
+  - libraryGetRandomArtwork
+  - libraryGetSections
+  - libraryGetSectionsPrefs
+  - libraryGetStreamsStream
+  - libraryGetStreamsStreamLevels
+  - libraryGetStreamsStreamLoudness
+  - libraryGetTags
+  - libraryMetadataDeleteElement
+  - libraryMetadataDeleteMarkerMarker
+  - libraryMetadataDeleteMediaMediaItem
+  - libraryMetadataDeleteSlash
+  - libraryMetadataGetAllLeaves
+  - libraryMetadataGetElement
+  - libraryMetadataGetExtras
+  - libraryMetadataGetFile
+  - libraryMetadataGetMatches
+  - libraryMetadataGetNearest
+  - libraryMetadataGetRelated
+  - libraryMetadataGetSimilar
+  - libraryMetadataGetTree
+  - libraryMetadataGetUsersTop
+  - libraryMetadataPostElement
+  - libraryMetadataPostExtras
+  - libraryMetadataPostMarker
+  - libraryMetadataPostSubtitles
+  - libraryMetadataPutAddetect
+  - libraryMetadataPutAnalyze
+  - libraryMetadataPutChapterThumbs
+  - libraryMetadataPutCredits
+  - libraryMetadataPutElement
+  - libraryMetadataPutIndex
+  - libraryMetadataPutIntro
+  - libraryMetadataPutMarkerMarker
+  - libraryMetadataPutMatch
+  - libraryMetadataPutMerge
+  - libraryMetadataPutPrefs
+  - libraryMetadataPutRefresh
+  - libraryMetadataPutSlash
+  - libraryMetadataPutSplit
+  - libraryMetadataPutUnmatch
+  - libraryMetadataPutVoiceActivity
+  - libraryPostFile
+  - libraryPostSection
+  - libraryPostSectionsRefresh
+  - libraryPutCleanBundles
+  - libraryPutOptimize
+  - libraryPutPartsPart
+  - libraryPutStreamsStream
+  - librarySectionDeleteCollectionCollection
+  - librarySectionDeleteIndexes
+  - librarySectionDeleteIntros
+  - librarySectionDeleteRefresh
+  - librarySectionGetAudioCodecs
+  - librarySectionGetAudioLayouts
+  - librarySectionGetAutocomplete
+  - librarySectionGetCollections
+  - librarySectionGetCommon
+  - librarySectionGetComposite
+  - librarySectionGetFilters
+  - librarySectionGetFirstCharaters
+  - librarySectionGetPrefs
+  - librarySectionGetSection
+  - librarySectionGetSorts
+  - librarySectionGetSubtitleCodecs
+  - librarySectionGetVideoCodecs
+  - librarySectionPostRefresh
+  - librarySectionPutAll
+  - librarySectionPutAnalyze
+  - librarySectionPutEmptyTrash
+  - librarySectionPutPrefs
+  - librarySectionPutSection
+- capability: Library Collections
+  operations:
+  - libraryCollectionCollectionPutItems
+  - libraryCollectionCollectionPutItemsItem
+  - libraryCollectionCollectionPutItemsItemMove
+- capability: Library Playlists
+  operations:
+  - playlistDeleteItems
+  - playlistDeleteItemsGenerator
+  - playlistDeletePlaylist
+  - playlistGetGenerators
+  - playlistGetItemsGenerator
+  - playlistGetItemsGeneratorItems
+  - playlistPostSlash
+  - playlistPostUpload
+  - playlistPutItems
+  - playlistPutItemsGenerator
+  - playlistPutItemsGeneratorReprocess
+  - playlistPutItemsMove
+  - playlistPutPlaylist
+- capability: Live TV
+  operations:
+  - livetvSessionsGetSession
+  - livetvSessionsGetSessionConsumerIndex
+  - livetvSessionsGetSessionConsumerSegment
+  - livetvSessionsGetSlash
+- capability: Log
+  operations:
+  - logPostPapertrail
+  - logPostSlash
+  - logPutSlash
+- capability: Metadata Agents
+  operations:
+  - deleteMetadataAgentProvider
+  - deleteMetadataAgentProviderGroup
+  - deleteMetadataAgentProviderGroupItem
+  - getMetadataAgentProvider
+  - getMetadataAgentProviderGroup
+  - getMetadataAgentProviderGroups
+  - getMetadataAgentProviders
+  - postMetadataAgentProviderGroups
+  - postMetadataAgentProviders
+  - putMetadataAgentProvider
+  - putMetadataAgentProviderGroup
+  - putMetadataAgentProviderGroupItem
+- capability: Play Queue
+  operations:
+  - playQueuePlayQueueReset
+  - playQueuePostSlash
+  - playQueueQueueDeleteItems
+  - playQueueQueueDeleteItemsItem
+  - playQueueQueueGetSlash
+  - playQueueQueuePutItemsMove
+  - playQueueQueuePutItemsShuffle
+  - playQueueQueuePutItemsUnshuffle
+  - playQueueQueuePutSlash
+- capability: Playlist
+  operations:
+  - playlistGetItems
+  - playlistGetPlaylist
+  - playlistGetSlash
+- capability: Preferences
+  operations:
+  - preferencesGetGet
+  - preferencesGetSlash
+  - preferencesPutSlash
+- capability: Provider
+  operations:
+  - deleteMediaProvider
+  - getMediaProviders
+  - postMediaProviders
+  - postMediaProvidersRefresh
+- capability: Rate
+  operations:
+  - putRate
+- capability: Search
+  operations:
+  - hubsGetSearch
+  - hubsSearchGetVoice
+- capability: Status
+  operations:
+  - statusDeleteHistory
+  - statusGetBackground
+  - statusGetHistory
+  - statusGetHistoryAll
+  - statusGetSlash
+  - statusPostTerminate
+- capability: Subscriptions
+  operations:
+  - mediaGrabberDeleteOperationsOperation
+  - mediaSubscriptionsDeleteSubscription
+  - mediaSubscriptionsGetScheduled
+  - mediaSubscriptionsGetSlash
+  - mediaSubscriptionsGetSubscription
+  - mediaSubscriptionsGetTemplate
+  - mediaSubscriptionsPostProcess
+  - mediaSubscriptionsPostSlash
+  - mediaSubscriptionsPutSubscription
+  - mediaSubscriptionsPutSubscriptionMove
+- capability: Timeline
+  operations:
+  - putScrobble
+  - putUnscrobble
+  - timelinePostSlash
+- capability: Transcoder
+  operations:
+  - imageTranscode
+  - transcodeDecision
+  - transcodeFallback
+  - transcodeStart
+  - transcodeSubtitles
+- capability: UltraBlur
+  operations:
+  - ultraBlurGetColors
+  - ultraBlurGetImage
+- capability: Updater
+  operations:
+  - updaterGetStatus
+  - updaterPutApply
+  - updaterPutCheck
+coverage:
+  tools_named: 0
+  tools_bound: 0
+  mcp_only: 0
+  rest_operations_total: 258
+  rest_operations_with_tool: 0
+  note: No rows can be emitted. Plex operates a real first-party MCP server but its tool list is OAuth-gated
+    and it is not documented anywhere public, so there is nothing to bind the 258 REST operations to.
+    Re-run this crosswalk after an authenticated tools/list introspection.
+x-status: pending-authenticated-introspection

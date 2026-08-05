@@ -1,0 +1,734 @@
+generated: '2026-08-05'
+method: derived
+source: openapi/plex-media-server-openapi.json
+docs: https://developer.plex.tv/pms/#section/API-Info/Metadata-Providers
+format: none
+envelope:
+  style: http-status-only
+  content_types:
+  - text/html
+  note: Plex Media Server does not return a structured error body. Error responses in the published OpenAPI declare
+    either no content or text/html, and there is no problem+json, no machine-readable error code, and no error envelope
+    schema. Clients must branch on the HTTP status code and, for a few endpoints, on the human-readable description.
+    The MCP server at https://plex.tv/internal/mcp is the exception — it returns JSON-RPC 2.0 errors, e.g. {"jsonrpc":"2.0","error":{"code":-32000,"message":"Unauthorized"}}.
+documented_status_codes:
+- status: 400
+  operations: 26
+- status: 401
+  operations: 2
+- status: 403
+  operations: 14
+- status: 404
+  operations: 40
+- status: 409
+  operations: 3
+- status: 412
+  operations: 1
+- status: 500
+  operations: 8
+- status: 501
+  operations: 1
+- status: 503
+  operations: 3
+- status: 509
+  operations: 1
+common_return_codes:
+- status: 200
+  name: OK
+  description: A response for an item or match is successfully returned
+- status: 400
+  name: Bad Request
+  description: A request was made which cannot be fulfilled because the request is malformed
+- status: 404
+  name: Not Found
+  description: If an item with the requested ratingKey is not found (Metadata feature only)
+- status: 500
+  name: Internal Server Error
+  description: A request was made which cannot be fulfilled because the server encountered an internal error
+problems:
+- status: 400
+  title: Bad Request
+  detail: null
+  occurrences: 38
+  source_operations:
+  - deleteMediaProvider
+  - deleteMetadataAgentProvider
+  - imageTranscode
+  - libraryMetadataPutMarkerMarker
+  - librarySectionGetCommon
+  - logPostSlash
+  - mediaGrabberPostDevices
+  - mediaSubscriptionsDeleteSubscription
+  - mediaSubscriptionsGetSubscription
+  - mediaSubscriptionsPostSlash
+  - mediaSubscriptionsPutSubscription
+  - mediaSubscriptionsPutSubscriptionMove
+  - …
+- status: 400
+  title: Bad Request
+  detail: No metadata with that id or permission is denied
+  occurrences: 3
+  source_operations:
+  - hubsGetMetadataMetadata
+  - hubsGetMetadataMetadataPostplay
+  - hubsGetMetadataMetadataRelated
+- status: 400
+  title: Bad Request
+  detail: Bad Request.  Can occur when parameters are of the wrong type, or missing
+  occurrences: 2
+  source_operations:
+  - putScrobble
+  - putUnscrobble
+- status: 400
+  title: Bad Request
+  detail: A required parameter was not given, the wrong type, or wrong value
+  occurrences: 2
+  source_operations:
+  - hubsGetSearch
+  - hubsSearchGetVoice
+- status: 400
+  title: Bad Request
+  detail: Item not found
+  occurrences: 2
+  source_operations:
+  - libraryCollectionCollectionPutItemsItem
+  - libraryCollectionCollectionPutItemsItemMove
+- status: 400
+  title: Bad Request
+  detail: Media items could not be deleted
+  occurrences: 2
+  source_operations:
+  - libraryMetadataDeleteSlash
+  - libraryMetadataPutSlash
+- status: 400
+  title: Bad Request
+  detail: Section cannot be created due to bad parameters in request
+  occurrences: 2
+  source_operations:
+  - libraryPostSection
+  - librarySectionPutSection
+- status: 400
+  title: Bad Request
+  detail: A query param is missing or the wrong value
+  occurrences: 2
+  source_operations:
+  - securityGetResources
+  - securityPostToken
+- status: 400
+  title: Bad Request
+  detail: Attempt to set a preferences that doesn't exist
+  occurrences: 1
+  source_operations:
+  - preferencesPutSlash
+- status: 400
+  title: Bad Request
+  detail: Bad Request.  Can occur when parameters are of the wrong type, missing, or if the `ratedAt` is in the
+    future
+  occurrences: 1
+  source_operations:
+  - putRate
+- status: 400
+  title: Bad Request
+  detail: Activity is not cancellable
+  occurrences: 1
+  source_operations:
+  - activitiesDeleteActivity
+- status: 400
+  title: Bad Request
+  detail: The item is not in a state where a decision is available
+  occurrences: 1
+  source_operations:
+  - downloadQueueGetQueueItemItemDecision
+- status: 400
+  title: Bad Request
+  detail: No section with that id or permission is denied
+  occurrences: 1
+  source_operations:
+  - hubsGetSection
+- status: 400
+  title: Bad Request
+  detail: A hub could not be created with this metadata item
+  occurrences: 1
+  source_operations:
+  - hubsSectionsSectionManagePostSlash
+- status: 400
+  title: Bad Request
+  detail: The hub is not a custom hub
+  occurrences: 1
+  source_operations:
+  - hubsSectionsSectionManageDeleteIdentifier
+- status: 400
+  title: Bad Request
+  detail: The uri is missing for a smart collection or the section could not be found
+  occurrences: 1
+  source_operations:
+  - libraryCollectionPostSlash
+- status: 400
+  title: Bad Request
+  detail: Request parameters are bad, such as an `endTimeOffset` prior to the `startTimeOffset`
+  occurrences: 1
+  source_operations:
+  - libraryMetadataPostMarker
+- status: 400
+  title: Bad Request
+  detail: Marker is not a bookmark
+  occurrences: 1
+  source_operations:
+  - libraryMetadataDeleteMarkerMarker
+- status: 400
+  title: Bad Request
+  detail: Media item could not be deleted
+  occurrences: 1
+  source_operations:
+  - libraryMetadataDeleteMediaMediaItem
+- status: 400
+  title: Bad Request
+  detail: One of the audio or subtitle streams does not belong to this part
+  occurrences: 1
+  source_operations:
+  - libraryPutPartsPart
+- status: 400
+  title: Bad Request
+  detail: type not provided or not an integer
+  occurrences: 1
+  source_operations:
+  - libraryGetSectionsPrefs
+- status: 400
+  title: Bad Request
+  detail: The set of parameters are inconsistent or invalid values
+  occurrences: 1
+  source_operations:
+  - librarySectionPutAll
+- status: 400
+  title: Bad Request
+  detail: A paramater is either invalid or missing
+  occurrences: 1
+  source_operations:
+  - librarySectionGetAutocomplete
+- status: 400
+  title: Bad Request
+  detail: The stream doesn't exist
+  occurrences: 1
+  source_operations:
+  - libraryPutStreamsStream
+- status: 400
+  title: Bad Request
+  detail: Requested width and height parameters are out of bounds (maximum 3840 x 2160)
+  occurrences: 1
+  source_operations:
+  - ultraBlurGetImage
+- status: 400
+  title: Bad Request
+  detail: This system cannot install updates
+  occurrences: 1
+  source_operations:
+  - updaterPutApply
+- status: 401
+  title: Unauthorized
+  detail: This augmentation is not owned by the requesting user
+  occurrences: 1
+  source_operations:
+  - libraryGetMetadataAugmentationsAugmentation
+- status: 401
+  title: Unauthorized
+  detail: Server does not have the feature enabled
+  occurrences: 1
+  source_operations:
+  - statusPostTerminate
+- status: 403
+  title: Forbidden
+  detail: null
+  occurrences: 11
+  source_operations:
+  - hubsSectionsSectionManageDeleteIdentifier
+  - hubsSectionsSectionManageDeleteSlash
+  - hubsSectionsSectionManageGetSlash
+  - hubsSectionsSectionManagePostSlash
+  - hubsSectionsSectionManagePutIdentifier
+  - hubsSectionsSectionManagePutMove
+  - imageTranscode
+  - libraryGetStreamsStreamLevels
+  - playlistPostUpload
+  - transcodeStart
+  - transcodeSubtitles
+- status: 403
+  title: Forbidden
+  detail: User cannot access DVR on this server
+  occurrences: 5
+  source_operations:
+  - mediaSubscriptionsGetScheduled
+  - mediaSubscriptionsGetSlash
+  - mediaSubscriptionsGetTemplate
+  - mediaSubscriptionsPostProcess
+  - mediaSubscriptionsPostSlash
+- status: 403
+  title: Forbidden
+  detail: User cannot access DVR on this server or cannot access this subscription
+  occurrences: 4
+  source_operations:
+  - mediaSubscriptionsDeleteSubscription
+  - mediaSubscriptionsGetSubscription
+  - mediaSubscriptionsPutSubscription
+  - mediaSubscriptionsPutSubscriptionMove
+- status: 403
+  title: Forbidden
+  detail: The media is not accessible to the user
+  occurrences: 2
+  source_operations:
+  - libraryGetStreamsStream
+  - libraryGetStreamsStreamLoudness
+- status: 403
+  title: Forbidden
+  detail: Invalid or no token provided or a transient token could not be created
+  occurrences: 2
+  source_operations:
+  - securityGetResources
+  - securityPostToken
+- status: 403
+  title: Forbidden
+  detail: Attempt to set a preferences that doesn't exist
+  occurrences: 1
+  source_operations:
+  - preferencesPutSlash
+- status: 403
+  title: Forbidden
+  detail: Client requested download and server owner has forbidden download of media
+  occurrences: 1
+  source_operations:
+  - libraryGetPartsPartChangestampFilename
+- status: 403
+  title: Forbidden
+  detail: This user cannot delete this stream
+  occurrences: 1
+  source_operations:
+  - libraryDeleteStreamsStream
+- status: 403
+  title: Forbidden
+  detail: User doesn't have permission
+  occurrences: 1
+  source_operations:
+  - logPostPapertrail
+- status: 403
+  title: Forbidden
+  detail: User is not owner of the grab and not the admin
+  occurrences: 1
+  source_operations:
+  - mediaGrabberDeleteOperationsOperation
+- status: 403
+  title: Forbidden
+  detail: Cannot delete a provider which is a child of another provider
+  occurrences: 1
+  source_operations:
+  - deleteMediaProvider
+- status: 403
+  title: Forbidden
+  detail: Cannot delete a provider which is currently used inside a group.
+  occurrences: 1
+  source_operations:
+  - deleteMetadataAgentProvider
+- status: 403
+  title: Forbidden
+  detail: Cannot delete the primary provider of a group.
+  occurrences: 1
+  source_operations:
+  - deleteMetadataAgentProviderGroupItem
+- status: 403
+  title: Forbidden
+  detail: sessionId is empty
+  occurrences: 1
+  source_operations:
+  - statusPostTerminate
+- status: 404
+  title: Not Found
+  detail: null
+  occurrences: 18
+  source_operations:
+  - deleteMetadataAgentProvider
+  - deleteMetadataAgentProviderGroup
+  - deleteMetadataAgentProviderGroupItem
+  - getMetadataAgentProvider
+  - getMetadataAgentProviderGroup
+  - imageTranscode
+  - libraryGetPeoplePerson
+  - libraryGetPeoplePersonMedia
+  - libraryGetStreamsStreamLevels
+  - libraryMetadataDeleteElement
+  - librarySectionGetCommon
+  - mediaGrabberDeleteOperationsOperation
+  - …
+- status: 404
+  title: Not Found
+  detail: No provider with the identifier was found
+  occurrences: 9
+  source_operations:
+  - livetvEpgGetChannels
+  - livetvEpgGetCountriesCountryLineups
+  - livetvEpgGetCountriesCountryRegions
+  - livetvEpgGetCountriesCountryRegionsRegionLineups
+  - livetvEpgGetLineupchannels
+  - mediaProviderEpgChannels
+  - mediaProviderEpgGrid
+  - mediaProviderEpgWatchnow
+  - mediaProviderEpgWatchnowAll
+- status: 404
+  title: Not Found
+  detail: Playlist not found (or user may not have permission to access playlist)
+  occurrences: 7
+  source_operations:
+  - playlistDeleteItems
+  - playlistDeletePlaylist
+  - playlistGetItems
+  - playlistGetPlaylist
+  - playlistPutItems
+  - playlistPutItemsMove
+  - playlistPutPlaylist
+- status: 404
+  title: Not Found
+  detail: Collection not found
+  occurrences: 6
+  source_operations:
+  - libraryCollectionCollectionGetComposite
+  - libraryCollectionCollectionGetItems
+  - libraryCollectionCollectionPutItems
+  - libraryCollectionCollectionPutItemsItem
+  - libraryCollectionCollectionPutItemsItemMove
+  - librarySectionDeleteCollectionCollection
+- status: 404
+  title: Not Found
+  detail: Playlist not found (or user may not have permission to access playlist) or generator not found
+  occurrences: 5
+  source_operations:
+  - playlistDeleteItemsGenerator
+  - playlistGetGenerators
+  - playlistGetItemsGenerator
+  - playlistGetItemsGeneratorItems
+  - playlistPutItemsGenerator
+- status: 404
+  title: Not Found
+  detail: Section id was not found
+  occurrences: 4
+  source_operations:
+  - hubsSectionsSectionManageDeleteSlash
+  - hubsSectionsSectionManageGetSlash
+  - hubsSectionsSectionManagePutIdentifier
+  - hubsSectionsSectionManagePutMove
+- status: 404
+  title: Not Found
+  detail: Device not found
+  occurrences: 4
+  source_operations:
+  - mediaGrabberDevicesDeviceDeleteSlash
+  - mediaGrabberDevicesDeviceGetChannels
+  - mediaGrabberDevicesDeviceGetSlash
+  - mediaGrabberDevicesDevicePutSlash
+- status: 404
+  title: Not Found
+  detail: Play queue not found
+  occurrences: 4
+  source_operations:
+  - playQueuePlayQueueReset
+  - playQueueQueueDeleteItemsItem
+  - playQueueQueueGetSlash
+  - playQueueQueuePutSlash
+- status: 404
+  title: Not Found
+  detail: Indicates that no library with the provide identifier can be found or no item can be found with the rating
+    key
+  occurrences: 3
+  source_operations:
+  - putRate
+  - putScrobble
+  - putUnscrobble
+- status: 404
+  title: Not Found
+  detail: No device or provider with the identifier was found
+  occurrences: 2
+  source_operations:
+  - livetvEpgGetChannelmap
+  - livetvEpgGetLineup
+- status: 404
+  title: Not Found
+  detail: Play queue not found or current item not found
+  occurrences: 2
+  source_operations:
+  - playQueueQueuePutItemsShuffle
+  - playQueueQueuePutItemsUnshuffle
+- status: 404
+  title: Not Found
+  detail: History item not found
+  occurrences: 2
+  source_operations:
+  - statusDeleteHistory
+  - statusGetHistory
+- status: 404
+  title: Not Found
+  detail: No preference with the provided name found.
+  occurrences: 1
+  source_operations:
+  - preferencesGetGet
+- status: 404
+  title: Not Found
+  detail: No activity with the provided id is found
+  occurrences: 1
+  source_operations:
+  - activitiesDeleteActivity
+- status: 404
+  title: Not Found
+  detail: No task with this name was found
+  occurrences: 1
+  source_operations:
+  - butlerPostTask
+- status: 404
+  title: Not Found
+  detail: No task with this name was found or no task with this name was running
+  occurrences: 1
+  source_operations:
+  - butlerDeleteTask
+- status: 404
+  title: Not Found
+  detail: The specified hub could not be found
+  occurrences: 1
+  source_operations:
+  - hubsGetItems
+- status: 404
+  title: Not Found
+  detail: Search restrictions result in no possible items found (such as searching no sections)
+  occurrences: 1
+  source_operations:
+  - hubsGetSearch
+- status: 404
+  title: Not Found
+  detail: Section id or metadata item was not found
+  occurrences: 1
+  source_operations:
+  - hubsSectionsSectionManagePostSlash
+- status: 404
+  title: Not Found
+  detail: The section or hub was not found
+  occurrences: 1
+  source_operations:
+  - hubsSectionsSectionManageDeleteIdentifier
+- status: 404
+  title: Not Found
+  detail: Either the media item or the chapter image was not found
+  occurrences: 1
+  source_operations:
+  - libraryGetMediaMediaChapterImagesChapter
+- status: 404
+  title: Not Found
+  detail: Either the metadata item is not present or the extra could not be added
+  occurrences: 1
+  source_operations:
+  - libraryMetadataPostExtras
+- status: 404
+  title: Not Found
+  detail: Marker could not be found
+  occurrences: 1
+  source_operations:
+  - libraryMetadataDeleteMarkerMarker
+- status: 404
+  title: Not Found
+  detail: The marker could not be found
+  occurrences: 1
+  source_operations:
+  - libraryMetadataPutMarkerMarker
+- status: 404
+  title: Not Found
+  detail: Media item could not be found
+  occurrences: 1
+  source_operations:
+  - libraryMetadataDeleteMediaMediaItem
+- status: 404
+  title: Not Found
+  detail: No augmentation found
+  occurrences: 1
+  source_operations:
+  - libraryGetMetadataAugmentationsAugmentation
+- status: 404
+  title: Not Found
+  detail: The part or the index doesn't exist or the interval is too small
+  occurrences: 1
+  source_operations:
+  - libraryGetPartsPartIndexesIndex
+- status: 404
+  title: Not Found
+  detail: The part or the index doesn't exist
+  occurrences: 1
+  source_operations:
+  - libraryGetPartsPartIndexesIndexOffset
+- status: 404
+  title: Not Found
+  detail: The part doesn't exist
+  occurrences: 1
+  source_operations:
+  - libraryGetPartsPartChangestampFilename
+- status: 404
+  title: Not Found
+  detail: A required item could not be found
+  occurrences: 1
+  source_operations:
+  - librarySectionPutAll
+- status: 404
+  title: Not Found
+  detail: The stream doesn't exist or has no data
+  occurrences: 1
+  source_operations:
+  - libraryGetStreamsStream
+- status: 404
+  title: Not Found
+  detail: The stream doesn't exist, or the loudness feature is not available on this PMS
+  occurrences: 1
+  source_operations:
+  - libraryGetStreamsStreamLoudness
+- status: 404
+  title: Not Found
+  detail: Session or consumer not found
+  occurrences: 1
+  source_operations:
+  - livetvSessionsGetSessionConsumerIndex
+- status: 404
+  title: Not Found
+  detail: Session, consumer, or segment not found
+  occurrences: 1
+  source_operations:
+  - livetvSessionsGetSessionConsumerSegment
+- status: 404
+  title: Not Found
+  detail: No thumb found for this device
+  occurrences: 1
+  source_operations:
+  - mediaGrabberDevicesDeviceGetThumbVersion
+- status: 404
+  title: Not Found
+  detail: Playlist not found (or user may not have permission to access playlist) or generator or metadata item
+    not found
+  occurrences: 1
+  source_operations:
+  - playlistPutItemsGeneratorReprocess
+- status: 404
+  title: Not Found
+  detail: Play queue or queue item not found
+  occurrences: 1
+  source_operations:
+  - playQueueQueuePutItemsMove
+- status: 404
+  title: Not Found
+  detail: The image url could not be found.
+  occurrences: 1
+  source_operations:
+  - ultraBlurGetColors
+- status: 404
+  title: Not Found
+  detail: Session not found
+  occurrences: 1
+  source_operations:
+  - statusPostTerminate
+- status: 404
+  title: Not Found
+  detail: Session ID does not exist
+  occurrences: 1
+  source_operations:
+  - transcodeFallback
+- status: 409
+  title: Conflict
+  detail: Rename of a collection to a name that's already taken
+  occurrences: 1
+  source_operations:
+  - librarySectionPutAll
+- status: 409
+  title: Conflict
+  detail: A provider with the same identifier already exists
+  occurrences: 1
+  source_operations:
+  - postMetadataAgentProviders
+- status: 409
+  title: Conflict
+  detail: An subscription with the same parameters already exists
+  occurrences: 1
+  source_operations:
+  - mediaSubscriptionsPostSlash
+- status: 412
+  title: Precondition Failed
+  detail: Transcode could not fallback
+  occurrences: 1
+  source_operations:
+  - transcodeFallback
+- status: 500
+  title: Internal Server Error
+  detail: The stream cannot be deleted
+  occurrences: 1
+  source_operations:
+  - libraryDeleteStreamsStream
+- status: 500
+  title: Internal Server Error
+  detail: Tuning failed
+  occurrences: 1
+  source_operations:
+  - livetvDvrPostChannelsChannelTune
+- status: 500
+  title: Internal Server Error
+  detail: Failed to compute channel map
+  occurrences: 1
+  source_operations:
+  - livetvEpgGetChannelmap
+- status: 500
+  title: Internal Server Error
+  detail: Could not get device's channels
+  occurrences: 1
+  source_operations:
+  - livetvEpgGetLineup
+- status: 500
+  title: Internal Server Error
+  detail: The playlist could not be imported
+  occurrences: 1
+  source_operations:
+  - playlistPostUpload
+- status: 500
+  title: Internal Server Error
+  detail: The server was unable to successfully extract the UltraBlur colors.
+  occurrences: 1
+  source_operations:
+  - ultraBlurGetColors
+- status: 500
+  title: Internal Server Error
+  detail: Transcode failed to fallback
+  occurrences: 1
+  source_operations:
+  - transcodeFallback
+- status: 500
+  title: Internal Server Error
+  detail: The update process failed to start
+  occurrences: 1
+  source_operations:
+  - updaterPutApply
+- status: 501
+  title: Not Implemented
+  detail: The stream is not a sidecar subtitle
+  occurrences: 1
+  source_operations:
+  - libraryGetStreamsStream
+- status: 503
+  title: Service Unavailable
+  detail: The queue item is not yet complete and is currently transcoding or waiting to transcode
+  occurrences: 1
+  source_operations:
+  - downloadQueueGetQueueItemItemMedia
+- status: 503
+  title: Service Unavailable
+  detail: Client requested the part without a decision and no decision could be made or decision is for a transcode
+  occurrences: 1
+  source_operations:
+  - libraryGetPartsPartChangestampFilename
+- status: 503
+  title: Service Unavailable
+  detail: Server cannot refresh a music library when not signed in
+  occurrences: 1
+  source_operations:
+  - libraryPostSectionsRefresh
+- status: 509
+  title: Bandwidth Limit Exceeded
+  detail: Client requested the part without a decision and no decision could be made because there is insufficient
+    bandwidth for client to direct play this part
+  occurrences: 1
+  source_operations:
+  - libraryGetPartsPartChangestampFilename

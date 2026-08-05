@@ -1,0 +1,60 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Plex Media Server API
+  version: 1.0.0
+extends: openapi/plex-media-server-openapi.json
+x-generated: '2026-08-05'
+x-method: generated
+x-source: openapi/plex-media-server-openapi.json
+x-note: >-
+  Captures API Evangelist annotations over the harvested Plex Media Server OpenAPI.
+  The original document is never mutated. The upstream contract is served only as
+  the Redoc SSR state embedded in https://developer.plex.tv/pms/; Plex publishes no
+  raw spec file at a stable URL, which is the single most valuable thing it could
+  change for machine consumers.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/plex/
+    x-apievangelist-harvested: '2026-08-05'
+    x-apievangelist-harvest-source: https://developer.plex.tv/pms/
+    x-apievangelist-harvest-method: extracted from the __redoc_state document embedded
+      in the Redoc server-side-rendered documentation page
+    x-apievangelist-spec-url-published: false
+- target: $.info
+  update:
+    x-apievangelist-artifacts:
+      authentication: authentication/plex-authentication.yml
+      conventions: conventions/plex-conventions.yml
+      errors: errors/plex-problem-types.yml
+      lifecycle: lifecycle/plex-lifecycle.yml
+      changelog: changelog/plex-changelog.yml
+      data_model: data-model/plex-data-model.yml
+      webhooks: asyncapi/plex-webhooks.yml
+      mcp: mcp/plex-mcp.yml
+      skills: skills/_index.yml
+      agentic_access: agentic-access/plex-agentic-access.yml
+- target: $.servers
+  update:
+    x-apievangelist-deployment: self-hosted
+    x-apievangelist-server-note: The single servers[] entry is a template whose host
+      encodes the server's IP address and machineIdentifier under Plex's wildcard
+      TLS domain plex.direct. There is no shared multi-tenant production host.
+- target: $.components.securitySchemes.user_token
+  update:
+    x-apievangelist-token-forms:
+    - legacy long-lived X-Plex-Token
+    - 7-day Plex JWT signed with an Ed25519 device key
+    x-apievangelist-issuer: https://clients.plex.tv/api/v2
+    x-apievangelist-query-parameter-accepted: true
+- target: $.info
+  update:
+    x-apievangelist-gaps:
+    - No raw OpenAPI file is served at a stable, linkable URL.
+    - Error responses declare text/html or no content; there is no problem+json
+      envelope and no machine-readable error code.
+    - No idempotency contract is documented for the write operations.
+    - No rate-limit headers or published quota are documented.
+    - Webhooks are documented in the support knowledge base only, with no AsyncAPI.
+    - The first-party MCP server publishes no tool list, so its capabilities are
+      undiscoverable without an authenticated session.

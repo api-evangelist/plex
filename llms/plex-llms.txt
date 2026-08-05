@@ -1,0 +1,105 @@
+# Plex
+
+> Plex, Inc. builds Plex Media Server — self-hosted software that organizes,
+> transcodes and streams a person's own movies, TV, music and photos to Plex apps on
+> nearly every platform — alongside a free ad-supported live TV and on-demand
+> catalog, Discover, Rentals, the Plexamp music player and the paid Plex Pass tier.
+> In September 2025 Plex published official documentation for the Plex Media Server
+> HTTP API for the first time: an OpenAPI 3.1 contract of 258 operations across 205
+> paths, a new public-key JWT authentication flow on plex.tv, and an
+> OAuth-protected remote MCP server for agents.
+
+Generated 2026-08-05 by the API Evangelist enrichment pipeline. Plex serves no
+llms.txt of its own — https://plex.tv/llms.txt and
+https://developer.plex.tv/llms.txt both return 404. (An llms.txt does exist at
+https://plexapi.dev/llms.txt, but plexapi.dev is a community documentation site,
+not a Plex property.)
+
+## Key facts for an agent
+
+- Plex Media Server is **self-hosted**. There is no shared production API host. A
+  server is reached on the LAN at `http://<ip>:32400` or remotely at
+  `https://<ip-with-dashes>.<machineIdentifier>.plex.direct:32400`.
+- Authentication is the `X-Plex-Token` header on every request. The value is either
+  a legacy long-lived token or a 7-day Plex JWT (Ed25519 / EdDSA).
+- Responses are **XML by default**. Send `Accept: application/json` for JSON.
+- Pagination is by `X-Plex-Container-Start` / `X-Plex-Container-Size` request
+  headers; verify the response actually paginated before trusting it.
+- API version is declared by the `X-Plex-Pms-Api-Version` request header. Absent
+  the header the server assumes `0.0` and the pre-1.0 field semantics.
+- There is **no idempotency contract**, **no rate-limit signalling**, and **no
+  structured error body**. Errors are HTTP status only.
+
+## APIs
+
+- [Plex Media Server API](https://developer.plex.tv/pms/): the official HTTP API on
+  every Plex Media Server — libraries, metadata, playlists, collections, play
+  queues, sessions, activities, butler tasks, preferences, download queue,
+  transcoding, DVR / EPG / Live TV, and WebSocket + SSE notification streams.
+- [Plex Account and Authentication API](https://clients.plex.tv/api/v2): PIN device
+  linking, JWK registration, nonce issuance and device-JWT exchange for a Plex JWT.
+- [Plex MCP Server](https://plex.tv/internal/mcp): first-party remote Model Context
+  Protocol server, OAuth 2.1 + PKCE, single scope `mcp`. Tool list is auth-gated.
+
+## Specs
+
+- [OpenAPI 3.1 — Plex Media Server 1.2.2](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/openapi/plex-media-server-openapi.json)
+  (harvested from the Redoc state embedded in developer.plex.tv/pms/; Plex serves no
+  raw spec file at a stable URL)
+- [Overlay of API Evangelist annotations](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/overlays/plex-media-server-overlay.yaml)
+
+## Discovery documents
+
+- [security.txt (RFC 9116)](https://plex.tv/.well-known/security.txt)
+- [OpenID Connect discovery](https://plex.tv/.well-known/openid-configuration)
+- [OAuth authorization server metadata (RFC 8414)](https://plex.tv/.well-known/oauth-authorization-server)
+- [OAuth protected resource metadata (RFC 9728)](https://plex.tv/.well-known/oauth-protected-resource)
+- [JWKS](https://plex.tv/api/v2/auth/keys)
+
+No agent card is published. `/.well-known/agent-card.json` and
+`/.well-known/agent.json` return 404 on plex.tv, www.plex.tv and developer.plex.tv.
+No `/.well-known/api-catalog`. No AsyncAPI. No GraphQL.
+
+## Docs
+
+- [Developer portal](https://developer.plex.tv/)
+- [API reference](https://developer.plex.tv/pms/)
+- [Authenticating with Plex](https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex)
+- [Pagination](https://developer.plex.tv/pms/#section/API-Info/Pagination)
+- [API versioning and changes](https://developer.plex.tv/pms/#section/API-Info/API-Versioning)
+- [Media queries](https://developer.plex.tv/pms/#section/API-Info/Media-Queries)
+- [Webhooks (Plex Pass)](https://support.plex.tv/articles/115002267687-webhooks/)
+- [Reporting security issues](https://support.plex.tv/articles/reporting-security-issues/)
+- [Announcement: Plex Pro Week '25 — API Unlocked](https://www.plex.tv/blog/plex-pro-week-25-api-unlocked/)
+
+## Derived artifacts (API Evangelist)
+
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/authentication/plex-authentication.yml)
+- [Scopes](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/scopes/plex-scopes.yml)
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/conventions/plex-conventions.yml)
+- [Error catalog](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/errors/plex-problem-types.yml)
+- [Lifecycle and versioning](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/lifecycle/plex-lifecycle.yml)
+- [Changelog](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/changelog/plex-changelog.yml)
+- [Data model](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/data-model/plex-data-model.yml)
+- [Webhook and streaming catalog](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/asyncapi/plex-webhooks.yml)
+- [MCP server manifest](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/mcp/plex-mcp.yml)
+- [Agent skills](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/skills/_index.yml)
+- [Packages and SDKs](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/packages/plex-packages.yml)
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/conformance/plex-conformance.yml)
+- [Well-known index](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/well-known/plex-well-known.yml)
+- [Domain security](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/security/plex-domain-security.yml)
+- [Agentic access contracts](https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/agentic-access/plex-agentic-access.yml)
+
+## Company
+
+- [Website](https://www.plex.tv/)
+- [Plans and pricing](https://www.plex.tv/plans/)
+- [Sign up](https://www.plex.tv/sign-up/)
+- [Downloads](https://www.plex.tv/media-server-downloads/)
+- [Support](https://support.plex.tv/)
+- [Forums](https://forums.plex.tv/)
+- [Blog](https://www.plex.tv/blog/)
+- [Status](https://status.plex.tv/)
+- [GitHub](https://github.com/plexinc)
+- [Terms of service](https://www.plex.tv/about/privacy-legal/plex-terms-of-service/)
+- [Privacy and legal](https://www.plex.tv/about/privacy-legal/)

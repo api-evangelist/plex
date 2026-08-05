@@ -1,0 +1,344 @@
+generated: '2026-08-05'
+method: derived
+source: openapi/plex-media-server-openapi.json
+docs: https://developer.plex.tv/pms/#section/API-Info/Metadata-Response
+summary:
+  schemas: 64
+  entities_with_relationships: 18
+identifiers:
+- name: ratingKey
+  description: The primary identifier of a metadata item on a Plex Media Server. Appears in paths as /library/metadata/{ids}.
+  type: string
+- name: key
+  description: A path fragment that addresses the item or its children, e.g. /library/metadata/12345/children.
+  type: string
+- name: guid
+  description: A globally scoped identifier of the form plex://<type>/<id> (or an agent-specific scheme) used to
+    match items across servers and providers.
+  type: string
+- name: machineIdentifier
+  description: The unique identifier of a Plex Media Server; also the middle label of the server's plex.direct hostname.
+  type: string
+- name: sectionId
+  description: Identifier of a library section (a movie, show, music or photo library).
+  type: integer
+- name: playlistId
+  description: Identifier of a playlist.
+  type: integer
+- name: playQueueId
+  description: Identifier of a play queue.
+  type: integer
+- name: dvrId
+  description: Identifier of a DVR.
+  type: integer
+container:
+  name: MediaContainer
+  description: Every Plex response is wrapped in a MediaContainer, which carries paging attributes (size, totalSize,
+    offset) plus the typed child arrays (Metadata, Directory, Hub, Video, Track, Playlist, ...).
+entities:
+- name: Device-items
+  properties: 13
+- name: Directory
+  properties: 0
+- name: DirectoryType
+  properties: 0
+- name: Filter
+  properties: 0
+- name: Hub
+  properties: 0
+- name: LibrarySection
+  properties: 0
+- name: Lineup-items
+  properties: 5
+- name: Media
+  properties: 0
+- name: MediaContainer
+  properties: 4
+- name: MediaContainerWithArtwork
+  properties: 0
+- name: MediaContainerWithDevice
+  properties: 0
+- name: MediaContainerWithLineup
+  properties: 0
+- name: MediaContainerWithMetadata
+  properties: 0
+- name: MediaContainerWithNestedMetadata
+  properties: 0
+- name: MediaContainerWithPlaylistMetadata
+  properties: 0
+- name: MediaContainerWithSettings
+  properties: 0
+- name: MediaContainerWithSubscription
+  properties: 0
+- name: MediaGrabOperation
+  properties: 0
+- name: MediaSubscription
+  properties: 0
+- name: Metadata
+  properties: 0
+- name: Part
+  properties: 0
+- name: ServerConfiguration
+  properties: 0
+- name: Sort
+  properties: 0
+- name: Stream
+  properties: 0
+- name: Tag
+  properties: 0
+- name: allowSync
+  properties: 0
+- name: art
+  properties: 0
+- name: channel
+  properties: 8
+- name: content
+  properties: 0
+- name: directory
+  properties: 15
+- name: directoryType
+  properties: 3
+  description: 'These represent the types of things found in this library, and for each one, a list of `Filter`
+    and `Sort` objects. These can be used to build rich controls around a grid of media to allow filtering and organizing.
+    Note '
+- name: filter
+  properties: 0
+- name: hub
+  properties: 14
+  relationships:
+  - to: metadata
+    kind: has_many
+    via: Metadata
+- name: image
+  properties: 3
+  description: 'Images such as movie posters and background artwork are represented by Image elements. '
+- name: items
+  properties: 0
+- name: key
+  properties: 0
+- name: librarySection
+  properties: 20
+  relationships:
+  - to: art
+    kind: has_one
+    via: art
+  - to: thumb
+    kind: has_one
+    via: thumb
+  - to: key
+    kind: has_one
+    via: key
+  - to: type
+    kind: has_one
+    via: type
+  - to: title
+    kind: has_one
+    via: title
+  - to: content
+    kind: has_one
+    via: content
+- name: media
+  properties: 18
+  description: '`Media` represents an one or more media files (parts) and is a child of a metadata item. There aren''t
+    necessarily any guaranteed attributes on media elements since the attributes will vary based on the type. The
+    possible'
+  relationships:
+  - to: part
+    kind: has_many
+    via: Part
+- name: mediaContainer
+  properties: 1
+  description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container.
+    Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`). It is also
+    common for a'
+- name: mediaContainerWithArtwork
+  properties: 1
+  relationships:
+  - to: MediaContainer
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithDecision
+  properties: 1
+  description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container.
+    Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`). It is also
+    common for a'
+  relationships:
+  - to: properties-MediaContainer
+    kind: has_one
+    via: MediaContainer
+  - to: metadata
+    kind: has_one
+    via: MediaContainer
+  - to: media
+    kind: has_one
+    via: MediaContainer
+  - to: part
+    kind: has_one
+    via: MediaContainer
+  - to: stream
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithDevice
+  properties: 1
+  relationships:
+  - to: MediaContainer
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithLineup
+  properties: 1
+  relationships:
+  - to: MediaContainer
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithMetadata
+  properties: 1
+  description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container.
+    Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`). It is also
+    common for a'
+  relationships:
+  - to: metadata
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithNestedMetadata
+  properties: 1
+  relationships:
+  - to: MediaContainer
+    kind: has_one
+    via: MediaContainer
+  - to: metadata
+    kind: has_one
+    via: MediaContainer
+  - to: items
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithPlaylistMetadata
+  properties: 1
+  relationships:
+  - to: properties-MediaContainer
+    kind: has_one
+    via: MediaContainer
+  - to: metadata
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithSettings
+  properties: 1
+  relationships:
+  - to: MediaContainer
+    kind: has_one
+    via: MediaContainer
+- name: mediaContainerWithStatus_properties-MediaContainer
+  properties: 0
+- name: mediaContainerWithSubscription
+  properties: 1
+  relationships:
+  - to: MediaContainer
+    kind: has_one
+    via: MediaContainer
+  - to: mediaSubscription
+    kind: has_one
+    via: MediaContainer
+- name: mediaGrabOperation
+  properties: 11
+  description: 'A media grab opration represents a scheduled or active recording of media '
+  relationships:
+  - to: metadata
+    kind: has_one
+    via: Metadata
+- name: mediaSubscription
+  properties: 16
+  description: 'A media subscription contains a representation of metadata desired to be recorded '
+  relationships:
+  - to: mediaGrabOperation
+    kind: has_many
+    via: MediaGrabOperation
+- name: metadata
+  properties: 67
+  description: Items in a library are referred to as "metadata items." These metadata items are distinct from "media
+    items" which represent actual instances of media that can be consumed. Consider a TV library that has a single
+    video f
+  relationships:
+  - to: media
+    kind: has_many
+    via: Media
+  - to: image
+    kind: has_many
+    via: Image
+  - to: tag
+    kind: has_many
+    via: Genre
+  - to: tag
+    kind: has_many
+    via: Country
+  - to: tag
+    kind: has_many
+    via: Guid
+  - to: tag
+    kind: has_many
+    via: Rating
+  - to: tag
+    kind: has_many
+    via: Director
+  - to: tag
+    kind: has_many
+    via: Writer
+  - to: tag
+    kind: has_many
+    via: Role
+  - to: tag
+    kind: has_many
+    via: Autotag
+  - to: filter
+    kind: has_many
+    via: Filter
+  - to: sort
+    kind: has_many
+    via: Sort
+- name: metadataAgentProvider
+  properties: 7
+  description: 'Describes a MetadataAgentProvider object. '
+- name: metadataAgentProviderGroup
+  properties: 4
+  description: 'An item that describes a group of MetadataAgentProviderGroupItem objects. '
+  relationships:
+  - to: metadataAgentProviderGroupItem
+    kind: has_many
+    via: MetadataAgentGroupItem
+- name: metadataAgentProviderGroupItem
+  properties: 4
+  description: 'Sub-items of a MetadataAgentProviderGroup object. They represent specific MetadataAgentProvider
+    objects. '
+- name: part
+  properties: 11
+  description: '`Part` represents a particular file or "part" of a media item. The part is the playable unit of
+    the media hierarchy. Suppose that a movie library contains a movie that is broken up into files, reminiscent
+    of a movie spli'
+  relationships:
+  - to: stream
+    kind: has_many
+    via: Stream
+- name: properties-MediaContainer
+  properties: 5
+  relationships:
+  - to: metadata
+    kind: has_many
+    via: Metadata
+- name: serverConfiguration
+  properties: 0
+- name: sort
+  properties: 0
+- name: stream
+  properties: 29
+  description: '`Stream` represents a particular stream from a media item, such as the video stream, audio stream,
+    or subtitle stream. The stream may either be part of the file represented by the parent `Part` or, especially
+    for subtitl'
+- name: tag
+  properties: 10
+  description: A variety of extra information about a metadata item is included as tags. These tags use their own
+    element names such as `Genre`, `Writer`, `Directory`, and `Role`. Individual tag types may introduce their own
+    extra attr
+- name: thumb
+  properties: 0
+- name: title
+  properties: 0
+- name: type
+  properties: 0

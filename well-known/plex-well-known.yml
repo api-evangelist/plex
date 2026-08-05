@@ -1,0 +1,76 @@
+generated: '2026-08-05'
+method: searched
+source: live probes of the /.well-known/ surface on every Plex host in apis.yml
+hosts_probed:
+- https://plex.tv
+- https://www.plex.tv
+- https://developer.plex.tv
+- https://plexapi.dev
+documents:
+- host: https://plex.tv
+  path: /.well-known/security.txt
+  standard: RFC 9116
+  status: 200
+  content_type: text/plain
+  file: plex-security.txt
+- host: https://plex.tv
+  path: /.well-known/openid-configuration
+  standard: OpenID Connect Discovery 1.0
+  status: 200
+  content_type: application/json
+  file: plex-openid-configuration.json
+  note: Discovery document is scoped to the Plex MCP server — issuer https://plex.tv,
+    authorization endpoint /admin/mcp/authorize, single scope "mcp".
+- host: https://plex.tv
+  path: /.well-known/oauth-authorization-server
+  standard: RFC 8414
+  status: 200
+  content_type: application/json
+  file: plex-oauth-authorization-server.json
+- host: https://plex.tv
+  path: /.well-known/oauth-protected-resource
+  standard: RFC 9728
+  status: 200
+  content_type: application/json
+  file: plex-oauth-protected-resource.json
+  note: Names https://plex.tv/internal/mcp as the protected resource.
+- host: https://plex.tv
+  path: /api/v2/auth/keys
+  standard: RFC 7517 (JWKS)
+  status: 200
+  content_type: application/json
+  file: plex-jwks.json
+  note: Not a /.well-known/ path — jwks_uri published by the OIDC discovery document.
+    Ed25519 / EdDSA signing key.
+- host: https://plex.tv
+  path: /.well-known/api-catalog
+  standard: RFC 9727
+  status: 404
+- host: https://plex.tv
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://plex.tv
+  path: /.well-known/agent-card.json
+  standard: A2A 1.0.0
+  status: 404
+- host: https://plex.tv
+  path: /.well-known/agent.json
+  standard: A2A pre-0.3 legacy
+  status: 404
+- host: https://www.plex.tv
+  path: /.well-known/security.txt
+  status: 404
+  note: The www host answers 404 with the marketing SPA shell; the canonical
+    security.txt lives on the apex plex.tv host.
+- host: https://www.plex.tv
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://developer.plex.tv
+  path: /.well-known/agent-card.json
+  status: 404
+x-notes:
+- 'An A2A agent card DOES answer 200 at https://plexapi.dev/.well-known/agent-card.json,
+  but plexapi.dev is a community-run documentation site — the card names its own
+  provider organization as "PlexAPI.dev Documentation", not Plex, Inc. It is
+  therefore NOT recorded as a Plex agent card. Plex publishes no agent card on any
+  host it operates.'

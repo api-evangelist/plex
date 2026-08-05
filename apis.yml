@@ -1,23 +1,197 @@
 aid: plex
 name: Plex
-description: 'Plex is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Plex, Inc. is a personal-media and streaming company whose Plex Media
+  Server organizes, transcodes and streams a user''s own movies, TV, music and photos
+  to Plex client apps on virtually every platform, alongside a free ad-supported live
+  TV and on-demand catalog, Discover, Rentals, the Plexamp music player and the paid
+  Plex Pass tier. In September 2025 Plex published official documentation for the
+  Plex Media Server HTTP API for the first time — an OpenAPI 3.1 contract covering
+  libraries, metadata, playlists, play queues, sessions, DVR/Live TV, transcoding
+  and server administration — together with a new public-key JWT authentication flow
+  on plex.tv, Plex Pass webhooks, and an OAuth-protected remote MCP server for agents.'
+image: https://www.plex.tv/wp-content/themes/plex/assets/img/plex-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment
 specificationVersion: '0.20'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
 - Company
-apis: []
+- Media
+- Streaming
+- Video
+- Music
+- Media Server
+- Entertainment
+- Self-Hosted
+- Personal Media
+- Home Automation
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: plex:plex-media-server-api
+  name: Plex Media Server API
+  description: 'The official HTTP API exposed by every Plex Media Server. Version
+    1.2.2 of the published contract describes 258 operations across 205 paths — library
+    sections and items, metadata and artwork, playlists, collections, play queues,
+    playback sessions and history, activities, butler maintenance tasks, preferences,
+    the download queue, transcoding decisions, DVR/EPG/Live TV, and the notification
+    WebSocket and EventSource streams. Responses are XML by default and JSON when
+    an Accept: application/json header is sent.'
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  x-baseURL-note: 'Plex Media Server is self-hosted. The OpenAPI servers[] entry is
+    a templated URL — https://{IP-description}.{identifier}.plex.direct:{port} — where
+    the host encodes the server''s IP address and machine identifier under Plex''s
+    wildcard TLS domain plex.direct. The value above is that template resolved with
+    the spec''s own default variables.'
+  tags:
+  - Media Server
+  - Library
+  - Metadata
+  - Playlists
+  - Live TV
+  - DVR
+  - Transcoding
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-media-server-openapi.json
+  - type: Overlay
+    url: overlays/plex-media-server-overlay.yaml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-account-api
+  name: Plex Account and Authentication API
+  description: 'The plex.tv cloud API that issues and refreshes the credentials every
+    Plex Media Server call depends on: PIN-based device linking, JWK public-key registration,
+    nonce issuance, device-JWT exchange for a 7-day Plex JWT, and the published JWKS.
+    Legacy long-lived X-Plex-Token authentication is still supported.'
+  humanURL: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
+  baseURL: https://clients.plex.tv/api/v2
+  tags:
+  - Authentication
+  - OAuth
+  - JWT
+  - Identity
+  properties:
+  - type: Authentication
+    url: authentication/plex-authentication.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
+- aid: plex:plex-mcp-server
+  name: Plex MCP Server
+  description: 'A first-party remote Model Context Protocol server operated by Plex
+    at https://plex.tv/internal/mcp. It advertises RFC 9728 protected-resource metadata,
+    RFC 8414 authorization-server metadata and OpenID Connect discovery from plex.tv,
+    uses OAuth 2.1 authorization-code with PKCE (S256) and dynamic client registration,
+    and requires the single scope "mcp". An anonymous tools/list call returns a JSON-RPC
+    Unauthorized error, so the live tool schemas require authenticated introspection.'
+  humanURL: https://plex.tv/.well-known/oauth-protected-resource
+  baseURL: https://plex.tv/internal/mcp
+  tags:
+  - MCP
+  - Agents
+  - OAuth
+  properties:
+  - type: MCPServer
+    url: mcp/plex-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/plex-tool-crosswalk.yml
+  - type: OAuthScopes
+    url: scopes/plex-scopes.yml
 common:
 - type: Website
-  url: https://forgeglobal.com/plex-systems_stock/
+  url: https://www.plex.tv/
+- type: DeveloperPortal
+  url: https://developer.plex.tv/
+- type: Documentation
+  url: https://developer.plex.tv/pms/
+- type: APIReference
+  url: https://developer.plex.tv/pms/
+- type: GettingStarted
+  url: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
+- type: Support
+  url: https://support.plex.tv/
+- type: HelpCenter
+  url: https://support.plex.tv/
+- type: Community
+  url: https://forums.plex.tv/
+- type: Blog
+  url: https://www.plex.tv/blog/
+- type: GitHubOrganization
+  url: https://github.com/plexinc
+- type: Pricing
+  url: https://www.plex.tv/plans/
+- type: SignUp
+  url: https://www.plex.tv/sign-up/
+- type: Login
+  url: https://app.plex.tv/
+- type: TermsOfService
+  url: https://www.plex.tv/about/privacy-legal/plex-terms-of-service/
+- type: PrivacyPolicy
+  url: https://www.plex.tv/about/privacy-legal/
+- type: StatusPage
+  url: https://status.plex.tv/
+- type: Downloads
+  url: https://www.plex.tv/media-server-downloads/
+- type: SecondaryMarket
+  url: https://forgeglobal.com/plex_stock/
+- type: OpenAPI
+  url: openapi/plex-media-server-openapi.json
+- type: Overlay
+  url: overlays/plex-media-server-overlay.yaml
+- type: Authentication
+  url: authentication/plex-authentication.yml
+- type: OAuthScopes
+  url: scopes/plex-scopes.yml
+- type: WellKnown
+  url: well-known/plex-well-known.yml
+- type: SecurityTxt
+  url: well-known/plex-security.txt
+- type: Security
+  url: https://support.plex.tv/articles/reporting-security-issues/
+- type: VulnerabilityDisclosure
+  url: security/plex-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/plex-domain-security.yml
+- type: MCPServer
+  url: mcp/plex-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/plex-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/plex-llms.txt
+- type: Conformance
+  url: conformance/plex-conformance.yml
+- type: ErrorCatalog
+  url: errors/plex-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/plex-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/plex-lifecycle.yml
+- type: Conventions
+  url: conventions/plex-conventions.yml
+- type: ChangeLog
+  url: changelog/plex-changelog.yml
+- type: DataModel
+  url: data-model/plex-data-model.yml
+- type: Webhooks
+  url: asyncapi/plex-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/plex-packages.yml
+- type: AgenticAccess
+  url: agentic-access/plex-agentic-access.yml
+x-enrichment:
+  date: '2026-08-05'
+  status: enriched
+  artifacts_added: 30
+  pass: local-v1

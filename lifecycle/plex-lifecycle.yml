@@ -1,0 +1,72 @@
+generated: '2026-08-05'
+method: searched
+source: https://developer.plex.tv/pms/#section/API-Info/API-Versioning
+versioning:
+  scheme: request-header
+  header: X-Plex-Pms-Api-Version
+  current: 1.2.2
+  first_published: '1.0.0'
+  default_when_absent: '0.0'
+  docs: https://developer.plex.tv/pms/#section/API-Info/API-Versioning
+  policy: 'PMS used no API versioning before this document existed. The first published
+    API is considered 1.0 and everything prior 0.0. A client declares the version it
+    expects via the X-Plex-Pms-Api-Version header; when no header is sent, 0.0 is
+    assumed. Each API version is tied to a minimum Plex Media Server build.'
+  version_to_server_build:
+  - api: 1.0.0
+    requires: PMS >= 1.41.9
+  - api: 1.1.0
+    requires: PMS >= 1.42.0
+  - api: 1.1.1
+    requires: PMS >= 1.42.2
+  - api: 1.2.0
+    requires: PMS >= 1.43.0
+  - api: 1.2.1
+    requires: PMS >= 1.43.1
+  - api: 1.2.2
+    requires: PMS >= 1.43.2
+deprecation:
+  policy_url: https://developer.plex.tv/pms/#section/API-Info/API-Versioning
+  policy: 'Breaking changes are gated behind the X-Plex-Pms-Api-Version header rather
+    than announced as deprecations. Clients that do not send the header keep the
+    unversioned 0.0 behaviour, which is how the September 2025 rename of
+    includeFields to includeOptionalFields was shipped without breaking existing
+    integrations. Plex publishes no dated deprecation calendar, no sunset window,
+    and does not emit RFC 8594 Deprecation or Sunset response headers.'
+  sunset_header: false
+  deprecation_header: false
+  breaking_changes_observed:
+  - api: 1.0.0
+    change: The includeFields parameter was renamed to includeOptionalFields.
+      includeFields now means "include only these fields" where it previously meant
+      "add these fields you would not normally include". Changed for consistency
+      with the cloud provider API.
+  - api: 1.1.0
+    change: types in /playlists/{playlistId}/items changed to an array of integers.
+deprecated_operations: []
+deprecated_operations_note: No operation in the 258-operation OpenAPI carries
+  deprecated -> true.
+support_lifecycle:
+  server_releases: https://www.plex.tv/media-server-downloads/
+  forum_category: https://forums.plex.tv/c/plex-media-server/114
+  note: The API version a server speaks is a function of the Plex Media Server build
+    the operator has installed. Because PMS is self-hosted, the deployed version
+    surface is fragmented across the installed base rather than controlled by Plex.
+sla:
+  url: null
+  uptime_target: null
+  note: Plex publishes no SLA. Plex Media Server is self-hosted; the plex.tv cloud
+    services it depends on (authentication, discovery, relay, Live TV, Discover) are
+    covered by the status page but carry no published availability commitment.
+status_page: https://status.plex.tv/
+status_page_platform: Atlassian Statuspage
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://developer.plex.tv/pms/
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://status.plex.tv/
+  http_status: 200
+- fetched: '2026-08-05'
+  url: https://www.plex.tv/media-server-downloads/
+  http_status: 200

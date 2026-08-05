@@ -1,0 +1,68 @@
+generated: '2026-08-05'
+method: searched
+status: published
+source: https://plex.tv/.well-known/oauth-protected-resource
+server:
+  name: plex
+  transport: http
+  url: https://plex.tv/internal/mcp
+  operator: Plex, Inc.
+  first_party: true
+discovery:
+  oauth_protected_resource: https://plex.tv/.well-known/oauth-protected-resource
+  oauth_authorization_server: https://plex.tv/.well-known/oauth-authorization-server
+  openid_configuration: https://plex.tv/.well-known/openid-configuration
+  jwks_uri: https://plex.tv/api/v2/auth/keys
+authorization:
+  model: OAuth 2.1 authorization code + PKCE
+  issuer: https://plex.tv
+  authorization_endpoint: https://plex.tv/admin/mcp/authorize
+  token_endpoint: https://plex.tv/internal/mcp/oauth/token
+  registration_endpoint: https://plex.tv/internal/mcp/oauth/register
+  revocation_endpoint: https://plex.tv/internal/mcp/oauth/revoke
+  dynamic_client_registration: true
+  code_challenge_methods:
+  - S256
+  grant_types:
+  - authorization_code
+  - refresh_token
+  token_endpoint_auth_methods:
+  - none
+  bearer_methods_supported:
+  - header
+  scopes:
+  - mcp
+  id_token_signing_alg:
+  - EdDSA
+tools:
+  status: auth-gated
+  count: null
+  note: An anonymous POST of {"jsonrpc":"2.0","id":1,"method":"tools/list"} to
+    https://plex.tv/internal/mcp returns HTTP 401 with
+    www-authenticate Bearer realm="MCP", resource_metadata=".../.well-known/oauth-protected-resource",
+    scope="mcp" and a JSON-RPC body {"error":{"code":-32000,"message":"Unauthorized"}}.
+    The live tool names and inputSchemas therefore require an authenticated
+    introspection. Plex publishes no tool list in documentation, so none is
+    recorded here — see mcp/plex-tool-crosswalk.yml.
+x-evidence:
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/oauth-protected-resource
+  http_status: 200
+  content_type: application/json
+- fetched: '2026-08-05'
+  url: https://plex.tv/.well-known/oauth-authorization-server
+  http_status: 200
+  content_type: application/json
+- fetched: '2026-08-05'
+  url: https://plex.tv/internal/mcp
+  method: POST tools/list
+  http_status: 401
+  content_type: application/json
+  www_authenticate: Bearer realm="MCP", resource_metadata="https://plex.tv/.well-known/oauth-protected-resource",
+    scope="mcp"
+x-notes:
+- The MCP server is the only Plex surface that carries OAuth/OIDC discovery. The
+  Plex Media Server HTTP API and the plex.tv account API both authenticate with the
+  X-Plex-Token header (legacy token or 7-day JWT), not with these OAuth endpoints.
+- Numerous third-party Plex MCP servers exist on npm/PyPI and in MCP registries.
+  None are operated by Plex and none are recorded here.
