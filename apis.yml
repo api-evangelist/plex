@@ -35,45 +35,12 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: plex:plex-media-server-api
-  name: Plex Media Server API
-  description: 'The official HTTP API exposed by every Plex Media Server. Version
-    1.2.2 of the published contract describes 258 operations across 205 paths — library
-    sections and items, metadata and artwork, playlists, collections, play queues,
-    playback sessions and history, activities, butler maintenance tasks, preferences,
-    the download queue, transcoding decisions, DVR/EPG/Live TV, and the notification
-    WebSocket and EventSource streams. Responses are XML by default and JSON when
-    an Accept: application/json header is sent.'
-  humanURL: https://developer.plex.tv/pms/
-  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
-  x-baseURL-note: 'Plex Media Server is self-hosted. The OpenAPI servers[] entry is
-    a templated URL — https://{IP-description}.{identifier}.plex.direct:{port} — where
-    the host encodes the server''s IP address and machine identifier under Plex''s
-    wildcard TLS domain plex.direct. The value above is that template resolved with
-    the spec''s own default variables.'
-  tags:
-  - Media Server
-  - Library
-  - Metadata
-  - Playlists
-  - Live TV
-  - DVR
-  - Transcoding
-  properties:
-  - type: OpenAPI
-    url: openapi/plex-media-server-openapi.json
-  - type: Overlay
-    url: overlays/plex-media-server-overlay.yaml
-  - type: Documentation
-    url: https://developer.plex.tv/pms/
-  - type: APIReference
-    url: https://developer.plex.tv/pms/
 - aid: plex:plex-account-api
   name: Plex Account and Authentication API
-  description: 'The plex.tv cloud API that issues and refreshes the credentials every
-    Plex Media Server call depends on: PIN-based device linking, JWK public-key registration,
-    nonce issuance, device-JWT exchange for a 7-day Plex JWT, and the published JWKS.
-    Legacy long-lived X-Plex-Token authentication is still supported.'
+  description: >-
+    The plex.tv cloud API that issues and refreshes the credentials every Plex Media Server call depends
+    on: PIN-based device linking, JWK public-key registration, nonce issuance, device-JWT exchange for
+    a 7-day Plex JWT, and the published JWKS. Legacy long-lived X-Plex-Token authentication is still supported.
   humanURL: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
   baseURL: https://clients.plex.tv/api/v2
   tags:
@@ -88,12 +55,12 @@ apis:
     url: https://developer.plex.tv/pms/#section/API-Info/Authenticating-with-Plex
 - aid: plex:plex-mcp-server
   name: Plex MCP Server
-  description: 'A first-party remote Model Context Protocol server operated by Plex
-    at https://plex.tv/internal/mcp. It advertises RFC 9728 protected-resource metadata,
-    RFC 8414 authorization-server metadata and OpenID Connect discovery from plex.tv,
-    uses OAuth 2.1 authorization-code with PKCE (S256) and dynamic client registration,
-    and requires the single scope "mcp". An anonymous tools/list call returns a JSON-RPC
-    Unauthorized error, so the live tool schemas require authenticated introspection.'
+  description: >-
+    A first-party remote Model Context Protocol server operated by Plex at https://plex.tv/internal/mcp.
+    It advertises RFC 9728 protected-resource metadata, RFC 8414 authorization-server metadata and OpenID
+    Connect discovery from plex.tv, uses OAuth 2.1 authorization-code with PKCE (S256) and dynamic client
+    registration, and requires the single scope "mcp". An anonymous tools/list call returns a JSON-RPC
+    Unauthorized error, so the live tool schemas require authenticated introspection.
   humanURL: https://plex.tv/.well-known/oauth-protected-resource
   baseURL: https://plex.tv/internal/mcp
   tags:
@@ -107,6 +74,522 @@ apis:
     url: mcp/plex-tool-crosswalk.yml
   - type: OAuthScopes
     url: scopes/plex-scopes.yml
+- aid: plex:plex-activities-api
+  name: Plex Activities API
+  description: >-
+    Activities provide a way to monitor and control asynchronous operations on the server. In order to
+    receive real-time updates for activities, a client would normally subscribe via either EventSource
+    or Websocket endpoints.
+
+
+    Activities are associated with HTTP replies via a special `X-Plex-Activity` header which contains
+    the UUID of the activity.
+
+
+    Activities are optional cancellable. If cancellable, they may be cancelled via the `DELETE` endpoint.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Activities
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-activities-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-butler-api
+  name: Plex Butler API
+  description: >-
+    The butler is responsible for running periodic tasks.  Some tasks run daily, others every few days,
+    and some weekly.  These includes database maintenance, metadata updating, thumbnail generation, media
+    analysis, and other tasks.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Butler
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-butler-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-collections-api
+  name: Plex Collections API
+  description: The Collections API from Plex — 1 operation(s) for collections.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-collections-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-content-api
+  name: Plex Content API
+  description: The actual content of the media provider
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Content
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-content-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-devices-api
+  name: Plex Devices API
+  description: >-
+    Media grabbers provide ways for media to be obtained for a given protocol. The simplest ones are `stream`
+    and `download`. More complex grabbers can have associated devices
+
+
+    Network tuners can present themselves on the network using the Simple Service Discovery Protocol and
+    Plex Media Server will discover them. The following XML is an example of the data returned from SSDP.
+    The `deviceType`, `serviceType`, and `serviceId` values must remain as they are in the example in
+    order for PMS to properly discover the device. Other less-obvious fields are described in the parameters
+    section below.
+
+
+    Example SSDP output
+
+    ```
+
+    <root xmlns="urn:schemas-upnp-org:device-1-0">
+        <specVersion>
+            <major>1</major>
+            <minor>0</minor>
+        </specVersion>
+        <device>
+            <deviceType>urn:plex-tv:device:Media:1</deviceType>
+            <friendlyName>Turing Hopper 3000</friendlyName>
+            <manufacturer>Plex, Inc.</manufacturer>
+            <manufacturerURL>https://plex.tv/</manufacturerURL>
+            <modelDescription>Turing Hopper 3000 Media Grabber</modelDescription>
+            <modelName>Plex Media Grabber</modelName>
+            <modelNumber>1</modelNumber>
+            <modelURL>https://plex.tv</modelURL>
+            <UDN>uuid:42fde8e4-93b6-41e5-8a63-12d848655811</UDN>
+            <serviceList>
+                <service>
+                    <URLBase>http://10.0.0.5:8088</URLBase>
+                    <serviceType>urn:plex-tv:service:MediaGrabber:1</serviceType>
+                    <serviceId>urn:plex-tv:serviceId:MediaGrabber</serviceId>
+                </service>
+            </serviceList>
+        </device>
+    </root>
+
+    ```
+
+      - UDN: (string) A UUID for the device. This should be unique across models of a device at minimum.
+      - URLBase: (string) The base HTTP URL for the device from which all of the other endpoints are hosted.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-devices-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-download-queue-api
+  name: Plex Download Queue API
+  description: The Download Queue API from Plex — 8 operation(s) for download queue.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Download Queue
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-download-queue-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-dvrs-api
+  name: Plex DV Rs API
+  description: >-
+    The DVR provides means to watch and record live TV.  This section of endpoints describes how to setup
+    the DVR itself
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - DVRs
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-dvrs-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-epg-api
+  name: Plex EPG API
+  description: >-
+    The EPG (Electronic Program Guide) is responsible for obtaining metadata for what is airing on each
+    channel and when
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - EPG
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-epg-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-events-api
+  name: Plex Events API
+  description: >-
+    The server can notify clients in real-time of a wide range of events, from library scanning, to preferences
+    being modified, to changes to media, and many other things. This is also the mechanism by which activity
+    progress is reported.
+
+
+    Two protocols for receiving the events are available: EventSource (also known as SSE), and WebSocket.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-events-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-general-api
+  name: Plex General API
+  description: General endpoints for basic PMS operation not specific to any media provider
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - General
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-general-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-hubs-api
+  name: Plex Hubs API
+  description: The hubs within a media provider
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Hubs
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-hubs-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-library-api
+  name: Plex Library API
+  description: >-
+    Library endpoints which are outside of the Media Provider API.  Typically this is manipulation of
+    the library (adding/removing sections, modifying preferences, etc).
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Library
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-library-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-library-collections-api
+  name: Plex Library Collections API
+  description: >-
+    Endpoints for manipulating collections.  In addition to these endpoints, `/library/collections/:collectionId/X`
+    will be rerouted to `/library/metadata/:collectionId/X` and respond to those endpoints as well.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Library Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-library-collections-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-library-playlists-api
+  name: Plex Library Playlists API
+  description: Endpoints for manipulating playlists.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Library Playlists
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-library-playlists-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-live-tv-api
+  name: Plex Live TV API
+  description: LiveTV contains the playback sessions of a channel from a DVR device
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Live TV
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-live-tv-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-log-api
+  name: Plex Log API
+  description: Logging mechanism to allow clients to log to the server
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Log
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-log-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-metadata-agents-api
+  name: Plex Metadata Agents API
+  description: The Metadata Agents API from Plex — 5 operation(s) for metadata agents.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Metadata Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-metadata-agents-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-play-queue-api
+  name: Plex Play Queue API
+  description: "The playqueue feature within a media provider\nA play queue represents the current list\
+    \ of media for playback. Although queues are persisted by the server, they should be regarded by the\
+    \ user as a fairly lightweight, an ephemeral list of items queued up for playback in a session.  There\
+    \ is generally one active queue for each type of media (music, video, photos) that can be added to\
+    \ or destroyed and replaced with a fresh queue.\nPlay Queues has a region, which we refer to in this\
+    \ doc (partially for historical reasons) as \"Up Next\". This region is defined by `playQueueLastAddedItemID`\
+    \ existing on the media container. This follows iTunes' terminology. It is a special region after\
+    \ the currently playing item but before the originally-played items. This enables \"Party Mode\" listening/viewing,\
+    \ where items can be added on-the-fly, and normal queue playback resumed when completed. \nYou can\
+    \ visualize the play queue as a sliding window in the complete list of media queued for playback.\
+    \ This model is important when scaling to larger play queues (e.g. shuffling 40,000 audio tracks).\
+    \ The client only needs visibility into small areas of the queue at any given time, and the server\
+    \ can optimize access in this fashion.\nAll created play queues will have an empty \"Up Next\" area\
+    \ - unless the item is an album and no `key` is provided. In this case the \"Up Next\" area will be\
+    \ populated by the contents of the album. This is to allow queueing of multiple albums - since the\
+    \ 'Add to Up Next' will insert after all the tracks. This means that If you're creating a PQ from\
+    \ an album, you can only shuffle it if you set `key`. This is due to the above implicit queueing of\
+    \ albums when no `key` is provided as well as the current limitation that you cannot shuffle a PQ\
+    \ with an \"Up Next\" area.\nThe play queue window advances as the server receives timeline requests.\
+    \ The client needs to retrieve the play queue as the “now playing” item changes. There is no play\
+    \ queue API to update the playing item."
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Play Queue
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-play-queue-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-playlist-api
+  name: Plex Playlist API
+  description: >-
+    The playlist feature within a media provider
+
+    Playlists are ordered collections of media. They can be dumb (just a list of media) or smart (based
+    on a media query, such as "all albums from 2017"). They can be organized in (optionally nesting) folders.
+
+    Retrieving a playlist, or its items, will trigger a refresh of its metadata. This may cause the duration
+    and number of items to change.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Playlist
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-playlist-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-preferences-api
+  name: Plex Preferences API
+  description: The Preferences API from Plex — 2 operation(s) for preferences.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Preferences
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-preferences-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-provider-api
+  name: Plex Provider API
+  description: >-
+    Media providers are the starting points for the entire Plex Media Server media library API.  It defines
+    the paths for the groups of endpoints.  The `/media/providers` should be the only hard-coded path
+    in clients when accessing the media library.  Non-media library endpoints are outside the scope of
+    the media provider.  See the description in See [the section in API Info](#section/API-Info/Media-Providers)
+    for more information on how to use media providers.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Provider
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-provider-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-rate-api
+  name: Plex Rate API
+  description: The rate feature within a media provider
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Rate
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-rate-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-search-api
+  name: Plex Search API
+  description: The search feature within a media provider
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-search-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-status-api
+  name: Plex Status API
+  description: >-
+    The status endpoints give you information about current playbacks, play history, and even terminating
+    sessions.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Status
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-status-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-subscriptions-api
+  name: Plex Subscriptions API
+  description: >-
+    Subscriptions determine which media will be recorded and the criteria for selecting an airing when
+    multiple are available
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-timeline-api
+  name: Plex Timeline API
+  description: The actions feature within a media provider
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Timeline
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-timeline-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-transcoder-api
+  name: Plex Transcoder API
+  description: The Transcoder API from Plex — 5 operation(s) for transcoder.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Transcoder
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-transcoder-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-ultrablur-api
+  name: Plex Ultra Blur API
+  description: Service provided to compute UltraBlur colors and images.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - UltraBlur
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-ultrablur-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
+- aid: plex:plex-updater-api
+  name: Plex Updater API
+  description: >-
+    This describes the API for searching and applying updates to the Plex Media Server.
+
+    Updates to the status can be observed via the Event API.
+  humanURL: https://developer.plex.tv/pms/
+  baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
+  tags:
+  - Updater
+  properties:
+  - type: OpenAPI
+    url: openapi/plex-updater-api-openapi.yml
+  - type: Documentation
+    url: https://developer.plex.tv/pms/
+  - type: APIReference
+    url: https://developer.plex.tv/pms/
 common:
 - type: Website
   url: https://www.plex.tv/
@@ -145,7 +628,7 @@ common:
 - type: SecondaryMarket
   url: https://forgeglobal.com/plex_stock/
 - type: OpenAPI
-  url: openapi/plex-media-server-openapi.json
+  url: openapi/_original/plex-media-server-openapi.json
 - type: Overlay
   url: overlays/plex-media-server-overlay.yaml
 - type: Authentication
