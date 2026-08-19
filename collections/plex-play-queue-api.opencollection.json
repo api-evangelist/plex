@@ -1,0 +1,317 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Play Queue API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Play Queue",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues",
+            "params": [
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "The content URI for what we're playing."
+              },
+              {
+                "name": "playlistID",
+                "value": "",
+                "type": "query",
+                "description": "the ID of the playlist we're playing."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The type of play queue to create"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "The key of the first item to play, defaults to the first in the play queue."
+              },
+              {
+                "name": "shuffle",
+                "value": "",
+                "type": "query",
+                "description": "Whether to shuffle the playlist, defaults to 0."
+              },
+              {
+                "name": "repeat",
+                "value": "",
+                "type": "query",
+                "description": "If the PQ is bigger than the window, fill any empty space with wraparound items, defaults to 0."
+              },
+              {
+                "name": "continuous",
+                "value": "",
+                "type": "query",
+                "description": "Whether to create a continuous play queue (e.g. from an episode), defaults to 0."
+              },
+              {
+                "name": "extrasPrefixCount",
+                "value": "",
+                "type": "query",
+                "description": "Number of trailers to prepend a movie with not including the pre-roll. If omitted the pre-roll will not be returned in the play queue. When resuming a movie `extrasPrefixCount` should be omitted as a parameter instead of passing 0."
+              },
+              {
+                "name": "recursive",
+                "value": "",
+                "type": "query",
+                "description": "Only applies to queues of type photo, whether to retrieve all descendent photos from an album or section, defaults to 1."
+              },
+              {
+                "name": "onDeck",
+                "value": "",
+                "type": "query",
+                "description": "Only applies to queues of type show or seasons, whether to return a queue that is started on the On Deck episode if one exists. Otherwise begins the play queue on the beginning of the show or season."
+              }
+            ]
+          },
+          "docs": "Makes a new play queue for a device. The source of the playqueue can either be a URI, or a playlist. The response is a media container with the initial items in the queue. Each item in the queue will be a regular item but with `playQueueItemID` - a unique ID since the queue could have repeated items with the same `ratingKey`.\nNote: Either `uri` or `playlistID` must be specified"
+        },
+        {
+          "info": {
+            "name": "Retrieve a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              },
+              {
+                "name": "own",
+                "value": "",
+                "type": "query",
+                "description": "If the server should transfer ownership to the requesting client (used in remote control scenarios)."
+              },
+              {
+                "name": "center",
+                "value": "",
+                "type": "query",
+                "description": "The play queue item ID for the center of the window - this doesn't change the current selected item."
+              },
+              {
+                "name": "window",
+                "value": "",
+                "type": "query",
+                "description": "How many items on each side of the center of the window"
+              },
+              {
+                "name": "includeBefore",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the items before the center (if 0, center is not included either), defaults to 1."
+              },
+              {
+                "name": "includeAfter",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the items after the center (if 0, center is not included either), defaults to 1."
+              }
+            ]
+          },
+          "docs": "Retrieves the play queue, centered at current item. This can be treated as a regular container by play queue-oblivious clients, but they may wish to request a large window onto the queue since they won't know to refresh."
+        },
+        {
+          "info": {
+            "name": "Add a generator or playlist to a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              },
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "The content URI for what we're adding to the queue."
+              },
+              {
+                "name": "playlistID",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the playlist to add to the playQueue."
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Play this item next (defaults to 0 - queueing at the end of manually queued items)."
+              }
+            ]
+          },
+          "docs": "Adds an item to a play queue (e.g. party mode). Increments the version of the play queue. Takes the following parameters (`uri` and `playlistID` are mutually exclusive). Returns the modified play queue."
+        },
+        {
+          "info": {
+            "name": "Clear a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId/items",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              }
+            ]
+          },
+          "docs": "Deletes all items in the play queue, and increases the version of the play queue."
+        },
+        {
+          "info": {
+            "name": "Delete an item from a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId/items/:playQueueItemId",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              },
+              {
+                "name": "playQueueItemId",
+                "value": "",
+                "type": "path",
+                "description": "The play queue item ID to delete."
+              }
+            ]
+          },
+          "docs": "Deletes an item in a play queue. Increments the version of the play queue. Returns the modified play queue."
+        },
+        {
+          "info": {
+            "name": "Move an item in a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId/items/:playQueueItemId/move",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              },
+              {
+                "name": "playQueueItemId",
+                "value": "",
+                "type": "path",
+                "description": "The play queue item ID to delete."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The play queue item ID to insert the new item after. If not present, moves to the beginning."
+              }
+            ]
+          },
+          "docs": "Moves an item in a play queue, and increases the version of the play queue. Returns the modified play queue."
+        },
+        {
+          "info": {
+            "name": "Reset a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId/reset",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              }
+            ]
+          },
+          "docs": "Reset a play queue to the first item being the current item"
+        },
+        {
+          "info": {
+            "name": "Shuffle a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId/shuffle",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              }
+            ]
+          },
+          "docs": "Shuffle a play queue (or reshuffles if already shuffled). The currently selected item is maintained. Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue."
+        },
+        {
+          "info": {
+            "name": "Unshuffle a play queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/playQueues/:playQueueId/unshuffle",
+            "params": [
+              {
+                "name": "playQueueId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the play queue."
+              }
+            ]
+          },
+          "docs": "Unshuffles a play queue and restores \"natural order\". Note that this is currently only supported for play queues *without* an Up Next area. Returns the modified play queue."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

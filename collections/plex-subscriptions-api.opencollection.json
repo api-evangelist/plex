@@ -1,0 +1,261 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Subscriptions API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Cancel an existing grab",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/operations/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the operation."
+              }
+            ]
+          },
+          "docs": "Cancels an existing media grab (recording). It can be used to resolve a conflict which exists for a rolling subscription.\nNote: This cancellation does not persist across a server restart, but neither does a rolling subscription itself."
+        },
+        {
+          "info": {
+            "name": "Get all subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions",
+            "params": [
+              {
+                "name": "includeGrabs",
+                "value": "",
+                "type": "query",
+                "description": "Indicates whether the active grabs should be included as well"
+              },
+              {
+                "name": "includeStorage",
+                "value": "",
+                "type": "query",
+                "description": "Compute the storage of recorded items desired by this subscription"
+              }
+            ]
+          },
+          "docs": "Get all subscriptions and potentially the grabs too"
+        },
+        {
+          "info": {
+            "name": "Create a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions",
+            "params": [
+              {
+                "name": "targetLibrarySectionID",
+                "value": "1",
+                "type": "query",
+                "description": "The library section into which we'll grab the media.  Not actually required when the subscription is to a playlist."
+              },
+              {
+                "name": "targetSectionLocationID",
+                "value": "3",
+                "type": "query",
+                "description": "The section location into which to grab."
+              },
+              {
+                "name": "type",
+                "value": "2",
+                "type": "query",
+                "description": "The type of the thing we're subscribing too (e.g. show, season)."
+              },
+              {
+                "name": "hints",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Hints describing what we're looking for.  Note: The hint `ratingKey` is required for downloading from a PMS remote."
+              },
+              {
+                "name": "prefs",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Subscription preferences."
+              },
+              {
+                "name": "params",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Subscription parameters.\n  - `mediaProviderID`: Required for downloads to indicate which MP the subscription will download into\n  - `source`: Required for downloads to indicate the source of the downloaded content.\n"
+              }
+            ]
+          },
+          "docs": "Create a subscription.  The query parameters should be mostly derived from the [template](#tag/Subscriptions/operation/mediaSubscriptionsGetTemplate)"
+        },
+        {
+          "info": {
+            "name": "Process all subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions/process"
+          },
+          "docs": "Process all subscriptions asynchronously"
+        },
+        {
+          "info": {
+            "name": "Get a single subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "includeGrabs",
+                "value": "",
+                "type": "query",
+                "description": "Indicates whether the active grabs should be included as well"
+              },
+              {
+                "name": "includeStorage",
+                "value": "",
+                "type": "query",
+                "description": "Compute the storage of recorded items desired by this subscription"
+              }
+            ]
+          },
+          "docs": "Get a single subscription and potentially the grabs too"
+        },
+        {
+          "info": {
+            "name": "Edit a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "prefs",
+                "value": "[object Object]",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Edit a subscription's preferences"
+        },
+        {
+          "info": {
+            "name": "Delete a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a subscription, cancelling all of its grabs as well"
+        },
+        {
+          "info": {
+            "name": "Re-order a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions/:subscriptionId/move",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The subscription to move this sub after.  If missing will insert at the beginning of the list"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Re-order a subscription to change its priority"
+        },
+        {
+          "info": {
+            "name": "Get all scheduled recordings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions/scheduled"
+          },
+          "docs": "Get all scheduled recordings across all subscriptions"
+        },
+        {
+          "info": {
+            "name": "Get the subscription template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/subscriptions/template",
+            "params": [
+              {
+                "name": "guid",
+                "value": "plex://episode/5fc70265c40548002d539d23",
+                "type": "query",
+                "description": "The guid of the item for which to get the template"
+              }
+            ]
+          },
+          "docs": "Get the templates for a piece of media which could include fetching one airing, season, the whole show, etc."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Search API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/search",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query term"
+              },
+              {
+                "name": "sectionId",
+                "value": "1",
+                "type": "query",
+                "description": "This gives context to the search, and can result in re-ordering of search result hubs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per hub.  3 if not specified"
+              }
+            ]
+          },
+          "docs": "Perform a search and get the result as hubs\n\nThis endpoint performs a search across all library sections, or a single section, and returns matches as hubs, split up by type. It performs spell checking, looks for partial matches, and orders the hubs based on quality of results. In addition, based on matches, it will return other related matches (e.g. for a genre match, it may return movies in that genre, or for an actor match, movies with that actor).\n\nIn the response's items, the following extra"
+        },
+        {
+          "info": {
+            "name": "Voice Search Hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/search/voice",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The query term"
+              },
+              {
+                "name": "type",
+                "value": "8",
+                "type": "query",
+                "description": "The type of thing to limit the search to."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return per hub.  3 if not specified"
+              }
+            ]
+          },
+          "docs": "Perform a search tailored to voice input and get the result as hubs\n\nThis endpoint performs a search specifically tailored towards voice or other imprecise input which may work badly with the substring and spell-checking heuristics used by the `/hubs/search` endpoint. It uses a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) heuristic to search titles, and as such is much slower than the other search endpoint. Whenever possible, clients should limit the search to the a"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

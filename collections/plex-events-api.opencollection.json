@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Events API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connect to Eventsource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/eventsource/notifications",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:\n\n- `filters=-log`: All event types except logs (the default).\n- `filters=foo,bar`: Only the foo and bar event types.\n- `filters=`: All events types.\n- `filters=-foo,bar`: All event types except foo and bar.\n"
+              }
+            ]
+          },
+          "docs": "Connect to the event source to get a stream of events"
+        },
+        {
+          "info": {
+            "name": "Connect to WebSocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/websocket/notifications",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "By default, all events except logs are sent. A rich filtering mechanism is provided to allow clients to opt into or out of each event type using the `filters` parameter. For example:\n\n- `filters=-log`: All event types except logs (the default).\n- `filters=foo,bar`: Only the foo and bar event types.\n- `filters=`: All events types.\n- `filters=-foo,bar`: All event types except foo and bar.\n"
+              }
+            ]
+          },
+          "docs": "Connect to the web socket to get a stream of events"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

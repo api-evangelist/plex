@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server General API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "General",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get PMS info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/"
+          },
+          "docs": "Information about this PMS setup and configuration"
+        },
+        {
+          "info": {
+            "name": "Get PMS identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/identity"
+          },
+          "docs": "Get details about this PMS's identity"
+        },
+        {
+          "info": {
+            "name": "Get Source Connection Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/security/resources",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "The source identifier with an included prefix."
+              },
+              {
+                "name": "refresh",
+                "value": "",
+                "type": "query",
+                "description": "Force refresh"
+              }
+            ]
+          },
+          "docs": "If a caller requires connection details and a transient token for a source that is known to the server, for example a cloud media provider or shared PMS, then this endpoint can be called. This endpoint is only accessible with either an admin token or a valid transient token generated from an admin token."
+        },
+        {
+          "info": {
+            "name": "Get Transient Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/security/token",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The value `delegation` is the only supported `type` parameter."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "The value `all` is the only supported `scope` parameter."
+              }
+            ]
+          },
+          "docs": "This endpoint provides the caller with a temporary token with the same access level as the caller's token. These tokens are valid for up to 48 hours and are destroyed if the server instance is restarted.\nNote: This endpoint responds to all HTTP verbs but POST in preferred"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

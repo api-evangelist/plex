@@ -1,0 +1,466 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Hubs API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Hubs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get global hubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs",
+            "params": [
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entries to count items"
+              },
+              {
+                "name": "onlyTransient",
+                "value": "",
+                "type": "query",
+                "description": "Only return hubs which are \"transient\", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "If provided, limit to only specified hubs"
+              }
+            ]
+          },
+          "docs": "Get the global hubs in this PMS"
+        },
+        {
+          "info": {
+            "name": "Get a hub's items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/items",
+            "params": [
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entry to count items"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "If provided, limit to only specified hubs"
+              }
+            ]
+          },
+          "docs": "Get the items within a single hub specified by identifier"
+        },
+        {
+          "info": {
+            "name": "Get the continue watching hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/continueWatching",
+            "params": [
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entry to count items"
+              }
+            ]
+          },
+          "docs": "Get the global continue watching hub"
+        },
+        {
+          "info": {
+            "name": "Get the hubs which are promoted",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/promoted",
+            "params": [
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entry to count items"
+              }
+            ]
+          },
+          "docs": "Get the global hubs which are promoted (should be displayed on the home screen)"
+        },
+        {
+          "info": {
+            "name": "Get hubs for a section by metadata item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/metadata/:metadataId",
+            "params": [
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "The metadata ID for the hubs to fetch"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entries to count items"
+              },
+              {
+                "name": "onlyTransient",
+                "value": "",
+                "type": "query",
+                "description": "Only return hubs which are \"transient\", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)"
+              }
+            ]
+          },
+          "docs": "Get the hubs for a section by metadata item.  Currently only for music sections"
+        },
+        {
+          "info": {
+            "name": "Get related hubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/metadata/:metadataId/related",
+            "params": [
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "The metadata ID for the hubs to fetch"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entries to count items"
+              },
+              {
+                "name": "onlyTransient",
+                "value": "",
+                "type": "query",
+                "description": "Only return hubs which are \"transient\", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)"
+              }
+            ]
+          },
+          "docs": "Get the hubs for a metadata related to the provided metadata item"
+        },
+        {
+          "info": {
+            "name": "Get postplay hubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/metadata/:metadataId/postplay",
+            "params": [
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "The metadata ID for the hubs to fetch"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entries to count items"
+              },
+              {
+                "name": "onlyTransient",
+                "value": "",
+                "type": "query",
+                "description": "Only return hubs which are \"transient\", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)"
+              }
+            ]
+          },
+          "docs": "Get the hubs for a metadata to be displayed in post play"
+        },
+        {
+          "info": {
+            "name": "Get section hubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/sections/:sectionId",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The section ID for the hubs to fetch"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Limit hub entries to count items"
+              },
+              {
+                "name": "onlyTransient",
+                "value": "",
+                "type": "query",
+                "description": "Only return hubs which are \"transient\", meaning those which are prone to changing after media playback or addition (e.g. On Deck, or Recently Added)"
+              }
+            ]
+          },
+          "docs": "Get the hubs for a single section"
+        },
+        {
+          "info": {
+            "name": "Get hubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/sections/:sectionId/manage",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The section ID for the hubs to reorder"
+              },
+              {
+                "name": "metadataItemId",
+                "value": "",
+                "type": "query",
+                "description": "Restrict hubs to ones relevant to the provided metadata item"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the list of hubs including both built-in and custom"
+        },
+        {
+          "info": {
+            "name": "Create a custom hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/sections/:sectionId/manage",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The section ID for the hubs to reorder"
+              },
+              {
+                "name": "metadataItemId",
+                "value": "",
+                "type": "query",
+                "description": "The metadata item on which to base this hub.  This must currently be a collection"
+              },
+              {
+                "name": "promotedToRecommended",
+                "value": "",
+                "type": "query",
+                "description": "Whether this hub should be displayed in recommended"
+              },
+              {
+                "name": "promotedToOwnHome",
+                "value": "",
+                "type": "query",
+                "description": "Whether this hub should be displayed in admin's home"
+              },
+              {
+                "name": "promotedToSharedHome",
+                "value": "",
+                "type": "query",
+                "description": "Whether this hub should be displayed in shared user's home"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a custom hub based on a metadata item"
+        },
+        {
+          "info": {
+            "name": "Reset hubs to defaults",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/sections/:sectionId/manage",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The section ID for the hubs to reorder"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Reset hubs for this section to defaults and delete custom hubs"
+        },
+        {
+          "info": {
+            "name": "Move Hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/sections/:sectionId/manage/move",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The section ID for the hubs to reorder"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the hub to move"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the hub to order this hub after (or empty/missing to put this hub first)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Changed the ordering of a hub among others hubs"
+        },
+        {
+          "info": {
+            "name": "Change hub visibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/sections/:sectionId/manage/:identifier",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The section ID for the hubs to change"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the hub to change"
+              },
+              {
+                "name": "promotedToRecommended",
+                "value": "",
+                "type": "query",
+                "description": "Whether this hub should be displayed in recommended"
+              },
+              {
+                "name": "promotedToOwnHome",
+                "value": "",
+                "type": "query",
+                "description": "Whether this hub should be displayed in admin's home"
+              },
+              {
+                "name": "promotedToSharedHome",
+                "value": "",
+                "type": "query",
+                "description": "Whether this hub should be displayed in shared user's home"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Changed the visibility of a hub for both the admin and shared users"
+        },
+        {
+          "info": {
+            "name": "Delete a custom hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/hubs/sections/:sectionId/manage/:identifier",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The section ID for the hubs to change"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the hub to change"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a custom hub from the server"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

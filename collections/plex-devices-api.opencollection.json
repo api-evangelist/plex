@@ -1,0 +1,353 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Devices API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available grabbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers",
+            "params": [
+              {
+                "name": "protocol",
+                "value": "livetv",
+                "type": "query",
+                "description": "Only return grabbers providing this protocol."
+              }
+            ]
+          },
+          "docs": "Get available grabbers visible to the server"
+        },
+        {
+          "info": {
+            "name": "Get all devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the list of all devices present"
+        },
+        {
+          "info": {
+            "name": "Add a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices",
+            "params": [
+              {
+                "name": "uri",
+                "value": "http://10.0.0.5",
+                "type": "query",
+                "description": "The URI of the device."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint adds a device to an existing grabber. The device is identified, and added to the correct grabber."
+        },
+        {
+          "info": {
+            "name": "Tell grabbers to discover devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/discover",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Tell grabbers to discover devices"
+        },
+        {
+          "info": {
+            "name": "Get device details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a device's details by its id"
+        },
+        {
+          "info": {
+            "name": "Enable or disable a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              },
+              {
+                "name": "enabled",
+                "value": "",
+                "type": "query",
+                "description": "Whether to enable the device"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Enable or disable a device by its id"
+        },
+        {
+          "info": {
+            "name": "Remove a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove a devices by its id along with its channel mappings"
+        },
+        {
+          "info": {
+            "name": "Set a device's channel mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId/channelmap",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              },
+              {
+                "name": "channelMapping",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "The mapping of changes, passed as a map of device channel to lineup VCN."
+              },
+              {
+                "name": "channelMappingByKey",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "The mapping of changes, passed as a map of device channel to lineup key."
+              },
+              {
+                "name": "channelsEnabled",
+                "value": "46.1,44.1,45.1",
+                "type": "query",
+                "description": "The channels which are enabled."
+              }
+            ]
+          },
+          "docs": "Set a device's channel mapping"
+        },
+        {
+          "info": {
+            "name": "Get a device's channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId/channels",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a device's channels by its id"
+        },
+        {
+          "info": {
+            "name": "Set device preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId/prefs",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "The preference names and values."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Set device preferences by its id"
+        },
+        {
+          "info": {
+            "name": "Tell a device to scan for channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId/scan",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              },
+              {
+                "name": "source",
+                "value": "Cable",
+                "type": "query",
+                "description": "A valid source for the scan"
+              }
+            ]
+          },
+          "docs": "Tell a device to scan for channels"
+        },
+        {
+          "info": {
+            "name": "Tell a device to stop scanning for channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId/scan",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              }
+            ]
+          },
+          "docs": "Tell a device to stop scanning for channels"
+        },
+        {
+          "info": {
+            "name": "Get device thumb",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/grabbers/devices/:deviceId/thumb/:version",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the device."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "A version number of the thumb used for busting cache"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a device's thumb for display to the user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

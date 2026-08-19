@@ -1,0 +1,385 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Content API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Content",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a collection's image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/collections/:collectionId/composite/:updatedAt",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection id"
+              },
+              {
+                "name": "updatedAt",
+                "value": "",
+                "type": "path",
+                "description": "The update time of the image.  Used for busting cache."
+              },
+              {
+                "name": "composite",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get an image for the collection based on the items within"
+        },
+        {
+          "info": {
+            "name": "Get items in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/collections/:collectionId/items",
+            "params": [
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection id"
+              }
+            ]
+          },
+          "docs": "Get items in a collection.  Note if this collection contains more than 100 items, paging must be used."
+        },
+        {
+          "info": {
+            "name": "Get a metadata item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/metadata/:ids",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "asyncCheckFiles",
+                "value": "",
+                "type": "query",
+                "description": "Determines if file check should be performed asynchronously.  An activity is created to indicate progress.  Default is false."
+              },
+              {
+                "name": "asyncRefreshLocalMediaAgent",
+                "value": "",
+                "type": "query",
+                "description": "Determines if local media agent refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false."
+              },
+              {
+                "name": "asyncRefreshAnalysis",
+                "value": "",
+                "type": "query",
+                "description": "Determines if analysis refresh should be performed asynchronously.  An activity is created to indicate progress.  Default is false."
+              },
+              {
+                "name": "checkFiles",
+                "value": "",
+                "type": "query",
+                "description": "Determines if file check should be performed synchronously.  Specifying `asyncCheckFiles` will cause this option to be ignored.  Default is false."
+              },
+              {
+                "name": "skipRefresh",
+                "value": "",
+                "type": "query",
+                "description": "Determines if synchronous local media agent and analysis refresh should be skipped.  Specifying async versions will cause synchronous versions to be skipped.  Default is false."
+              },
+              {
+                "name": "checkFileAvailability",
+                "value": "",
+                "type": "query",
+                "description": "Determines if file existence check should be performed synchronously.  Specifying `checkFiles` will imply this option.  Default is false."
+              },
+              {
+                "name": "asyncAugmentMetadata",
+                "value": "",
+                "type": "query",
+                "description": "Add metadata augmentations.  An activity is created to indicate progress.  Option will be ignored if specified by non-admin or if multiple metadata items are requested.  Default is false."
+              },
+              {
+                "name": "augmentCount",
+                "value": "",
+                "type": "query",
+                "description": "Number of augmentations to add.  Requires `asyncAugmentMetadata` to be specified."
+              }
+            ]
+          },
+          "docs": "Get one or more metadata items."
+        },
+        {
+          "info": {
+            "name": "Get items in the section",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/all",
+            "params": [
+              {
+                "name": "mediaQuery",
+                "value": "",
+                "type": "query",
+                "description": "This is a complex query built of several parameters.  See [API Info section](#section/API-Info/Media-Queries) for information on building media queries"
+              },
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the section"
+              }
+            ]
+          },
+          "docs": "Get the items in a section, potentially filtering them"
+        },
+        {
+          "info": {
+            "name": "Set section leaves",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/allLeaves",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              }
+            ]
+          },
+          "docs": "Get all leaves in a section (such as episodes in a show section)"
+        },
+        {
+          "info": {
+            "name": "Set section artwork",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/arts",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              }
+            ]
+          },
+          "docs": "Get artwork for a library section"
+        },
+        {
+          "info": {
+            "name": "Set section albums",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/albums",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              }
+            ]
+          },
+          "docs": "Get all albums in a music section"
+        },
+        {
+          "info": {
+            "name": "Set section categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/categories",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              }
+            ]
+          },
+          "docs": "Get categories in a library section"
+        },
+        {
+          "info": {
+            "name": "Set section clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/cluster",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              }
+            ]
+          },
+          "docs": "Get clusters in a library section (typically for photos)"
+        },
+        {
+          "info": {
+            "name": "Similar tracks to transition from one to another",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/computePath",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              },
+              {
+                "name": "startID",
+                "value": "",
+                "type": "query",
+                "description": "The starting metadata item id"
+              },
+              {
+                "name": "endID",
+                "value": "",
+                "type": "query",
+                "description": "The ending metadata item id"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of items along the path; defaults to 50"
+              },
+              {
+                "name": "maxDistance",
+                "value": "",
+                "type": "query",
+                "description": "The maximum distance allowed along the path; defaults to 0.25"
+              }
+            ]
+          },
+          "docs": "Get a list of audio tracks starting at one and ending at another which are similar across the path"
+        },
+        {
+          "info": {
+            "name": "Get all folder locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/location",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              }
+            ]
+          },
+          "docs": "Get all folder locations of the media in a section"
+        },
+        {
+          "info": {
+            "name": "The nearest audio tracks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/nearest",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The metadata type to fetch (should be 10 for audio track)"
+              },
+              {
+                "name": "values",
+                "value": "",
+                "type": "query",
+                "description": "The music analysis to center the search.  Typically obtained from the `musicAnalysis` of a track"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The limit of the number of items to fetch; defaults to 50"
+              },
+              {
+                "name": "maxDistance",
+                "value": "",
+                "type": "query",
+                "description": "The maximum distance to search, defaults to 0.25"
+              }
+            ]
+          },
+          "docs": "Get the nearest audio tracks to a particular analysis"
+        },
+        {
+          "info": {
+            "name": "Set section moments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/sections/:sectionId/moment",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "path",
+                "description": "Section identifier"
+              }
+            ]
+          },
+          "docs": "Get moments in a library section (typically for photos)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

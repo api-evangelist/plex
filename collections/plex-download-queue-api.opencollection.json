@@ -1,0 +1,415 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Download Queue API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Download Queue",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get or create a download queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue"
+          },
+          "docs": "Available: 0.2.0\n\nGet or create a download queue for this client by its client id and for this user as identified by the token\n"
+        },
+        {
+          "info": {
+            "name": "Get a download queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId",
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              }
+            ]
+          },
+          "docs": "Available: 0.2.0\n\nGet a download queue by its id\n"
+        },
+        {
+          "info": {
+            "name": "Add to download queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId/add",
+            "headers": [
+              {
+                "name": "X-Plex-Client-Identifier",
+                "value": ""
+              },
+              {
+                "name": "X-Plex-Client-Profile-Extra",
+                "value": "add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)"
+              },
+              {
+                "name": "X-Plex-Client-Profile-Name",
+                "value": "generic"
+              },
+              {
+                "name": "X-Plex-Device",
+                "value": "Windows"
+              },
+              {
+                "name": "X-Plex-Model",
+                "value": "standalone"
+              },
+              {
+                "name": "X-Plex-Platform",
+                "value": "Chrome"
+              },
+              {
+                "name": "X-Plex-Platform-Version",
+                "value": "135"
+              },
+              {
+                "name": "X-Plex-Session-Identifier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              },
+              {
+                "name": "keys",
+                "value": "/library/metadata/3,/library/metadata/6",
+                "type": "query",
+                "description": "Keys to add"
+              },
+              {
+                "name": "advancedSubtitles",
+                "value": "burn",
+                "type": "query",
+                "description": "Indicates how  incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost\n"
+              },
+              {
+                "name": "audioBoost",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)"
+              },
+              {
+                "name": "audioChannelCount",
+                "value": "5",
+                "type": "query",
+                "description": "Target video number of audio channels."
+              },
+              {
+                "name": "autoAdjustQuality",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports ABR."
+              },
+              {
+                "name": "autoAdjustSubtitle",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if the server should adjust subtitles based on Voice Activity Data."
+              },
+              {
+                "name": "directPlay",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct playing the indicated content."
+              },
+              {
+                "name": "directStream",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the video of the indicated content."
+              },
+              {
+                "name": "directStreamAudio",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the audio of the indicated content."
+              },
+              {
+                "name": "disableResolutionRotation",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if resolution should be adjusted for orientation."
+              },
+              {
+                "name": "hasMDE",
+                "value": "1",
+                "type": "query",
+                "description": "Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1"
+              },
+              {
+                "name": "location",
+                "value": "wan",
+                "type": "query",
+                "description": "Network type of the client, can be used to help determine target bitrate."
+              },
+              {
+                "name": "mediaBufferSize",
+                "value": "102400",
+                "type": "query",
+                "description": "Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks."
+              },
+              {
+                "name": "mediaIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the media to transcode. -1 or not specified indicates let the server choose."
+              },
+              {
+                "name": "musicBitrate",
+                "value": "5000",
+                "type": "query",
+                "description": "Target bitrate for audio only files (in kbps, used to transcode)."
+              },
+              {
+                "name": "offset",
+                "value": "90.5",
+                "type": "query",
+                "description": "Offset from the start of the media (in seconds)."
+              },
+              {
+                "name": "partIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode"
+              },
+              {
+                "name": "path",
+                "value": "/library/metadata/151671",
+                "type": "query",
+                "description": "Internal PMS path of the media to transcode."
+              },
+              {
+                "name": "peakBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Maximum bitrate (in kbps) to use in ABR."
+              },
+              {
+                "name": "photoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target photo resolution."
+              },
+              {
+                "name": "protocol",
+                "value": "dash",
+                "type": "query",
+                "description": "Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)\n"
+              },
+              {
+                "name": "secondsPerSegment",
+                "value": "5",
+                "type": "query",
+                "description": "Number of seconds to include in each transcoded segment"
+              },
+              {
+                "name": "subtitleSize",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)"
+              },
+              {
+                "name": "subtitles",
+                "value": "Burn",
+                "type": "query",
+                "description": "Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream\n"
+              },
+              {
+                "name": "videoBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Target video bitrate (in kbps)."
+              },
+              {
+                "name": "videoQuality",
+                "value": "50",
+                "type": "query",
+                "description": "Target photo quality."
+              },
+              {
+                "name": "videoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target maximum video resolution."
+              }
+            ]
+          },
+          "docs": "Available: 0.2.0\n\nAdd items to the download queue\n"
+        },
+        {
+          "info": {
+            "name": "Grab download queue media",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId/item/:itemId/media",
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              },
+              {
+                "name": "itemId",
+                "value": "32",
+                "type": "path",
+                "description": "The item ids"
+              }
+            ]
+          },
+          "docs": "Available: 0.2.0\n\nGrab the media for a download queue item\n"
+        },
+        {
+          "info": {
+            "name": "Grab download queue item decision",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId/item/:itemId/decision",
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              },
+              {
+                "name": "itemId",
+                "value": "32",
+                "type": "path",
+                "description": "The item ids"
+              }
+            ]
+          },
+          "docs": "Available: 0.2.0\n\nGrab the decision for a download queue item\n"
+        },
+        {
+          "info": {
+            "name": "Get download queue items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId/items",
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              }
+            ]
+          },
+          "docs": "Available: 0.2.0\n\nGet items from a download queue\n"
+        },
+        {
+          "info": {
+            "name": "Get download queue items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId/items/:itemId",
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              },
+              {
+                "name": "itemId",
+                "value": "32,345,23",
+                "type": "path",
+                "description": "The item ids"
+              }
+            ]
+          },
+          "docs": "Available: 0.2.0\n\nGet items from a download queue\n"
+        },
+        {
+          "info": {
+            "name": "Delete download queue items",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId/items/:itemId",
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              },
+              {
+                "name": "itemId",
+                "value": "32,345,23",
+                "type": "path",
+                "description": "The item id"
+              }
+            ]
+          },
+          "docs": "delete items from a download queue"
+        },
+        {
+          "info": {
+            "name": "Restart processing of items from the decision",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/downloadQueue/:queueId/items/:itemId/restart",
+            "params": [
+              {
+                "name": "queueId",
+                "value": "",
+                "type": "path",
+                "description": "The queue id"
+              },
+              {
+                "name": "itemId",
+                "value": "32,345,23",
+                "type": "path",
+                "description": "The item ids"
+              }
+            ]
+          },
+          "docs": "Available: 0.2.0\n\nReprocess download queue items with previous decision parameters\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

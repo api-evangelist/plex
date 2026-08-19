@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Live TV API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Live TV",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/sessions"
+          },
+          "docs": "Get all livetv sessions and metadata"
+        },
+        {
+          "info": {
+            "name": "Get a single session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/sessions/:sessionId",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "The session id"
+              }
+            ]
+          },
+          "docs": "Get a single livetv session and metadata"
+        },
+        {
+          "info": {
+            "name": "Get a session playlist index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/sessions/:sessionId/:consumerId/index.m3u8",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "The session id"
+              },
+              {
+                "name": "consumerId",
+                "value": "",
+                "type": "path",
+                "description": "The consumer id"
+              }
+            ]
+          },
+          "docs": "Get a playlist index for playing this session"
+        },
+        {
+          "info": {
+            "name": "Get a single session segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/sessions/:sessionId/:consumerId/:segmentId",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "The session id"
+              },
+              {
+                "name": "consumerId",
+                "value": "",
+                "type": "path",
+                "description": "The consumer id"
+              },
+              {
+                "name": "segmentId",
+                "value": "",
+                "type": "path",
+                "description": "The segment id"
+              }
+            ]
+          },
+          "docs": "Get a single livetv session segment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

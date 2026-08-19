@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Status API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/status/sessions",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all current playbacks on this server"
+        },
+        {
+          "info": {
+            "name": "Get background tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/status/sessions/background",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the list of all background tasks"
+        },
+        {
+          "info": {
+            "name": "List Playback History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/status/sessions/history/all",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "query",
+                "description": "The account id to restrict view history"
+              },
+              {
+                "name": "viewedAt",
+                "value": "",
+                "type": "query",
+                "description": "The time period to restrict history (typically of the form `viewedAt>=12456789`)"
+              },
+              {
+                "name": "librarySectionID",
+                "value": "",
+                "type": "query",
+                "description": "The library section id to restrict view history"
+              },
+              {
+                "name": "metadataItemID",
+                "value": "",
+                "type": "query",
+                "description": "The metadata item to restrict view history (can provide the id for a show to see all of that show's view history).  Note this is translated to `metadata_items.id`, `parents.id`, or `grandparents.id` internally depending on the metadata type."
+              },
+              {
+                "name": "sort",
+                "value": "viewedAt:desc,accountID",
+                "type": "query",
+                "description": "The field on which to sort.  Multiple orderings can be specified separated by `,` and the direction specified following a `:` (`desc` or `asc`; `asc` is assumed if not provided).  Note `metadataItemID` may not be used here."
+              }
+            ]
+          },
+          "docs": "List all playback history (Admin can see all users, others can only see their own).\nPagination should be used on this endpoint.  Additionally this endpoint supports `includeFields`, `excludeFields`, `includeElements`, and `excludeElements` parameters."
+        },
+        {
+          "info": {
+            "name": "Get Single History Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/status/sessions/history/:historyId",
+            "params": [
+              {
+                "name": "historyId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the history item (the `historyKey` from above)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a single history item by id"
+        },
+        {
+          "info": {
+            "name": "Delete Single History Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/status/sessions/history/:historyId",
+            "params": [
+              {
+                "name": "historyId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the history item (the `historyKey` from above)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a single history item by id"
+        },
+        {
+          "info": {
+            "name": "Terminate a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/status/sessions/terminate",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "cdefghijklmnopqrstuvwxyz",
+                "type": "query",
+                "description": "The session id (found in the `Session` element in [/status/sessions](#tag/Status/operation/statusGetSlash))"
+              },
+              {
+                "name": "reason",
+                "value": "Stop Playing",
+                "type": "query",
+                "description": "The reason to give to the user (typically displayed in the client)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Terminate a playback session kicking off the user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

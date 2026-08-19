@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Log API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Log",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Logging a multi-line message to the Plex Media Server log",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/log",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint will write multiple lines to the main Plex Media Server log in a single request. It takes a set of query strings as would normally sent to the above PUT endpoint as a linefeed-separated block of POST data. The parameters for each query string match as above.\n"
+        },
+        {
+          "info": {
+            "name": "Logging a single-line message to the Plex Media Server log",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/log",
+            "params": [
+              {
+                "name": "level",
+                "value": "",
+                "type": "query",
+                "description": "An integer log level to write to the PMS log with.\n  - 0: Error\n  - 1: Warning\n  - 2: Info\n  - 3: Debug\n  - 4: Verbose\n"
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "The text of the message to write to the log."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "A string indicating the source of the message."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint will write a single-line log message, including a level and source to the main Plex Media Server log.\n\nNote: This endpoint responds to all HTTP verbs **except POST** but PUT is preferred\n"
+        },
+        {
+          "info": {
+            "name": "Enabling Papertrail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/log/networked",
+            "params": [
+              {
+                "name": "minutes",
+                "value": "",
+                "type": "query",
+                "description": "The number of minutes logging should be sent to Papertrail"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint will enable all Plex Media Serverlogs to be sent to the Papertrail networked logging site for a period of time\n\nNote: This endpoint responds to all HTTP verbs but POST is preferred\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

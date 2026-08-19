@@ -1,0 +1,195 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Timeline API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Timeline",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Mark an item as played",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/scrobble",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "The key of the item to rate.  This is the `ratingKey` found in metadata items"
+              },
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "The URI of the item to mark as played.  See intro for description of the URIs"
+              }
+            ]
+          },
+          "docs": "Mark an item as played.  Note, this does not create any view history of this item but rather just sets the state as played. The client must provide either the `key` or `uri` query parameter\nThis API does respond to the GET verb but applications should use PUT"
+        },
+        {
+          "info": {
+            "name": "Report media timeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/timeline",
+            "headers": [
+              {
+                "name": "X-Plex-Client-Identifier",
+                "value": ""
+              },
+              {
+                "name": "X-Plex-Session-Identifier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "key",
+                "value": "/foo",
+                "type": "query",
+                "description": "The details key for the item."
+              },
+              {
+                "name": "ratingKey",
+                "value": "xyz",
+                "type": "query",
+                "description": "The rating key attribute for the item."
+              },
+              {
+                "name": "state",
+                "value": "playing",
+                "type": "query",
+                "description": "The current state of the media."
+              },
+              {
+                "name": "playQueueItemID",
+                "value": "123",
+                "type": "query",
+                "description": "If playing media from a play queue, the play queue's ID."
+              },
+              {
+                "name": "time",
+                "value": "0",
+                "type": "query",
+                "description": "The current time offset of playback in ms."
+              },
+              {
+                "name": "duration",
+                "value": "10000",
+                "type": "query",
+                "description": "The total duration of the item in ms."
+              },
+              {
+                "name": "continuing",
+                "value": "1",
+                "type": "query",
+                "description": "When state is `stopped`, a flag indicating whether or not the client is going to continue playing anothe item."
+              },
+              {
+                "name": "updated",
+                "value": "14200000",
+                "type": "query",
+                "description": "Used when a sync client comes online and is syncing media timelines, holds the time at which the playback state was last updated."
+              },
+              {
+                "name": "offline",
+                "value": "1",
+                "type": "query",
+                "description": "Also used by sync clients, used to indicate that a timeline is being synced from being offline, as opposed to being \"live\"."
+              },
+              {
+                "name": "timeToFirstFrame",
+                "value": "1000",
+                "type": "query",
+                "description": "Time in seconds till first frame is displayed.  Sent only on the first playing timeline request."
+              },
+              {
+                "name": "timeStalled",
+                "value": "1000",
+                "type": "query",
+                "description": "Time in seconds spent buffering since last request."
+              },
+              {
+                "name": "bandwidth",
+                "value": "100",
+                "type": "query",
+                "description": "Bandwidth in kbps as estimated by the client."
+              },
+              {
+                "name": "bufferedTime",
+                "value": "100",
+                "type": "query",
+                "description": "Amount of time in seconds buffered by client.  Omit if computed by `bufferedSize` below."
+              },
+              {
+                "name": "bufferedSize",
+                "value": "1024",
+                "type": "query",
+                "description": "Size in kilobytes of data buffered by client.  Omit if computed by `bufferedTime` above"
+              }
+            ]
+          },
+          "docs": "This endpoint is hit during media playback for an item. It must be hit whenever the play state changes, or in the absence of a play state change, in a regular fashion (generally this means every 10 seconds on a LAN/WAN, and every 20 seconds over cellular).\n"
+        },
+        {
+          "info": {
+            "name": "Mark an item as unplayed",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/unscrobble",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "The key of the item to rate.  This is the `ratingKey` found in metadata items"
+              },
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "The URI of the item to mark as played.  See intro for description of the URIs"
+              }
+            ]
+          },
+          "docs": "Mark an item as unplayed. The client must provide either the `key` or `uri` query parameter\nThis API does respond to the GET verb but applications should use PUT"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

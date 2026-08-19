@@ -1,0 +1,341 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server EPG API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EPG",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Compute the best channel map",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/channelmap",
+            "params": [
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "The URI describing the device"
+              },
+              {
+                "name": "lineup",
+                "value": "",
+                "type": "query",
+                "description": "The URI describing the lineup"
+              }
+            ]
+          },
+          "docs": "Compute the best channel map, given device and lineup"
+        },
+        {
+          "info": {
+            "name": "Get channels for a lineup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/channels",
+            "params": [
+              {
+                "name": "lineup",
+                "value": "",
+                "type": "query",
+                "description": "The URI describing the lineup"
+              }
+            ]
+          },
+          "docs": "Get channels for a lineup within an EPG provider"
+        },
+        {
+          "info": {
+            "name": "Get all countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/countries"
+          },
+          "docs": "This endpoint returns a list of countries which EPG data is available for. There are three flavors, as specfied by the `flavor` attribute"
+        },
+        {
+          "info": {
+            "name": "Get lineups for a country via postal code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/countries/:country/:epgId/lineups",
+            "params": [
+              {
+                "name": "country",
+                "value": "",
+                "type": "path",
+                "description": "3 letter country code"
+              },
+              {
+                "name": "epgId",
+                "value": "",
+                "type": "path",
+                "description": "The `providerIdentifier` of the provider"
+              },
+              {
+                "name": "postalCode",
+                "value": "",
+                "type": "query",
+                "description": "The postal code for the lineups to fetch"
+              }
+            ]
+          },
+          "docs": "Returns a list of lineups for a given country, EPG provider and postal code"
+        },
+        {
+          "info": {
+            "name": "Get regions for a country",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/countries/:country/:epgId/regions",
+            "params": [
+              {
+                "name": "country",
+                "value": "",
+                "type": "path",
+                "description": "3 letter country code"
+              },
+              {
+                "name": "epgId",
+                "value": "",
+                "type": "path",
+                "description": "The `providerIdentifier` of the provider"
+              }
+            ]
+          },
+          "docs": "Get regions for a country within an EPG provider"
+        },
+        {
+          "info": {
+            "name": "Get lineups for a region",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/countries/:country/:epgId/regions/:region/lineups",
+            "params": [
+              {
+                "name": "country",
+                "value": "",
+                "type": "path",
+                "description": "3 letter country code"
+              },
+              {
+                "name": "epgId",
+                "value": "",
+                "type": "path",
+                "description": "The `providerIdentifier` of the provider"
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "path",
+                "description": "The region for the lineup"
+              }
+            ]
+          },
+          "docs": "Get lineups for a region within an EPG provider"
+        },
+        {
+          "info": {
+            "name": "Get all languages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/languages"
+          },
+          "docs": "Returns a list of all possible languages for EPG data."
+        },
+        {
+          "info": {
+            "name": "Compute the best lineup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/lineup",
+            "params": [
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "The URI describing the device"
+              },
+              {
+                "name": "lineupGroup",
+                "value": "",
+                "type": "query",
+                "description": "The URI describing the lineupGroup"
+              }
+            ]
+          },
+          "docs": "Compute the best lineup, given lineup group and device"
+        },
+        {
+          "info": {
+            "name": "Get the channels for mulitple lineups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/livetv/epg/lineupchannels",
+            "params": [
+              {
+                "name": "lineup",
+                "value": "",
+                "type": "query",
+                "description": "The URIs describing the lineups"
+              }
+            ]
+          },
+          "docs": "Get the channels across multiple lineups"
+        },
+        {
+          "info": {
+            "name": "Get channels for a lineup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/tv.plex.providers.epg.:identifier::deviceId/lineups/dvr/channels",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The device's Identifier"
+              },
+              {
+                "name": "genre",
+                "value": "",
+                "type": "query",
+                "description": "The genre of channels to fetch"
+              },
+              {
+                "name": "identifier",
+                "value": "cloud",
+                "type": "path",
+                "description": "The type of EPG"
+              }
+            ]
+          },
+          "docs": "Get channels for a lineup within an EPG provider"
+        },
+        {
+          "info": {
+            "name": "Get airing information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/tv.plex.providers.epg.:identifier::deviceId/grid",
+            "params": [
+              {
+                "name": "channelGridKey",
+                "value": "",
+                "type": "query",
+                "description": "The key of the channel on which to get airing information"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The date on which to get airing information"
+              },
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The device's Identifier"
+              },
+              {
+                "name": "identifier",
+                "value": "cloud",
+                "type": "path",
+                "description": "The type of EPG"
+              }
+            ]
+          },
+          "docs": "Get the airing information for a given channel on a given day"
+        },
+        {
+          "info": {
+            "name": "Get hubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/tv.plex.providers.epg.:identifier::deviceId/watchnow",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The device's Identifier"
+              },
+              {
+                "name": "identifier",
+                "value": "cloud",
+                "type": "path",
+                "description": "The type of EPG"
+              }
+            ]
+          },
+          "docs": "Get the watchnow hubs for the specified provider"
+        },
+        {
+          "info": {
+            "name": "Get currently airing",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/tv.plex.providers.epg.:identifier::deviceId/watchnow/all",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The device's Identifier"
+              },
+              {
+                "name": "identifier",
+                "value": "cloud",
+                "type": "path",
+                "description": "The type of EPG"
+              }
+            ]
+          },
+          "docs": "Get the information for all currently airing shows on the specified provider"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

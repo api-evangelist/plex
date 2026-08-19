@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Rate API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Rate an item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/rate",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the media provider containing the media to rate.  Typically `com.plexapp.plugins.library`"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "The key of the item to rate.  This is the `ratingKey` found in metadata items"
+              },
+              {
+                "name": "rating",
+                "value": "",
+                "type": "query",
+                "description": "The rating to give the item."
+              },
+              {
+                "name": "ratedAt",
+                "value": "",
+                "type": "query",
+                "description": "The time when the rating occurred.  If not present, interpreted as now."
+              }
+            ]
+          },
+          "docs": "Set the rating on an item.\nThis API does respond to the GET verb but applications should use PUT"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

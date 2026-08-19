@@ -1,0 +1,354 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Metadata Agents API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata Agents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of available metadata agent providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata",
+            "params": [
+              {
+                "name": "metadataTypes",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of metadata types to filter the providers by. If not specified, all providers are returned."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the list of all available metadata agent providers for this PMS."
+        },
+        {
+          "info": {
+            "name": "Add a metadata agent provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata",
+            "params": [
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "The URI of the metadata agent provider to add."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint registers a metadata agent provider with the server. The provider URI must respond with a valid MediaProvider response."
+        },
+        {
+          "info": {
+            "name": "Get a metadata agent provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/:providerId",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider to get"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the metadata agent provider with the given id."
+        },
+        {
+          "info": {
+            "name": "Modify a metadata agent provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/:providerId",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider to modify"
+              },
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "The new URI of the metadata agent provider."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modify the metadata agent provider with the given id. Only the URI is passed, the response to the URI will determine the other properties."
+        },
+        {
+          "info": {
+            "name": "Delete a metadata agent provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/:providerId",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a metadata agent provider with the given id. This will fail if the provider is being used inside a MetadataAgentGroup."
+        },
+        {
+          "info": {
+            "name": "Get the list of available metadata agent provider groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/group",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the list of all available metadata agent provider groups for this PMS."
+        },
+        {
+          "info": {
+            "name": "Add a metadata agent provider group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/group",
+            "params": [
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "The title of the metadata agent provider group to add."
+              },
+              {
+                "name": "primaryIdentifier",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the metadata agent provider which will be the primary for the group."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint registers a new metadata agent provider group and creates a new MetadataAgentGroupItem for the primraryIdentifier."
+        },
+        {
+          "info": {
+            "name": "Get a metadata agent provider group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider group to get"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the metadata agent provider group with the given id."
+        },
+        {
+          "info": {
+            "name": "Modify a metadata agent provider group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider group to update"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "The title of the metadata agent provider group to update."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modify the metadata agent group with the given id. Only the title can be changed."
+        },
+        {
+          "info": {
+            "name": "Delete a metadata agent provider group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider group to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a metadata agent provider group with the given id. This will also delete any MetadataAgentGroupItem objects associated with the group."
+        },
+        {
+          "info": {
+            "name": "Modify a metadata agent provider group's items",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/group/:groupId/items/:providerId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent group"
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the group item to place this item after. This only works if the group item already exists. A -1 value will place the item at the beginning."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modify a metadata agent provider group's items. This will assign the specified provider id to the group if it does not already exist.\n\nProviding the optional after query parameter on an existing group item will move its position in the group relative to the item with the specified ID.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a metadata agent provider group item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/metadata/group/:groupId/items/:providerId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider group"
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the metadata agent provider"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a metadata agent provider group item with the given id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

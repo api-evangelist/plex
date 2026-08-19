@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Provider API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Provider",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of available media providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers"
+          },
+          "docs": "Get the list of all available media providers for this PMS.  This will generally include the library provider and possibly EPG if DVR is set up."
+        },
+        {
+          "info": {
+            "name": "Add a media provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "The URL of the media provider to add."
+              }
+            ]
+          },
+          "docs": "This endpoint registers a media provider with the server. Once registered, the media server acts as a reverse proxy to the provider, allowing both local and remote providers to work."
+        },
+        {
+          "info": {
+            "name": "Refresh media providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/refresh"
+          },
+          "docs": "Refresh all known media providers. This is useful in case a provider has updated features."
+        },
+        {
+          "info": {
+            "name": "Delete a media provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/media/providers/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the media provider to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a media provider with the given id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

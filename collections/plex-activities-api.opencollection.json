@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Activities API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Activities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/activities"
+          },
+          "docs": "List all activities on the server.  Admins can see all activities but other users can only see their own"
+        },
+        {
+          "info": {
+            "name": "Cancel a running activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/activities/:activityId",
+            "params": [
+              {
+                "name": "activityId",
+                "value": "d6199ba1-fb5e-4cae-bf17-1a5369c1cf1e",
+                "type": "path",
+                "description": "The UUID of the activity to cancel."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancel a running activity.  Admins can cancel all activities but other users can only cancel their own"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Ultra Blur API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "UltraBlur",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get UltraBlur Colors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/services/ultrablur/colors",
+            "params": [
+              {
+                "name": "url",
+                "value": "/library/metadata/217745/art/1718931408",
+                "type": "query",
+                "description": "Url for image which requires color extraction. Can be relative PMS library path or absolute url."
+              }
+            ]
+          },
+          "docs": "Retrieves the four colors extracted from an image for clients to use to generate an ultrablur image."
+        },
+        {
+          "info": {
+            "name": "Get UltraBlur Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/services/ultrablur/image",
+            "params": [
+              {
+                "name": "topLeft",
+                "value": "3f280a",
+                "type": "query",
+                "description": "The base color (hex) for the top left quadrant."
+              },
+              {
+                "name": "topRight",
+                "value": "6b4713",
+                "type": "query",
+                "description": "The base color (hex) for the top right quadrant."
+              },
+              {
+                "name": "bottomRight",
+                "value": "0f2a43",
+                "type": "query",
+                "description": "The base color (hex) for the bottom right quadrant."
+              },
+              {
+                "name": "bottomLeft",
+                "value": "1c425d",
+                "type": "query",
+                "description": "The base color (hex) for the bottom left quadrant."
+              },
+              {
+                "name": "width",
+                "value": "1920",
+                "type": "query",
+                "description": "Width in pixels for the image."
+              },
+              {
+                "name": "height",
+                "value": "1080",
+                "type": "query",
+                "description": "Height in pixels for the image."
+              },
+              {
+                "name": "noise",
+                "value": "1",
+                "type": "query",
+                "description": "Whether to add noise to the ouput image. Noise can reduce color banding with the gradients. Image sizes with noise will be larger."
+              }
+            ]
+          },
+          "docs": "Retrieves a server-side generated UltraBlur image based on the provided color inputs. Clients should always call this via the photo transcoder endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

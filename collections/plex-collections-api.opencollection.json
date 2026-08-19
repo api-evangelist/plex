@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Collections API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/library/collections",
+            "params": [
+              {
+                "name": "sectionId",
+                "value": "",
+                "type": "query",
+                "description": "The section where this collection will be created"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "The title of this collection"
+              },
+              {
+                "name": "smart",
+                "value": "",
+                "type": "query",
+                "description": "Whether this is a smart collection.  Defaults to false"
+              },
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "The URI for processing the smart collection.  Required for a smart collection"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The type of metadata this collection will hold"
+              }
+            ]
+          },
+          "docs": "Create a collection in the library"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

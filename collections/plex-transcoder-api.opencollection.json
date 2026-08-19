@@ -1,0 +1,793 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Transcoder API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transcoder",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Transcode an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/photo/:/transcode",
+            "params": [
+              {
+                "name": "url",
+                "value": "/library/metadata/265/thumb/1715112705",
+                "type": "query",
+                "description": "The source URL for the image to transcode.  Note, if this URL requires a token such as `X-Plex-Token`, it should be given as a query parameter to this url."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "The output format for the image; defaults to jpg"
+              },
+              {
+                "name": "width",
+                "value": "",
+                "type": "query",
+                "description": "The desired width of the output image"
+              },
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "The desired height of the output image"
+              },
+              {
+                "name": "quality",
+                "value": "",
+                "type": "query",
+                "description": "The desired quality of the output.  -1 means the highest quality.  Defaults to -1"
+              },
+              {
+                "name": "background",
+                "value": "#ff5522",
+                "type": "query",
+                "description": "The background color to apply before painting the image.  Only really applicable if image has transparency.  Defaults to none"
+              },
+              {
+                "name": "upscale",
+                "value": "",
+                "type": "query",
+                "description": "Indicates if image should be upscaled to the desired width/height.  Defaults to false"
+              },
+              {
+                "name": "minSize",
+                "value": "",
+                "type": "query",
+                "description": "Indicates if image should be scaled to fit the smaller dimension.  By default (false) the image is scaled to fit within the width/height specified but if this parameter is true, it will allow overflowing one dimension to fit the other.  Essentially it is making the width/height minimum sizes of the image or sizing the image to fill the entire width/height even if it overflows one dimension."
+              },
+              {
+                "name": "rotate",
+                "value": "",
+                "type": "query",
+                "description": "Obey the rotation values specified in EXIF data.  Defaults to true."
+              },
+              {
+                "name": "blur",
+                "value": "",
+                "type": "query",
+                "description": "Apply a blur to the image, Defaults to 0 (none)"
+              },
+              {
+                "name": "saturation",
+                "value": "",
+                "type": "query",
+                "description": "Scale the image saturation by the specified percentage.  Defaults to 100"
+              },
+              {
+                "name": "opacity",
+                "value": "",
+                "type": "query",
+                "description": "Render the image at the specified opacity percentage.  Defaults to 100"
+              },
+              {
+                "name": "chromaSubsampling",
+                "value": "",
+                "type": "query",
+                "description": "Use the specified chroma subsambling.\n  - 0: 411\n  - 1: 420\n  - 2: 422\n  - 3: 444\nDefaults to 3 (444)"
+              },
+              {
+                "name": "blendColor",
+                "value": "#ff5522",
+                "type": "query",
+                "description": "The color to blend with the image.  Defaults to none"
+              }
+            ]
+          },
+          "docs": "Transcode an image, possibly changing format or size"
+        },
+        {
+          "info": {
+            "name": "Make a decision on media playback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:transcodeType/:/transcode/universal/decision",
+            "headers": [
+              {
+                "name": "X-Plex-Client-Identifier",
+                "value": ""
+              },
+              {
+                "name": "X-Plex-Client-Profile-Extra",
+                "value": "add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)"
+              },
+              {
+                "name": "X-Plex-Client-Profile-Name",
+                "value": "generic"
+              },
+              {
+                "name": "X-Plex-Device",
+                "value": "Windows"
+              },
+              {
+                "name": "X-Plex-Model",
+                "value": "standalone"
+              },
+              {
+                "name": "X-Plex-Platform",
+                "value": "Chrome"
+              },
+              {
+                "name": "X-Plex-Platform-Version",
+                "value": "135"
+              },
+              {
+                "name": "X-Plex-Session-Identifier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transcodeType",
+                "value": "",
+                "type": "path",
+                "description": "Type of transcode media"
+              },
+              {
+                "name": "transcodeSessionId",
+                "value": "",
+                "type": "query",
+                "description": "Transcode session UUID"
+              },
+              {
+                "name": "advancedSubtitles",
+                "value": "burn",
+                "type": "query",
+                "description": "Indicates how  incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost\n"
+              },
+              {
+                "name": "audioBoost",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)"
+              },
+              {
+                "name": "audioChannelCount",
+                "value": "5",
+                "type": "query",
+                "description": "Target video number of audio channels."
+              },
+              {
+                "name": "autoAdjustQuality",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports ABR."
+              },
+              {
+                "name": "autoAdjustSubtitle",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if the server should adjust subtitles based on Voice Activity Data."
+              },
+              {
+                "name": "directPlay",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct playing the indicated content."
+              },
+              {
+                "name": "directStream",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the video of the indicated content."
+              },
+              {
+                "name": "directStreamAudio",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the audio of the indicated content."
+              },
+              {
+                "name": "disableResolutionRotation",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if resolution should be adjusted for orientation."
+              },
+              {
+                "name": "hasMDE",
+                "value": "1",
+                "type": "query",
+                "description": "Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1"
+              },
+              {
+                "name": "location",
+                "value": "wan",
+                "type": "query",
+                "description": "Network type of the client, can be used to help determine target bitrate."
+              },
+              {
+                "name": "mediaBufferSize",
+                "value": "102400",
+                "type": "query",
+                "description": "Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks."
+              },
+              {
+                "name": "mediaIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the media to transcode. -1 or not specified indicates let the server choose."
+              },
+              {
+                "name": "musicBitrate",
+                "value": "5000",
+                "type": "query",
+                "description": "Target bitrate for audio only files (in kbps, used to transcode)."
+              },
+              {
+                "name": "offset",
+                "value": "90.5",
+                "type": "query",
+                "description": "Offset from the start of the media (in seconds)."
+              },
+              {
+                "name": "partIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode"
+              },
+              {
+                "name": "path",
+                "value": "/library/metadata/151671",
+                "type": "query",
+                "description": "Internal PMS path of the media to transcode."
+              },
+              {
+                "name": "peakBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Maximum bitrate (in kbps) to use in ABR."
+              },
+              {
+                "name": "photoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target photo resolution."
+              },
+              {
+                "name": "protocol",
+                "value": "dash",
+                "type": "query",
+                "description": "Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)\n"
+              },
+              {
+                "name": "secondsPerSegment",
+                "value": "5",
+                "type": "query",
+                "description": "Number of seconds to include in each transcoded segment"
+              },
+              {
+                "name": "subtitleSize",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)"
+              },
+              {
+                "name": "subtitles",
+                "value": "Burn",
+                "type": "query",
+                "description": "Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream\n"
+              },
+              {
+                "name": "videoBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Target video bitrate (in kbps)."
+              },
+              {
+                "name": "videoQuality",
+                "value": "50",
+                "type": "query",
+                "description": "Target photo quality."
+              },
+              {
+                "name": "videoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target maximum video resolution."
+              }
+            ]
+          },
+          "docs": "Make a decision on media playback based on client profile, and requested settings such as bandwidth and resolution."
+        },
+        {
+          "info": {
+            "name": "Manually trigger a transcoder fallback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:transcodeType/:/transcode/universal/fallback",
+            "params": [
+              {
+                "name": "transcodeType",
+                "value": "",
+                "type": "path",
+                "description": "Type of transcode media"
+              },
+              {
+                "name": "transcodeSessionId",
+                "value": "",
+                "type": "query",
+                "description": "Transcode session UUID"
+              }
+            ]
+          },
+          "docs": "Manually trigger a transcoder fallback ex: HEVC to h.264 or hw to sw"
+        },
+        {
+          "info": {
+            "name": "Start A Transcoding Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:transcodeType/:/transcode/universal/start.*",
+            "headers": [
+              {
+                "name": "X-Plex-Client-Identifier",
+                "value": ""
+              },
+              {
+                "name": "X-Plex-Client-Profile-Extra",
+                "value": "add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)"
+              },
+              {
+                "name": "X-Plex-Client-Profile-Name",
+                "value": "generic"
+              },
+              {
+                "name": "X-Plex-Device",
+                "value": "Windows"
+              },
+              {
+                "name": "X-Plex-Model",
+                "value": "standalone"
+              },
+              {
+                "name": "X-Plex-Platform",
+                "value": "Chrome"
+              },
+              {
+                "name": "X-Plex-Platform-Version",
+                "value": "135"
+              },
+              {
+                "name": "X-Plex-Session-Identifier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transcodeType",
+                "value": "",
+                "type": "path",
+                "description": "Type of transcode media"
+              },
+              {
+                "name": "transcodeSessionId",
+                "value": "",
+                "type": "query",
+                "description": "Transcode session UUID"
+              },
+              {
+                "name": "advancedSubtitles",
+                "value": "burn",
+                "type": "query",
+                "description": "Indicates how  incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost\n"
+              },
+              {
+                "name": "audioBoost",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)"
+              },
+              {
+                "name": "audioChannelCount",
+                "value": "5",
+                "type": "query",
+                "description": "Target video number of audio channels."
+              },
+              {
+                "name": "autoAdjustQuality",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports ABR."
+              },
+              {
+                "name": "autoAdjustSubtitle",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if the server should adjust subtitles based on Voice Activity Data."
+              },
+              {
+                "name": "directPlay",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct playing the indicated content."
+              },
+              {
+                "name": "directStream",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the video of the indicated content."
+              },
+              {
+                "name": "directStreamAudio",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the audio of the indicated content."
+              },
+              {
+                "name": "disableResolutionRotation",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if resolution should be adjusted for orientation."
+              },
+              {
+                "name": "hasMDE",
+                "value": "1",
+                "type": "query",
+                "description": "Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1"
+              },
+              {
+                "name": "location",
+                "value": "wan",
+                "type": "query",
+                "description": "Network type of the client, can be used to help determine target bitrate."
+              },
+              {
+                "name": "mediaBufferSize",
+                "value": "102400",
+                "type": "query",
+                "description": "Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks."
+              },
+              {
+                "name": "mediaIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the media to transcode. -1 or not specified indicates let the server choose."
+              },
+              {
+                "name": "musicBitrate",
+                "value": "5000",
+                "type": "query",
+                "description": "Target bitrate for audio only files (in kbps, used to transcode)."
+              },
+              {
+                "name": "offset",
+                "value": "90.5",
+                "type": "query",
+                "description": "Offset from the start of the media (in seconds)."
+              },
+              {
+                "name": "partIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode"
+              },
+              {
+                "name": "path",
+                "value": "/library/metadata/151671",
+                "type": "query",
+                "description": "Internal PMS path of the media to transcode."
+              },
+              {
+                "name": "peakBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Maximum bitrate (in kbps) to use in ABR."
+              },
+              {
+                "name": "photoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target photo resolution."
+              },
+              {
+                "name": "protocol",
+                "value": "dash",
+                "type": "query",
+                "description": "Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)\n"
+              },
+              {
+                "name": "secondsPerSegment",
+                "value": "5",
+                "type": "query",
+                "description": "Number of seconds to include in each transcoded segment"
+              },
+              {
+                "name": "subtitleSize",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)"
+              },
+              {
+                "name": "subtitles",
+                "value": "Burn",
+                "type": "query",
+                "description": "Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream\n"
+              },
+              {
+                "name": "videoBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Target video bitrate (in kbps)."
+              },
+              {
+                "name": "videoQuality",
+                "value": "50",
+                "type": "query",
+                "description": "Target photo quality."
+              },
+              {
+                "name": "videoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target maximum video resolution."
+              }
+            ]
+          },
+          "docs": "Starts the transcoder and returns the corresponding streaming resource document."
+        },
+        {
+          "info": {
+            "name": "Transcode subtitles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:transcodeType/:/transcode/universal/subtitles",
+            "headers": [
+              {
+                "name": "X-Plex-Client-Identifier",
+                "value": ""
+              },
+              {
+                "name": "X-Plex-Client-Profile-Extra",
+                "value": "add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)"
+              },
+              {
+                "name": "X-Plex-Client-Profile-Name",
+                "value": "generic"
+              },
+              {
+                "name": "X-Plex-Device",
+                "value": "Windows"
+              },
+              {
+                "name": "X-Plex-Model",
+                "value": "standalone"
+              },
+              {
+                "name": "X-Plex-Platform",
+                "value": "Chrome"
+              },
+              {
+                "name": "X-Plex-Platform-Version",
+                "value": "135"
+              },
+              {
+                "name": "X-Plex-Session-Identifier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transcodeType",
+                "value": "",
+                "type": "path",
+                "description": "Type of transcode media"
+              },
+              {
+                "name": "transcodeSessionId",
+                "value": "",
+                "type": "query",
+                "description": "Transcode session UUID"
+              },
+              {
+                "name": "advancedSubtitles",
+                "value": "burn",
+                "type": "query",
+                "description": "Indicates how  incompatible advanced subtitles (such as ass/ssa) should be included: * 'burn' - Burn incompatible advanced text subtitles into the video stream * 'text' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost\n"
+              },
+              {
+                "name": "audioBoost",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)"
+              },
+              {
+                "name": "audioChannelCount",
+                "value": "5",
+                "type": "query",
+                "description": "Target video number of audio channels."
+              },
+              {
+                "name": "autoAdjustQuality",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports ABR."
+              },
+              {
+                "name": "autoAdjustSubtitle",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if the server should adjust subtitles based on Voice Activity Data."
+              },
+              {
+                "name": "directPlay",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct playing the indicated content."
+              },
+              {
+                "name": "directStream",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the video of the indicated content."
+              },
+              {
+                "name": "directStreamAudio",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates the client supports direct streaming the audio of the indicated content."
+              },
+              {
+                "name": "disableResolutionRotation",
+                "value": "1",
+                "type": "query",
+                "description": "Indicates if resolution should be adjusted for orientation."
+              },
+              {
+                "name": "hasMDE",
+                "value": "1",
+                "type": "query",
+                "description": "Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1"
+              },
+              {
+                "name": "location",
+                "value": "wan",
+                "type": "query",
+                "description": "Network type of the client, can be used to help determine target bitrate."
+              },
+              {
+                "name": "mediaBufferSize",
+                "value": "102400",
+                "type": "query",
+                "description": "Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks."
+              },
+              {
+                "name": "mediaIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the media to transcode. -1 or not specified indicates let the server choose."
+              },
+              {
+                "name": "musicBitrate",
+                "value": "5000",
+                "type": "query",
+                "description": "Target bitrate for audio only files (in kbps, used to transcode)."
+              },
+              {
+                "name": "offset",
+                "value": "90.5",
+                "type": "query",
+                "description": "Offset from the start of the media (in seconds)."
+              },
+              {
+                "name": "partIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode"
+              },
+              {
+                "name": "path",
+                "value": "/library/metadata/151671",
+                "type": "query",
+                "description": "Internal PMS path of the media to transcode."
+              },
+              {
+                "name": "peakBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Maximum bitrate (in kbps) to use in ABR."
+              },
+              {
+                "name": "photoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target photo resolution."
+              },
+              {
+                "name": "protocol",
+                "value": "dash",
+                "type": "query",
+                "description": "Indicates the network streaming protocol to be used for the transcode session: * 'http' - include the file in the http response such as MKV streaming * 'hls' - hls stream (RFC 8216) * 'dash' - dash stream (ISO/IEC 23009-1:2022)\n"
+              },
+              {
+                "name": "secondsPerSegment",
+                "value": "5",
+                "type": "query",
+                "description": "Number of seconds to include in each transcoded segment"
+              },
+              {
+                "name": "subtitleSize",
+                "value": "50",
+                "type": "query",
+                "description": "Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)"
+              },
+              {
+                "name": "subtitles",
+                "value": "Burn",
+                "type": "query",
+                "description": "Indicates how subtitles should be included: * 'auto' - Compute the appropriate subtitle setting automatically * 'burn' - Burn the selected subtitle; auto if no selected subtitle * 'none' - Ignore all subtitle streams * 'sidecar' - The selected subtitle should be provided as a sidecar * 'embedded' - The selected subtitle should be provided as an embedded stream * 'segmented' - The selected subtitle should be provided as a segmented stream\n"
+              },
+              {
+                "name": "videoBitrate",
+                "value": "12000",
+                "type": "query",
+                "description": "Target video bitrate (in kbps)."
+              },
+              {
+                "name": "videoQuality",
+                "value": "50",
+                "type": "query",
+                "description": "Target photo quality."
+              },
+              {
+                "name": "videoResolution",
+                "value": "1080x1080",
+                "type": "query",
+                "description": "Target maximum video resolution."
+              }
+            ]
+          },
+          "docs": "Only transcode subtitle streams."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

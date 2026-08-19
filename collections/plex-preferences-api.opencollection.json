@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Preferences API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Preferences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/prefs"
+          },
+          "docs": "Get the list of all preferences"
+        },
+        {
+          "info": {
+            "name": "Set preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/prefs",
+            "params": [
+              {
+                "name": "prefs",
+                "value": "[object Object]",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Set a set of preferences in query parameters"
+        },
+        {
+          "info": {
+            "name": "Get a preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/:/prefs/get",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "The preference to fetch"
+              }
+            ]
+          },
+          "docs": "Get a single preference and value"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Plex Media Server Updater API",
+    "version": "1.2.2\n"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Plex-Token",
+      "value": "{{X-Plex-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Updater",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Querying status of updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/updater/status",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the status of updating the server"
+        },
+        {
+          "info": {
+            "name": "Checking for updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/updater/check",
+            "params": [
+              {
+                "name": "download",
+                "value": "",
+                "type": "query",
+                "description": "Indicate that you want to start download any updates found."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Perform an update check and potentially download"
+        },
+        {
+          "info": {
+            "name": "Applying updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{IP-description}.{identifier}.plex.direct:{port}/updater/apply",
+            "params": [
+              {
+                "name": "tonight",
+                "value": "",
+                "type": "query",
+                "description": "Indicate that you want the update to run during the next Butler execution. Omitting this or setting it to false indicates that the update should install immediately."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Indicate that the latest version should be marked as skipped. The <Release> entry for this version will have the `state` set to `skipped`."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Plex-Token",
+              "value": "{{X-Plex-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Apply any downloaded updates.  Note that the two parameters `tonight` and `skip` are effectively mutually exclusive. The `tonight` parameter takes precedence and `skip` will be ignored if `tonight` is also passed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
