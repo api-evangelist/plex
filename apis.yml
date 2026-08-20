@@ -45,6 +45,10 @@ apis:
   baseURL: https://clients.plex.tv/api/v2
   tags:
   - Authentication
+  - JWT
+  - Identity
+  tags_raw:
+  - Authentication
   - OAuth
   - JWT
   - Identity
@@ -64,6 +68,10 @@ apis:
   humanURL: https://plex.tv/.well-known/oauth-protected-resource
   baseURL: https://plex.tv/internal/mcp
   tags:
+  - MCP
+  - Agents
+  - Authentication
+  tags_raw:
   - MCP
   - Agents
   - OAuth
@@ -121,6 +129,8 @@ apis:
   humanURL: https://developer.plex.tv/pms/
   baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
   tags:
+  - Collection
+  tags_raw:
   - Collections
   properties:
   - type: OpenAPI
@@ -259,6 +269,8 @@ apis:
   humanURL: https://developer.plex.tv/pms/
   baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -272,7 +284,8 @@ apis:
   description: General endpoints for basic PMS operation not specific to any media provider
   humanURL: https://developer.plex.tv/pms/
   baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
-  tags:
+  tags: []
+  tags_raw:
   - General
   properties:
   - type: OpenAPI
@@ -287,6 +300,8 @@ apis:
   humanURL: https://developer.plex.tv/pms/
   baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
   tags:
+  - Hub
+  tags_raw:
   - Hubs
   properties:
   - type: OpenAPI
@@ -523,6 +538,8 @@ apis:
   humanURL: https://developer.plex.tv/pms/
   baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
@@ -537,6 +554,8 @@ apis:
   humanURL: https://developer.plex.tv/pms/
   baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
   tags:
+  - Timelines
+  tags_raw:
   - Timeline
   properties:
   - type: OpenAPI
