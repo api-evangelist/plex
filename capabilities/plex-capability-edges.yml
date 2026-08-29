@@ -1,0 +1,48 @@
+slug: plex
+provider: Plex
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Media, Entertainment & Telecom Content
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: EPG
+  spec_file: plex-epg-api-openapi.yml
+  capability_id: BC-3730.20
+  capability_id_l1: BC-3730
+  capability_name: Electronic Programme Guide Management
+  confidence: 0.8
+  evidence: GET /livetv/epg/channels  livetvEpgGetChannels  Get channels for a lineup; GET /tv.plex.providers.epg.{identifier}:{deviceId}/grid  Get
+    airing information
+  reason: Operations retrieve and compute electronic programme guide data — lineups, channel maps and
+    airing grids — which is EPG data management and consumption. Consumer-side rather than authoring/distribution,
+    hence not 0.95.
+- tag: Transcoder
+  spec_file: plex-transcoder-api-openapi.yml
+  capability_id: BC-3710.40
+  capability_id_l1: BC-3710
+  capability_name: Transcoding & Format Conversion
+  confidence: 0.8
+  evidence: GET /{transcodeType}/:/transcode/universal/start.* transcodeStart 'Start A Transcoding Session';
+    'Transcode an image'; 'Transcode subtitles'
+  reason: The operations perform on-the-fly transcoding of media into playable renditions (video, images,
+    subtitles), which is exactly transcoding/format conversion of media assets rather than any generic
+    technical concern.
+- tag: Library
+  spec_file: plex-library-api-openapi.yml
+  capability_id: BC-3710
+  capability_id_l1: BC-3710
+  capability_name: Media Asset Management
+  confidence: 0.75
+  evidence: POST /library/file  libraryPostFile  Ingest a transient item; PUT /library/metadata/{ids}  Edit
+    a metadata item; PUT /library/metadata/{ids}/analyze  Analyze an item
+  reason: 'Broad media asset management surface: ingest, metadata edit/delete, analysis, chapter thumbnail
+    generation and library sections. Spans several sub-capabilities (ingest, metadata, storage) so only
+    the L1 is asserted.'

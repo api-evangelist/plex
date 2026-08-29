@@ -622,6 +622,9 @@ apis:
   - type: APIReference
     url: https://developer.plex.tv/pms/
 common:
+- type: CapabilityMap
+  url: capabilities/plex-capability-edges.yml
+  name: Plex Business Capability Map
 - type: Website
   url: https://www.plex.tv/
 - type: DeveloperPortal
