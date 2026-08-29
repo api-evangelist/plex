@@ -9,6 +9,18 @@ description: 'Plex, Inc. is a personal-media and streaming company whose Plex Me
   libraries, metadata, playlists, play queues, sessions, DVR/Live TV, transcoding
   and server administration — together with a new public-key JWT authentication flow
   on plex.tv, Plex Pass webhooks, and an OAuth-protected remote MCP server for agents.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.plex.tv/wp-content/themes/plex/assets/img/plex-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/plex/refs/heads/main/apis.yml
 x-type: company
