@@ -312,7 +312,7 @@ apis:
   humanURL: https://developer.plex.tv/pms/
   baseURL: https://1-2-3-4.0123456789abcdef0123456789abcdef.plex.direct:32400
   tags:
-  - Hubs
+  - Hub
   tags_raw:
   - Hubs
   properties:
