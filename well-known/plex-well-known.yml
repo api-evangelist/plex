@@ -1,4 +1,4 @@
-generated: '2026-08-05'
+generated: '2026-09-19'
 method: searched
 source: live probes of the /.well-known/ surface on every Plex host in apis.yml
 hosts_probed:
@@ -6,71 +6,85 @@ hosts_probed:
 - https://www.plex.tv
 - https://developer.plex.tv
 - https://plexapi.dev
-documents:
-- host: https://plex.tv
-  path: /.well-known/security.txt
-  standard: RFC 9116
-  status: 200
-  content_type: text/plain
-  file: plex-security.txt
-- host: https://plex.tv
-  path: /.well-known/openid-configuration
-  standard: OpenID Connect Discovery 1.0
-  status: 200
-  content_type: application/json
-  file: plex-openid-configuration.json
-  note: Discovery document is scoped to the Plex MCP server — issuer https://plex.tv,
-    authorization endpoint /admin/mcp/authorize, single scope "mcp".
-- host: https://plex.tv
-  path: /.well-known/oauth-authorization-server
-  standard: RFC 8414
-  status: 200
-  content_type: application/json
-  file: plex-oauth-authorization-server.json
-- host: https://plex.tv
-  path: /.well-known/oauth-protected-resource
-  standard: RFC 9728
-  status: 200
-  content_type: application/json
-  file: plex-oauth-protected-resource.json
-  note: Names https://plex.tv/internal/mcp as the protected resource.
-- host: https://plex.tv
-  path: /api/v2/auth/keys
-  standard: RFC 7517 (JWKS)
-  status: 200
-  content_type: application/json
-  file: plex-jwks.json
-  note: Not a /.well-known/ path — jwks_uri published by the OIDC discovery document.
-    Ed25519 / EdDSA signing key.
-- host: https://plex.tv
-  path: /.well-known/api-catalog
-  standard: RFC 9727
-  status: 404
-- host: https://plex.tv
-  path: /.well-known/ai-plugin.json
-  status: 404
-- host: https://plex.tv
-  path: /.well-known/agent-card.json
-  standard: A2A 1.0.0
-  status: 404
-- host: https://plex.tv
-  path: /.well-known/agent.json
-  standard: A2A pre-0.3 legacy
-  status: 404
-- host: https://www.plex.tv
-  path: /.well-known/security.txt
-  status: 404
-  note: The www host answers 404 with the marketing SPA shell; the canonical
-    security.txt lives on the apex plex.tv host.
-- host: https://www.plex.tv
-  path: /.well-known/agent-card.json
-  status: 404
-- host: https://developer.plex.tv
-  path: /.well-known/agent-card.json
-  status: 404
 x-notes:
-- 'An A2A agent card DOES answer 200 at https://plexapi.dev/.well-known/agent-card.json,
-  but plexapi.dev is a community-run documentation site — the card names its own
-  provider organization as "PlexAPI.dev Documentation", not Plex, Inc. It is
-  therefore NOT recorded as a Plex agent card. Plex publishes no agent card on any
-  host it operates.'
+- An A2A agent card DOES answer 200 at https://plexapi.dev/.well-known/agent-card.json, but plexapi.dev
+  is a community-run documentation site — the card names its own provider organization as "PlexAPI.dev
+  Documentation", not Plex, Inc. It is therefore NOT recorded as a Plex agent card. Plex publishes no
+  agent card on any host it operates.
+hosts:
+- host: ''
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: plex-security.txt
+    standard: RFC 9116
+    content_type: text/plain
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: plex-openid-configuration.json
+    standard: OpenID Connect Discovery 1.0
+    content_type: application/json
+    note: Discovery document is scoped to the Plex MCP server — issuer https://plex.tv, authorization
+      endpoint /admin/mcp/authorize, single scope "mcp".
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: plex-oauth-authorization-server.json
+    standard: RFC 8414
+    content_type: application/json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: plex-oauth-protected-resource.json
+    standard: RFC 9728
+    content_type: application/json
+    note: Names https://plex.tv/internal/mcp as the protected resource.
+  - path: /.well-known/api-catalog
+    status: 404
+    standard: RFC 9727
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+    standard: A2A 1.0.0
+  - path: /.well-known/agent.json
+    status: 404
+    standard: A2A pre-0.3 legacy
+  - path: /.well-known/security.txt
+    status: 404
+    note: The www host answers 404 with the marketing SPA shell; the canonical security.txt lives on the
+      apex plex.tv host.
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: https://plex.tv
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: plex-plex-oauth-protected-resource.json
+    bytes: 152
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: plex-plex-oauth-authorization-server.json
+    bytes: 506
+  path_echo_control: passed
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://plex.tv
+    path: /.well-known/oauth-protected-resource
+    file: plex-plex-oauth-protected-resource.json
+  - host: https://plex.tv
+    path: /.well-known/oauth-authorization-server
+    file: plex-plex-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
