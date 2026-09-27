@@ -258,19 +258,6 @@ paths:
                   value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
 components:
   schemas:
-    MediaContainer:
-      type: object
-      properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
     mediaContainerWithSettings:
       type: object
       properties:
@@ -324,6 +311,19 @@ components:
                     enumValues:
                       type: string
                       description: The possible values for this pref if restricted.  The list is `|` separated with `value:name` entries.
+    MediaContainer:
+      type: object
+      properties:
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
   responses:
     '200':
       description: OK

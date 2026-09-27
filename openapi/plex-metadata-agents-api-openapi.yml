@@ -567,99 +567,6 @@ paths:
         '404':
           $ref: '#/components/responses/404'
 components:
-  schemas:
-    metadataAgentProviderGroupItem:
-      description: 'Sub-items of a MetadataAgentProviderGroup object. They represent specific MetadataAgentProvider objects.
-
-        '
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The unique identifier for the item.
-        metadataAgentProviderGroupId:
-          type: integer
-          description: The unique identifier for the MetadataAgentProviderGroup.
-        metadataAgentProviderId:
-          type: integer
-          description: The unique identifier for the MetadataAgentProvider.
-        order:
-          type: number
-          description: The order of the item in the group.
-    metadataAgentProviderGroup:
-      description: 'An item that describes a group of MetadataAgentProviderGroupItem objects.
-
-        '
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The unique identifier for the item.
-        title:
-          type: string
-          description: The title of the group.
-        primaryIdentifier:
-          type: string
-          description: The primary identifier for the group. i.e. the identifier of the MetadataAgentProvider which will provide the item guids.
-        MetadataAgentGroupItem:
-          type: array
-          items:
-            $ref: '#/components/schemas/metadataAgentProviderGroupItem'
-    MediaContainer:
-      type: object
-      properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-    metadataAgentProvider:
-      description: 'Describes a MetadataAgentProvider object.
-
-        '
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The unique identifier for the item.
-        identifier:
-          type: string
-          description: The identifier for the provider.
-        title:
-          type: string
-          description: The title of the provider.
-        uri:
-          type: string
-          description: The URI of the provider.
-        agentType:
-          type: string
-          description: 'The type of agent.
-
-            - primary: A metadata provider which provides a unique identifier (guid) for each item.
-
-            - contributor: A metadata provider which provides additional metadata for items but does not have a unique item identifier.
-
-            '
-          enum:
-          - primary
-          - contributor
-        MetadataType:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: integer
-                description: The type of supported metadata.
-          description: The metadata types supported by the provider.
-        online:
-          type: boolean
-          description: Indicates whether the provider is online.
   responses:
     '409':
       description: Conflict
@@ -710,14 +617,6 @@ components:
                     - type: 3
                     - type: 4
                     online: true
-    '200':
-      description: OK
-      content:
-        text/html:
-          examples:
-            ok:
-              summary: OK
-              value: ''
     '400':
       description: Bad Request
       content:
@@ -726,6 +625,107 @@ components:
             badRequest:
               summary: A parameter has a bad value or required parameter is missing
               value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
+    '200':
+      description: OK
+      content:
+        text/html:
+          examples:
+            ok:
+              summary: OK
+              value: ''
+  schemas:
+    metadataAgentProviderGroup:
+      description: 'An item that describes a group of MetadataAgentProviderGroupItem objects.
+
+        '
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the item.
+        title:
+          type: string
+          description: The title of the group.
+        primaryIdentifier:
+          type: string
+          description: The primary identifier for the group. i.e. the identifier of the MetadataAgentProvider which will provide the item guids.
+        MetadataAgentGroupItem:
+          type: array
+          items:
+            $ref: '#/components/schemas/metadataAgentProviderGroupItem'
+    metadataAgentProvider:
+      description: 'Describes a MetadataAgentProvider object.
+
+        '
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the item.
+        identifier:
+          type: string
+          description: The identifier for the provider.
+        title:
+          type: string
+          description: The title of the provider.
+        uri:
+          type: string
+          description: The URI of the provider.
+        agentType:
+          type: string
+          description: 'The type of agent.
+
+            - primary: A metadata provider which provides a unique identifier (guid) for each item.
+
+            - contributor: A metadata provider which provides additional metadata for items but does not have a unique item identifier.
+
+            '
+          enum:
+          - primary
+          - contributor
+        MetadataType:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: integer
+                description: The type of supported metadata.
+          description: The metadata types supported by the provider.
+        online:
+          type: boolean
+          description: Indicates whether the provider is online.
+    metadataAgentProviderGroupItem:
+      description: 'Sub-items of a MetadataAgentProviderGroup object. They represent specific MetadataAgentProvider objects.
+
+        '
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the item.
+        metadataAgentProviderGroupId:
+          type: integer
+          description: The unique identifier for the MetadataAgentProviderGroup.
+        metadataAgentProviderId:
+          type: integer
+          description: The unique identifier for the MetadataAgentProvider.
+        order:
+          type: number
+          description: The order of the item in the group.
+    MediaContainer:
+      type: object
+      properties:
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
   securitySchemes:
     user_token:
       type: apiKey

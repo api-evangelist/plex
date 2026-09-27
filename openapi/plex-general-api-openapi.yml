@@ -354,19 +354,6 @@ components:
             offset:
               type: integer
               description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-    MediaContainer:
-      type: object
-      properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
     serverConfiguration:
       allOf:
       - $ref: '#/components/schemas/MediaContainer'
@@ -471,6 +458,19 @@ components:
             type: string
           voiceSearch:
             type: boolean
+    MediaContainer:
+      type: object
+      properties:
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
   securitySchemes:
     user_token:
       type: apiKey
