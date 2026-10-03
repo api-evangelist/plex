@@ -568,22 +568,14 @@ paths:
           $ref: '#/components/responses/404'
 components:
   responses:
-    '409':
-      description: Conflict
+    '400':
+      description: Bad Request
       content:
         text/html:
           examples:
-            conflict:
-              summary: Conflict
-              value: <html><head><title>Conflict</title></head><body><h1>409 Conflict</h1></body></html>
-    '404':
-      description: Not Found
-      content:
-        text/html:
-          examples:
-            notFound:
-              summary: Not Found
-              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
+            badRequest:
+              summary: A parameter has a bad value or required parameter is missing
+              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
     metadataAgentProviderManager_slash-get-responses-200:
       description: OK
       content:
@@ -617,14 +609,6 @@ components:
                     - type: 3
                     - type: 4
                     online: true
-    '400':
-      description: Bad Request
-      content:
-        text/html:
-          examples:
-            badRequest:
-              summary: A parameter has a bad value or required parameter is missing
-              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
     '200':
       description: OK
       content:
@@ -633,6 +617,22 @@ components:
             ok:
               summary: OK
               value: ''
+    '409':
+      description: Conflict
+      content:
+        text/html:
+          examples:
+            conflict:
+              summary: Conflict
+              value: <html><head><title>Conflict</title></head><body><h1>409 Conflict</h1></body></html>
+    '404':
+      description: Not Found
+      content:
+        text/html:
+          examples:
+            notFound:
+              summary: Not Found
+              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
   schemas:
     metadataAgentProviderGroup:
       description: 'An item that describes a group of MetadataAgentProviderGroupItem objects.

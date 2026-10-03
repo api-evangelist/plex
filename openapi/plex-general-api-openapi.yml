@@ -332,28 +332,19 @@ paths:
                   value: <html><head><title>Forbidden</title></head><body><h1>403 Forbidden</h1></body></html>
 components:
   schemas:
-    mediaContainer:
-      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
-
-
-        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
-
-        '
+    MediaContainer:
       type: object
       properties:
-        MediaContainer:
-          type: object
-          properties:
-            identifier:
-              type: string
-            size:
-              type: integer
-            totalSize:
-              type: integer
-              description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-            offset:
-              type: integer
-              description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
     serverConfiguration:
       allOf:
       - $ref: '#/components/schemas/MediaContainer'
@@ -458,19 +449,28 @@ components:
             type: string
           voiceSearch:
             type: boolean
-    MediaContainer:
+    mediaContainer:
+      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
+
+
+        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
+
+        '
       type: object
       properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+        MediaContainer:
+          type: object
+          properties:
+            identifier:
+              type: string
+            size:
+              type: integer
+            totalSize:
+              type: integer
+              description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+            offset:
+              type: integer
+              description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
   securitySchemes:
     user_token:
       type: apiKey

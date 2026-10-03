@@ -506,6 +506,23 @@ paths:
                   summary: Forbidden
                   value: <html><head><title>Forbidden</title></head><body><h1>403 Forbidden</h1></body></html>
 components:
+  responses:
+    '400':
+      description: Bad Request
+      content:
+        text/html:
+          examples:
+            badRequest:
+              summary: A parameter has a bad value or required parameter is missing
+              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
+    '200':
+      description: OK
+      content:
+        text/html:
+          examples:
+            ok:
+              summary: OK
+              value: ''
   schemas:
     directory:
       type: object
@@ -673,23 +690,6 @@ components:
         offset:
           type: integer
           description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-  responses:
-    '400':
-      description: Bad Request
-      content:
-        text/html:
-          examples:
-            badRequest:
-              summary: A parameter has a bad value or required parameter is missing
-              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
-    '200':
-      description: OK
-      content:
-        text/html:
-          examples:
-            ok:
-              summary: OK
-              value: ''
   securitySchemes:
     user_token:
       type: apiKey
