@@ -507,14 +507,6 @@ paths:
                   value: <html><head><title>Forbidden</title></head><body><h1>403 Forbidden</h1></body></html>
 components:
   responses:
-    '400':
-      description: Bad Request
-      content:
-        text/html:
-          examples:
-            badRequest:
-              summary: A parameter has a bad value or required parameter is missing
-              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
     '200':
       description: OK
       content:
@@ -523,56 +515,15 @@ components:
             ok:
               summary: OK
               value: ''
+    '400':
+      description: Bad Request
+      content:
+        text/html:
+          examples:
+            badRequest:
+              summary: A parameter has a bad value or required parameter is missing
+              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
   schemas:
-    directory:
-      type: object
-      properties:
-        hubKey:
-          type: string
-        key:
-          type: string
-        title:
-          type: string
-        thumb:
-          type: string
-        art:
-          type: string
-        share:
-          type: integer
-        hasStoreServices:
-          type: boolean
-        hasPrefs:
-          type: boolean
-        identifier:
-          type: string
-        titleBar:
-          type: string
-        lastAccessedAt:
-          type: integer
-        type:
-          type: string
-        content:
-          type: boolean
-        filter:
-          type: string
-        Pivot:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              key:
-                type: string
-              type:
-                type: string
-              title:
-                type: string
-              context:
-                type: string
-              symbol:
-                type: string
-      additionalProperties: true
     serverConfiguration:
       allOf:
       - $ref: '#/components/schemas/MediaContainer'
@@ -677,6 +628,55 @@ components:
             type: string
           voiceSearch:
             type: boolean
+    directory:
+      type: object
+      properties:
+        hubKey:
+          type: string
+        key:
+          type: string
+        title:
+          type: string
+        thumb:
+          type: string
+        art:
+          type: string
+        share:
+          type: integer
+        hasStoreServices:
+          type: boolean
+        hasPrefs:
+          type: boolean
+        identifier:
+          type: string
+        titleBar:
+          type: string
+        lastAccessedAt:
+          type: integer
+        type:
+          type: string
+        content:
+          type: boolean
+        filter:
+          type: string
+        Pivot:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              key:
+                type: string
+              type:
+                type: string
+              title:
+                type: string
+              context:
+                type: string
+              symbol:
+                type: string
+      additionalProperties: true
     MediaContainer:
       type: object
       properties:

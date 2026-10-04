@@ -5347,398 +5347,6 @@ paths:
                         thumb: https://metadata-static.plex.tv/1/people/117e6b9ffe277568350e4c5c552f7800.jpg
 components:
   schemas:
-    mediaContainerWithNestedMetadata:
-      type: object
-      properties:
-        MediaContainer:
-          allOf:
-          - $ref: '#/components/schemas/MediaContainer'
-          - type: object
-            properties:
-              MetadataItem:
-                type: array
-                items:
-                  type: object
-                  allOf:
-                  - $ref: '#/components/schemas/metadata'
-                  - type: object
-                    properties:
-                      MetadataItem:
-                        type: array
-                        items:
-                          type: object
-                          description: Nested metadata items
-                          $ref: '#/components/schemas/items'
-    title:
-      type: string
-    filter:
-      allOf:
-      - $ref: '#/components/schemas/directory'
-      - type: object
-        description: 'Each `Filter` object contains a description of the filter. Note that it is not an exhaustive list of the full media query language, but an important subset useful for top-level API.
-
-          '
-        properties:
-          filter:
-            type: string
-            description: This represents the filter name used for the filter, which can be used to construct complex media queries with.
-          filterType:
-            type: string
-            description: This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
-          key:
-            type: string
-            description: This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
-          title:
-            type: string
-            description: The title for the filter.
-    mediaContainerWithArtwork:
-      type: object
-      properties:
-        MediaContainer:
-          allOf:
-          - $ref: '#/components/schemas/MediaContainer'
-          - type: object
-            properties:
-              Metadata:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: The title of the item
-                    type:
-                      type: string
-                      enum:
-                      - image
-                    key:
-                      type: string
-                      description: The path to the artwork
-                  additionalProperties: true
-    tag:
-      description: 'A variety of extra information about a metadata item is included as tags. These tags use their own element names such as `Genre`, `Writer`, `Directory`, and `Role`. Individual tag types may introduce their own extra attributes.
-
-        '
-      type: object
-      properties:
-        id:
-          type: integer
-        tag:
-          description: The value of the tag (the name)
-          example: Shaun Lawton
-        tagKey:
-          description: Plex identifier for this tag which can be used to fetch additional information from plex.tv
-          example: 5d3ee12c4cde6a001c3e0b27
-        tagType:
-          type: integer
-        filter:
-          description: A filter parameter that can be used to query for more content that matches this tag value.
-          example: actor=49
-        role:
-          description: The role this actor played
-          example: Secretary
-        thumb:
-          example: http://image.tmdb.org/t/p/original/lcJ8qM51ClAR2UzXU1mkZGfnn3o.jpg
-        context:
-          type: string
-        ratingKey:
-          type: string
-        confidence:
-          type: number
-          description: Measure of the confidence of an automatic tag
-    stream:
-      description: '`Stream` represents a particular stream from a media item, such as the video stream, audio stream, or subtitle stream. The stream may either be part of the file represented by the parent `Part` or, especially for subtitles, an external file. The stream contains more detailed information about the specific stream. For example, a video may include the `aspectRatio` at the `Media` level, but detailed information about the video stream like the color space will be included on the `Stream` for the video stream.  Note that photos do not have streams (mostly as an optimization).
-
-        '
-      type: object
-      properties:
-        audioChannelLayout:
-          example: stereo
-        bitDepth:
-          type: integer
-          example: 8
-        bitrate:
-          type: integer
-          example: 5466
-        canAutoSync:
-          type: boolean
-          description: For subtitle streams only. If `true` then the server can attempt to automatically sync the subtitle timestamps with the video.
-          example: true
-        chromaLocation:
-          example: topleft
-        chromaSubsampling:
-          example: '4:2:0'
-        codec:
-          description: The codec of the stream, such as `h264` or `aac`
-          example: h264
-        colorPrimaries:
-          example: bt709
-        colorRange:
-          example: tv
-        colorSpace:
-          example: bt709
-        colorTrc:
-          example: bt709
-        default:
-          type: boolean
-          example: true
-        displayTitle:
-          description: A friendly name for the stream, often comprised of the language and codec information
-          example: English (H.264 Main)
-        frameRate:
-          type: number
-          example: 23.976
-        hasScalingMatrix:
-          example: false
-        height:
-          type: integer
-          example: 544
-        id:
-          type: integer
-          example: 1
-        index:
-          type: integer
-          description: If the stream is part of the `Part` and not an external resource, the index of the stream within that part
-          example: 0
-        key:
-          description: If the stream is independently streamable, the key from which it can be streamed
-          example: /library/streams/1
-        language:
-          example: English
-        languageCode:
-          description: The three character language code for the stream contents
-          example: eng
-        level:
-          type: integer
-          example: 31
-        profile:
-          example: main
-        refFrames:
-          type: integer
-          example: 2
-        samplingRate:
-          type: integer
-          example: 48000
-        selected:
-          type: boolean
-        streamIdentifier:
-          type: integer
-          example: 1
-        streamType:
-          type: integer
-          description: A number indicating the type of the stream. `1` for video, `2` for audio, `3` for subtitles, `4` for lyrics
-          example: 1
-        width:
-          type: integer
-          example: 1280
-      additionalProperties: true
-    key:
-      type: string
-    hub:
-      type: object
-      properties:
-        context:
-          type: string
-          example: hub.home.onDeck
-        hubIdentifier:
-          type: string
-          description: A unique identifier for the hub
-          example: home.onDeck
-        hubKey:
-          type: string
-          description: 'A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It''s otherwise optional.
-
-            '
-        key:
-          type: string
-          description: The key at which all of the content for this hub can be retrieved
-          example: /hubs/sections/home/onDeck
-        more:
-          type: boolean
-          description: '"A boolean indicating that the hub contains more than what''s included in the current response."
-
-            '
-        size:
-          type: integer
-          example: 1
-        totalSize:
-          type: integer
-          example: 8
-        type:
-          type: string
-          description: The type of the items contained in this hub, or possibly `mixed` if there are multiple types
-          example: track
-        subtype:
-          type: string
-          description: The subtype of the items contained in this hub, or possibly `mixed` if there are multiple types
-          example: podcast
-        promoted:
-          type: boolean
-          description: Indicating if the hub should be promoted to the user's homescreen
-        random:
-          type: boolean
-          description: Indicating that the contents of the hub may change on each request
-        style:
-          type: string
-          description: A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
-        title:
-          type: string
-          description: A title for this grouping of content
-        Metadata:
-          type: array
-          items:
-            $ref: '#/components/schemas/metadata'
-      additionalProperties: true
-    directory:
-      type: object
-      properties:
-        hubKey:
-          type: string
-        key:
-          type: string
-        title:
-          type: string
-        thumb:
-          type: string
-        art:
-          type: string
-        share:
-          type: integer
-        hasStoreServices:
-          type: boolean
-        hasPrefs:
-          type: boolean
-        identifier:
-          type: string
-        titleBar:
-          type: string
-        lastAccessedAt:
-          type: integer
-        type:
-          type: string
-        content:
-          type: boolean
-        filter:
-          type: string
-        Pivot:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              key:
-                type: string
-              type:
-                type: string
-              title:
-                type: string
-              context:
-                type: string
-              symbol:
-                type: string
-      additionalProperties: true
-    MediaContainer:
-      type: object
-      properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-    media:
-      description: '`Media` represents an one or more media files (parts) and is a child of a metadata item. There aren''t necessarily any guaranteed attributes on media elements since the attributes will vary based on the type. The possible attributes are not documented here, but they typically have self-evident names. High-level media information that can be used for badging and flagging, such as `videoResolution` and codecs, is included on the media element.
-
-        '
-      type: object
-      properties:
-        aspectRatio:
-          type: number
-          example: 2.35
-        audioChannels:
-          type: integer
-          example: 2
-        audioCodec:
-          example: aac
-        audioProfile:
-          example: lc
-        bitrate:
-          type: integer
-          example: 5612
-        container:
-          example: mov
-        duration:
-          type: integer
-          example: 150192
-        has64bitOffsets:
-          type: boolean
-          example: false
-        hasVoiceActivity:
-          type: boolean
-          example: true
-        height:
-          type: integer
-          example: 544
-        id:
-          type: integer
-          example: 1
-        optimizedForStreaming:
-          type: boolean
-          example: false
-        videoCodec:
-          example: h264
-        videoFrameRate:
-          example: 24p
-        videoProfile:
-          example: main
-        videoResolution:
-          example: '720'
-        width:
-          type: integer
-          example: 1280
-        Part:
-          type: array
-          items:
-            $ref: '#/components/schemas/part'
-      additionalProperties: true
-    items:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/metadata'
-      - type: object
-        properties:
-          MetadataItem:
-            type: array
-            items:
-              type: object
-              description: Nested metadata items
-              $ref: '#/components/schemas/items'
-    image:
-      description: 'Images such as movie posters and background artwork are represented by Image elements.
-
-        '
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - background
-          - banner
-          - clearLogo
-          - coverPoster
-          - snapshot
-          description: Describes both the purpose and intended presentation of the image.
-        url:
-          type: string
-          description: The relative path or absolute url for the image.
-        alt:
-          type: string
-          description: Title to use for accessibility.
     sort:
       allOf:
       - $ref: '#/components/schemas/directory'
@@ -5771,259 +5379,6 @@ components:
           firstCharacterKey:
             type: string
             description: The key to use to get items sorted by this field and indexed by the first character
-    allowSync:
-      type: boolean
-    thumb:
-      type: string
-    mediaContainer:
-      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
-
-
-        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
-
-        '
-      type: object
-      properties:
-        MediaContainer:
-          type: object
-          properties:
-            identifier:
-              type: string
-            size:
-              type: integer
-            totalSize:
-              type: integer
-              description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-            offset:
-              type: integer
-              description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-    art:
-      type: string
-    serverConfiguration:
-      allOf:
-      - $ref: '#/components/schemas/MediaContainer'
-      - type: object
-        properties:
-          allowCameraUpload:
-            type: boolean
-          allowChannelAccess:
-            type: boolean
-          allowMediaDeletion:
-            type: boolean
-          allowSharing:
-            type: boolean
-          allowSync:
-            type: boolean
-          allowTuners:
-            type: boolean
-          backgroundProcessing:
-            type: boolean
-          certificate:
-            type: boolean
-          companionProxy:
-            type: boolean
-          countryCode:
-            type: string
-          diagnostics:
-            type: string
-          eventStream:
-            type: boolean
-          friendlyName:
-            type: string
-          hubSearch:
-            type: boolean
-          itemClusters:
-            type: boolean
-          livetv:
-            type: integer
-            example: 7
-          machineIdentifier:
-            example: 0123456789abcdef0123456789abcdef012345678
-          mediaProviders:
-            type: boolean
-          multiuser:
-            type: boolean
-          musicAnalysis:
-            type: integer
-            example: 2
-          myPlex:
-            type: boolean
-          myPlexMappingState:
-            example: mapped
-          myPlexSigninState:
-            example: ok
-          myPlexSubscription:
-            type: boolean
-          myPlexUsername:
-            type: string
-          offlineTranscode:
-            example: 1
-          ownerFeatures:
-            description: A comma-separated list of features which are enabled for the server owner
-            type: string
-          platform:
-            type: string
-          platformVersion:
-            type: string
-          pluginHost:
-            type: boolean
-          pushNotifications:
-            type: boolean
-          readOnlyLibraries:
-            type: boolean
-          streamingBrainABRVersion:
-            type: integer
-          streamingBrainVersion:
-            type: integer
-          sync:
-            type: boolean
-          transcoderActiveVideoSessions:
-            type: integer
-          transcoderAudio:
-            type: boolean
-          transcoderLyrics:
-            type: boolean
-          transcoderPhoto:
-            type: boolean
-          transcoderSubtitles:
-            type: boolean
-          transcoderVideo:
-            type: boolean
-          transcoderVideoBitrates:
-            description: The suggested video quality bitrates to present to the user
-          transcoderVideoQualities:
-            type: string
-          transcoderVideoResolutions:
-            description: The suggested video resolutions to the above quality bitrates
-          updatedAt:
-            type: integer
-          updater:
-            type: boolean
-          version:
-            type: string
-          voiceSearch:
-            type: boolean
-    mediaContainerWithMetadata:
-      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
-
-
-        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
-
-        '
-      type: object
-      properties:
-        MediaContainer:
-          type: object
-          properties:
-            identifier:
-              type: string
-            size:
-              type: integer
-            totalSize:
-              type: integer
-              description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-            offset:
-              type: integer
-              description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-            Metadata:
-              type: array
-              items:
-                $ref: '#/components/schemas/metadata'
-          additionalProperties: true
-    librarySection:
-      type: object
-      properties:
-        allowSync:
-          type: boolean
-        art:
-          $ref: '#/components/schemas/art'
-        composite:
-          type: string
-        filters:
-          type: boolean
-          description: Indicates whether this section has filtering capabilities
-        refreshing:
-          type: boolean
-          description: Indicates whether this library section is currently scanning
-        thumb:
-          $ref: '#/components/schemas/thumb'
-        key:
-          $ref: '#/components/schemas/key'
-        type:
-          $ref: '#/components/schemas/type'
-        title:
-          $ref: '#/components/schemas/title'
-        agent:
-          type: string
-        scanner:
-          type: string
-        language:
-          type: string
-        updatedAt:
-          type: integer
-        createdAt:
-          type: integer
-        scannedAt:
-          type: integer
-        content:
-          $ref: '#/components/schemas/content'
-        directory:
-          type: boolean
-        contentChangedAt:
-          type: integer
-        hidden:
-          type: boolean
-        Location:
-          type: array
-          items:
-            type: object
-            description: Represents a top-level location on disk where media in this library section is stored
-            properties:
-              id:
-                type: integer
-              path:
-                description: The path of where this directory exists on disk
-    part:
-      description: '`Part` represents a particular file or "part" of a media item. The part is the playable unit of the media hierarchy. Suppose that a movie library contains a movie that is broken up into files, reminiscent of a movie split across two BDs. The metadata item represents information about the movie, the media item represents this instance of the movie at this resolution and quality, and the part items represent the two playable files.  If another media were added which contained the joining of these two parts transcoded down to a lower resolution, then this metadata would contain 2 medias, one with 2 parts and one with 1 part.
-
-        '
-      type: object
-      properties:
-        audioProfile:
-          example: lc
-        container:
-          description: The container of the media file, such as `mp4` or `mkv`
-          example: mov
-        duration:
-          type: integer
-          description: The duration of the media item, in milliseconds
-          example: 150192
-        file:
-          description: The local file path at which the part is stored on the server
-          example: /home/schuyler/Videos/Trailers/Cloud Atlas (2012).mov
-        has64bitOffsets:
-          type: boolean
-          example: false
-        id:
-          type: integer
-          example: 1
-        key:
-          description: The key from which the media can be streamed
-          example: /library/parts/1/1531779263/file.mov
-        optimizedForStreaming:
-          type: boolean
-          example: false
-        size:
-          type: integer
-          description: The size of the media, in bytes
-          example: 105355654
-        videoProfile:
-          example: main
-        Stream:
-          type: array
-          items:
-            $ref: '#/components/schemas/stream'
-      additionalProperties: true
     metadata:
       description: 'Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
 
@@ -6236,10 +5591,103 @@ components:
           items:
             $ref: '#/components/schemas/sort'
       additionalProperties: true
+    mediaContainerWithNestedMetadata:
+      type: object
+      properties:
+        MediaContainer:
+          allOf:
+          - $ref: '#/components/schemas/MediaContainer'
+          - type: object
+            properties:
+              MetadataItem:
+                type: array
+                items:
+                  type: object
+                  allOf:
+                  - $ref: '#/components/schemas/metadata'
+                  - type: object
+                    properties:
+                      MetadataItem:
+                        type: array
+                        items:
+                          type: object
+                          description: Nested metadata items
+                          $ref: '#/components/schemas/items'
+    filter:
+      allOf:
+      - $ref: '#/components/schemas/directory'
+      - type: object
+        description: 'Each `Filter` object contains a description of the filter. Note that it is not an exhaustive list of the full media query language, but an important subset useful for top-level API.
+
+          '
+        properties:
+          filter:
+            type: string
+            description: This represents the filter name used for the filter, which can be used to construct complex media queries with.
+          filterType:
+            type: string
+            description: This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+          key:
+            type: string
+            description: This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+          title:
+            type: string
+            description: The title for the filter.
+    librarySection:
+      type: object
+      properties:
+        allowSync:
+          type: boolean
+        art:
+          $ref: '#/components/schemas/art'
+        composite:
+          type: string
+        filters:
+          type: boolean
+          description: Indicates whether this section has filtering capabilities
+        refreshing:
+          type: boolean
+          description: Indicates whether this library section is currently scanning
+        thumb:
+          $ref: '#/components/schemas/thumb'
+        key:
+          $ref: '#/components/schemas/key'
+        type:
+          $ref: '#/components/schemas/type'
+        title:
+          $ref: '#/components/schemas/title'
+        agent:
+          type: string
+        scanner:
+          type: string
+        language:
+          type: string
+        updatedAt:
+          type: integer
+        createdAt:
+          type: integer
+        scannedAt:
+          type: integer
+        content:
+          $ref: '#/components/schemas/content'
+        directory:
+          type: boolean
+        contentChangedAt:
+          type: integer
+        hidden:
+          type: boolean
+        Location:
+          type: array
+          items:
+            type: object
+            description: Represents a top-level location on disk where media in this library section is stored
+            properties:
+              id:
+                type: integer
+              path:
+                description: The path of where this directory exists on disk
     type:
       type: string
-    content:
-      type: boolean
     mediaContainerWithSettings:
       type: object
       properties:
@@ -6293,23 +5741,601 @@ components:
                     enumValues:
                       type: string
                       description: The possible values for this pref if restricted.  The list is `|` separated with `value:name` entries.
+    media:
+      description: '`Media` represents an one or more media files (parts) and is a child of a metadata item. There aren''t necessarily any guaranteed attributes on media elements since the attributes will vary based on the type. The possible attributes are not documented here, but they typically have self-evident names. High-level media information that can be used for badging and flagging, such as `videoResolution` and codecs, is included on the media element.
+
+        '
+      type: object
+      properties:
+        aspectRatio:
+          type: number
+          example: 2.35
+        audioChannels:
+          type: integer
+          example: 2
+        audioCodec:
+          example: aac
+        audioProfile:
+          example: lc
+        bitrate:
+          type: integer
+          example: 5612
+        container:
+          example: mov
+        duration:
+          type: integer
+          example: 150192
+        has64bitOffsets:
+          type: boolean
+          example: false
+        hasVoiceActivity:
+          type: boolean
+          example: true
+        height:
+          type: integer
+          example: 544
+        id:
+          type: integer
+          example: 1
+        optimizedForStreaming:
+          type: boolean
+          example: false
+        videoCodec:
+          example: h264
+        videoFrameRate:
+          example: 24p
+        videoProfile:
+          example: main
+        videoResolution:
+          example: '720'
+        width:
+          type: integer
+          example: 1280
+        Part:
+          type: array
+          items:
+            $ref: '#/components/schemas/part'
+      additionalProperties: true
+    content:
+      type: boolean
+    tag:
+      description: 'A variety of extra information about a metadata item is included as tags. These tags use their own element names such as `Genre`, `Writer`, `Directory`, and `Role`. Individual tag types may introduce their own extra attributes.
+
+        '
+      type: object
+      properties:
+        id:
+          type: integer
+        tag:
+          description: The value of the tag (the name)
+          example: Shaun Lawton
+        tagKey:
+          description: Plex identifier for this tag which can be used to fetch additional information from plex.tv
+          example: 5d3ee12c4cde6a001c3e0b27
+        tagType:
+          type: integer
+        filter:
+          description: A filter parameter that can be used to query for more content that matches this tag value.
+          example: actor=49
+        role:
+          description: The role this actor played
+          example: Secretary
+        thumb:
+          example: http://image.tmdb.org/t/p/original/lcJ8qM51ClAR2UzXU1mkZGfnn3o.jpg
+        context:
+          type: string
+        ratingKey:
+          type: string
+        confidence:
+          type: number
+          description: Measure of the confidence of an automatic tag
+    hub:
+      type: object
+      properties:
+        context:
+          type: string
+          example: hub.home.onDeck
+        hubIdentifier:
+          type: string
+          description: A unique identifier for the hub
+          example: home.onDeck
+        hubKey:
+          type: string
+          description: 'A key at which the exact content currently displayed can be fetched again. This is particularly important when a hub is marked as random and requesting the `key` may get different results. It''s otherwise optional.
+
+            '
+        key:
+          type: string
+          description: The key at which all of the content for this hub can be retrieved
+          example: /hubs/sections/home/onDeck
+        more:
+          type: boolean
+          description: '"A boolean indicating that the hub contains more than what''s included in the current response."
+
+            '
+        size:
+          type: integer
+          example: 1
+        totalSize:
+          type: integer
+          example: 8
+        type:
+          type: string
+          description: The type of the items contained in this hub, or possibly `mixed` if there are multiple types
+          example: track
+        subtype:
+          type: string
+          description: The subtype of the items contained in this hub, or possibly `mixed` if there are multiple types
+          example: podcast
+        promoted:
+          type: boolean
+          description: Indicating if the hub should be promoted to the user's homescreen
+        random:
+          type: boolean
+          description: Indicating that the contents of the hub may change on each request
+        style:
+          type: string
+          description: A suggestion on how this hub's contents might be displayed by a client. Some examples include `hero`, `list`, `spotlight`, and `upsell`
+        title:
+          type: string
+          description: A title for this grouping of content
+        Metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/metadata'
+      additionalProperties: true
+    part:
+      description: '`Part` represents a particular file or "part" of a media item. The part is the playable unit of the media hierarchy. Suppose that a movie library contains a movie that is broken up into files, reminiscent of a movie split across two BDs. The metadata item represents information about the movie, the media item represents this instance of the movie at this resolution and quality, and the part items represent the two playable files.  If another media were added which contained the joining of these two parts transcoded down to a lower resolution, then this metadata would contain 2 medias, one with 2 parts and one with 1 part.
+
+        '
+      type: object
+      properties:
+        audioProfile:
+          example: lc
+        container:
+          description: The container of the media file, such as `mp4` or `mkv`
+          example: mov
+        duration:
+          type: integer
+          description: The duration of the media item, in milliseconds
+          example: 150192
+        file:
+          description: The local file path at which the part is stored on the server
+          example: /home/schuyler/Videos/Trailers/Cloud Atlas (2012).mov
+        has64bitOffsets:
+          type: boolean
+          example: false
+        id:
+          type: integer
+          example: 1
+        key:
+          description: The key from which the media can be streamed
+          example: /library/parts/1/1531779263/file.mov
+        optimizedForStreaming:
+          type: boolean
+          example: false
+        size:
+          type: integer
+          description: The size of the media, in bytes
+          example: 105355654
+        videoProfile:
+          example: main
+        Stream:
+          type: array
+          items:
+            $ref: '#/components/schemas/stream'
+      additionalProperties: true
+    MediaContainer:
+      type: object
+      properties:
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+    image:
+      description: 'Images such as movie posters and background artwork are represented by Image elements.
+
+        '
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - background
+          - banner
+          - clearLogo
+          - coverPoster
+          - snapshot
+          description: Describes both the purpose and intended presentation of the image.
+        url:
+          type: string
+          description: The relative path or absolute url for the image.
+        alt:
+          type: string
+          description: Title to use for accessibility.
+    allowSync:
+      type: boolean
+    mediaContainer:
+      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
+
+
+        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
+
+        '
+      type: object
+      properties:
+        MediaContainer:
+          type: object
+          properties:
+            identifier:
+              type: string
+            size:
+              type: integer
+            totalSize:
+              type: integer
+              description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+            offset:
+              type: integer
+              description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+    directory:
+      type: object
+      properties:
+        hubKey:
+          type: string
+        key:
+          type: string
+        title:
+          type: string
+        thumb:
+          type: string
+        art:
+          type: string
+        share:
+          type: integer
+        hasStoreServices:
+          type: boolean
+        hasPrefs:
+          type: boolean
+        identifier:
+          type: string
+        titleBar:
+          type: string
+        lastAccessedAt:
+          type: integer
+        type:
+          type: string
+        content:
+          type: boolean
+        filter:
+          type: string
+        Pivot:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              key:
+                type: string
+              type:
+                type: string
+              title:
+                type: string
+              context:
+                type: string
+              symbol:
+                type: string
+      additionalProperties: true
+    mediaContainerWithMetadata:
+      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
+
+
+        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
+
+        '
+      type: object
+      properties:
+        MediaContainer:
+          type: object
+          properties:
+            identifier:
+              type: string
+            size:
+              type: integer
+            totalSize:
+              type: integer
+              description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+            offset:
+              type: integer
+              description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+            Metadata:
+              type: array
+              items:
+                $ref: '#/components/schemas/metadata'
+          additionalProperties: true
+    thumb:
+      type: string
+    title:
+      type: string
+    art:
+      type: string
+    mediaContainerWithArtwork:
+      type: object
+      properties:
+        MediaContainer:
+          allOf:
+          - $ref: '#/components/schemas/MediaContainer'
+          - type: object
+            properties:
+              Metadata:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: The title of the item
+                    type:
+                      type: string
+                      enum:
+                      - image
+                    key:
+                      type: string
+                      description: The path to the artwork
+                  additionalProperties: true
+    key:
+      type: string
+    items:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/metadata'
+      - type: object
+        properties:
+          MetadataItem:
+            type: array
+            items:
+              type: object
+              description: Nested metadata items
+              $ref: '#/components/schemas/items'
+    stream:
+      description: '`Stream` represents a particular stream from a media item, such as the video stream, audio stream, or subtitle stream. The stream may either be part of the file represented by the parent `Part` or, especially for subtitles, an external file. The stream contains more detailed information about the specific stream. For example, a video may include the `aspectRatio` at the `Media` level, but detailed information about the video stream like the color space will be included on the `Stream` for the video stream.  Note that photos do not have streams (mostly as an optimization).
+
+        '
+      type: object
+      properties:
+        audioChannelLayout:
+          example: stereo
+        bitDepth:
+          type: integer
+          example: 8
+        bitrate:
+          type: integer
+          example: 5466
+        canAutoSync:
+          type: boolean
+          description: For subtitle streams only. If `true` then the server can attempt to automatically sync the subtitle timestamps with the video.
+          example: true
+        chromaLocation:
+          example: topleft
+        chromaSubsampling:
+          example: '4:2:0'
+        codec:
+          description: The codec of the stream, such as `h264` or `aac`
+          example: h264
+        colorPrimaries:
+          example: bt709
+        colorRange:
+          example: tv
+        colorSpace:
+          example: bt709
+        colorTrc:
+          example: bt709
+        default:
+          type: boolean
+          example: true
+        displayTitle:
+          description: A friendly name for the stream, often comprised of the language and codec information
+          example: English (H.264 Main)
+        frameRate:
+          type: number
+          example: 23.976
+        hasScalingMatrix:
+          example: false
+        height:
+          type: integer
+          example: 544
+        id:
+          type: integer
+          example: 1
+        index:
+          type: integer
+          description: If the stream is part of the `Part` and not an external resource, the index of the stream within that part
+          example: 0
+        key:
+          description: If the stream is independently streamable, the key from which it can be streamed
+          example: /library/streams/1
+        language:
+          example: English
+        languageCode:
+          description: The three character language code for the stream contents
+          example: eng
+        level:
+          type: integer
+          example: 31
+        profile:
+          example: main
+        refFrames:
+          type: integer
+          example: 2
+        samplingRate:
+          type: integer
+          example: 48000
+        selected:
+          type: boolean
+        streamIdentifier:
+          type: integer
+          example: 1
+        streamType:
+          type: integer
+          description: A number indicating the type of the stream. `1` for video, `2` for audio, `3` for subtitles, `4` for lyrics
+          example: 1
+        width:
+          type: integer
+          example: 1280
+      additionalProperties: true
+    serverConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/MediaContainer'
+      - type: object
+        properties:
+          allowCameraUpload:
+            type: boolean
+          allowChannelAccess:
+            type: boolean
+          allowMediaDeletion:
+            type: boolean
+          allowSharing:
+            type: boolean
+          allowSync:
+            type: boolean
+          allowTuners:
+            type: boolean
+          backgroundProcessing:
+            type: boolean
+          certificate:
+            type: boolean
+          companionProxy:
+            type: boolean
+          countryCode:
+            type: string
+          diagnostics:
+            type: string
+          eventStream:
+            type: boolean
+          friendlyName:
+            type: string
+          hubSearch:
+            type: boolean
+          itemClusters:
+            type: boolean
+          livetv:
+            type: integer
+            example: 7
+          machineIdentifier:
+            example: 0123456789abcdef0123456789abcdef012345678
+          mediaProviders:
+            type: boolean
+          multiuser:
+            type: boolean
+          musicAnalysis:
+            type: integer
+            example: 2
+          myPlex:
+            type: boolean
+          myPlexMappingState:
+            example: mapped
+          myPlexSigninState:
+            example: ok
+          myPlexSubscription:
+            type: boolean
+          myPlexUsername:
+            type: string
+          offlineTranscode:
+            example: 1
+          ownerFeatures:
+            description: A comma-separated list of features which are enabled for the server owner
+            type: string
+          platform:
+            type: string
+          platformVersion:
+            type: string
+          pluginHost:
+            type: boolean
+          pushNotifications:
+            type: boolean
+          readOnlyLibraries:
+            type: boolean
+          streamingBrainABRVersion:
+            type: integer
+          streamingBrainVersion:
+            type: integer
+          sync:
+            type: boolean
+          transcoderActiveVideoSessions:
+            type: integer
+          transcoderAudio:
+            type: boolean
+          transcoderLyrics:
+            type: boolean
+          transcoderPhoto:
+            type: boolean
+          transcoderSubtitles:
+            type: boolean
+          transcoderVideo:
+            type: boolean
+          transcoderVideoBitrates:
+            description: The suggested video quality bitrates to present to the user
+          transcoderVideoQualities:
+            type: string
+          transcoderVideoResolutions:
+            description: The suggested video resolutions to the above quality bitrates
+          updatedAt:
+            type: integer
+          updater:
+            type: boolean
+          version:
+            type: string
+          voiceSearch:
+            type: boolean
   responses:
-    responses-404:
-      description: The stream doesn't exist, or the loudness feature is not available on this PMS
+    post-responses-200:
+      description: OK
       content:
-        text/html:
+        application/json:
+          schema:
+            type: object
+            properties:
+              MediaContainer:
+                allOf:
+                - $ref: '#/components/schemas/MediaContainer'
+                - type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                      enum:
+                      - intro
+                      - commercial
+                      - bookmark
+                      - resume
+                      - credit
+                    startTimeOffset:
+                      type: integer
+                    endTimeOffset:
+                      type: integer
+                    title:
+                      type: string
+                    color:
+                      type: string
+                  additionalProperties: true
           examples:
-            notFound:
-              summary: Not Found
-              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
-    responses-403:
-      description: The media is not accessible to the user
-      content:
-        text/html:
-          examples:
-            forbidden:
-              summary: Forbidden
-              value: <html><head><title>Forbidden</title></head><body><h1>403 Forbidden</h1></body></html>
+            creditMarker:
+              value:
+                MediaContainer:
+                  size: 1
+                  Marker:
+                  - final: true
+                    id: 1025
+                    type: credits
+                    startTimeOffset: 8249805
+                    endTimeOffset: 8715339
     '200':
       description: OK
       content:
@@ -6521,48 +6547,46 @@ components:
                       descKey: duration:desc
                       key: duration
                       title: Duration
-    post-responses-200:
-      description: OK
+    responses-404:
+      description: The stream doesn't exist, or the loudness feature is not available on this PMS
       content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              MediaContainer:
-                allOf:
-                - $ref: '#/components/schemas/MediaContainer'
-                - type: object
-                  properties:
-                    id:
-                      type: integer
-                    type:
-                      type: string
-                      enum:
-                      - intro
-                      - commercial
-                      - bookmark
-                      - resume
-                      - credit
-                    startTimeOffset:
-                      type: integer
-                    endTimeOffset:
-                      type: integer
-                    title:
-                      type: string
-                    color:
-                      type: string
-                  additionalProperties: true
+        text/html:
           examples:
-            creditMarker:
-              value:
-                MediaContainer:
-                  size: 1
-                  Marker:
-                  - final: true
-                    id: 1025
-                    type: credits
-                    startTimeOffset: 8249805
-                    endTimeOffset: 8715339
+            notFound:
+              summary: Not Found
+              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
+    '400':
+      description: Bad Request
+      content:
+        text/html:
+          examples:
+            badRequest:
+              summary: A parameter has a bad value or required parameter is missing
+              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
+    responses-403:
+      description: The media is not accessible to the user
+      content:
+        text/html:
+          examples:
+            forbidden:
+              summary: Forbidden
+              value: <html><head><title>Forbidden</title></head><body><h1>403 Forbidden</h1></body></html>
+    responses-400:
+      description: Request parameters are bad, such as an `endTimeOffset` prior to the `startTimeOffset`
+      content:
+        text/html:
+          examples:
+            badRequest:
+              summary: A parameter has a bad value or required parameter is missing
+              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
+    '404':
+      description: Not Found
+      content:
+        text/html:
+          examples:
+            notFound:
+              summary: Not Found
+              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
     requestHandler_slash-get-responses-200:
       description: OK
       content:
@@ -6644,14 +6668,6 @@ components:
                   - count: 1
                     key: key
                     title: title
-    '400':
-      description: Bad Request
-      content:
-        text/html:
-          examples:
-            badRequest:
-              summary: A parameter has a bad value or required parameter is missing
-              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
     '204':
       description: No Content
       content:
@@ -6660,62 +6676,7 @@ components:
             noContent:
               summary: No Content
               value: ''
-    responses-400:
-      description: Request parameters are bad, such as an `endTimeOffset` prior to the `startTimeOffset`
-      content:
-        text/html:
-          examples:
-            badRequest:
-              summary: A parameter has a bad value or required parameter is missing
-              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
-    '404':
-      description: Not Found
-      content:
-        text/html:
-          examples:
-            notFound:
-              summary: Not Found
-              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
   parameters:
-    mediaQuery:
-      in: query
-      name: mediaQuery
-      schema:
-        type: object
-      examples:
-        simplyAnd:
-          description: Represents type = 4 AND sourceType = 2 AND title = "24"
-          value:
-            type: 4
-            sourceType: 2
-            title=: 24
-        sorting:
-          description: Represents type = 4 AND sourceType = 2 AND title IS \"24\" sort by duration in descending order and index (ascending)"
-          value:
-            type: 4
-            sourceType: 2
-            title=: 24
-            sort:
-            - duration:desc
-            - index
-        implicitOr:
-          description: Represents (rating=1 OR rating=2 OR rating=3) AND index=5
-          value:
-            rating:
-            - 1
-            - 2
-            - 3
-            index: 5
-        complex:
-          description: Represents (index = 1 OR rating = 2) AND duration = 10
-          value:
-            push: 1
-            index: 1
-            or: 1
-            rating: 2
-            pop: 1
-            duration: 10
-      description: This is a complex query built of several parameters.  See [API Info section](#section/API-Info/Media-Queries) for information on building media queries
     composite:
       in: query
       name: composite
@@ -6785,6 +6746,45 @@ components:
           value:
             height: 256
             width: 256
+    mediaQuery:
+      in: query
+      name: mediaQuery
+      schema:
+        type: object
+      examples:
+        simplyAnd:
+          description: Represents type = 4 AND sourceType = 2 AND title = "24"
+          value:
+            type: 4
+            sourceType: 2
+            title=: 24
+        sorting:
+          description: Represents type = 4 AND sourceType = 2 AND title IS \"24\" sort by duration in descending order and index (ascending)"
+          value:
+            type: 4
+            sourceType: 2
+            title=: 24
+            sort:
+            - duration:desc
+            - index
+        implicitOr:
+          description: Represents (rating=1 OR rating=2 OR rating=3) AND index=5
+          value:
+            rating:
+            - 1
+            - 2
+            - 3
+            index: 5
+        complex:
+          description: Represents (index = 1 OR rating = 2) AND duration = 10
+          value:
+            push: 1
+            index: 1
+            or: 1
+            rating: 2
+            pop: 1
+            duration: 10
+      description: This is a complex query built of several parameters.  See [API Info section](#section/API-Info/Media-Queries) for information on building media queries
   securitySchemes:
     user_token:
       type: apiKey

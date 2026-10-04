@@ -828,596 +828,7 @@ paths:
         '200':
           $ref: '#/components/responses/200'
 components:
-  parameters:
-    '13':
-      in: query
-      name: mediaBufferSize
-      schema:
-        type: integer
-      example: 102400
-      description: Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
-    '20':
-      in: query
-      name: photoResolution
-      schema:
-        type: string
-        pattern: ^\d[x:]\d$
-      example: 1080x1080
-      description: Target photo resolution.
-    '27':
-      in: query
-      name: videoResolution
-      schema:
-        type: string
-        pattern: ^\d[x:]\d$
-      example: 1080x1080
-      description: Target maximum video resolution.
-    '5':
-      in: query
-      name: autoAdjustQuality
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-      example: 1
-      description: Indicates the client supports ABR.
-    '28':
-      in: header
-      name: X-Plex-Client-Identifier
-      schema:
-        type: string
-      required: true
-      description: Unique per client.
-    '15':
-      in: query
-      name: musicBitrate
-      schema:
-        type: integer
-        minimum: 0
-      example: 5000
-      description: Target bitrate for audio only files (in kbps, used to transcode).
-    '25':
-      in: query
-      name: videoBitrate
-      schema:
-        type: integer
-        minimum: 0
-      example: 12000
-      description: Target video bitrate (in kbps).
-    '21':
-      in: query
-      name: protocol
-      schema:
-        type: string
-        enum:
-        - http
-        - hls
-        - dash
-      example: dash
-      description: 'Indicates the network streaming protocol to be used for the transcode session: * ''http'' - include the file in the http response such as MKV streaming * ''hls'' - hls stream (RFC 8216) * ''dash'' - dash stream (ISO/IEC 23009-1:2022)
-
-        '
-    '14':
-      in: query
-      name: mediaIndex
-      schema:
-        type: integer
-      example: 0
-      description: Index of the media to transcode. -1 or not specified indicates let the server choose.
-    '8':
-      in: query
-      name: directStream
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-      example: 1
-      description: Indicates the client supports direct streaming the video of the indicated content.
-    '12':
-      in: query
-      name: location
-      schema:
-        type: string
-        enum:
-        - lan
-        - wan
-        - cellular
-      example: wan
-      description: Network type of the client, can be used to help determine target bitrate.
-    '6':
-      in: query
-      name: autoAdjustSubtitle
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-      example: 1
-      description: Indicates if the server should adjust subtitles based on Voice Activity Data.
-    '4':
-      in: query
-      name: audioChannelCount
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 8
-      example: 5
-      description: Target video number of audio channels.
-    '29':
-      in: header
-      name: X-Plex-Client-Profile-Extra
-      schema:
-        type: string
-      example: add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)
-      description: See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
-    '18':
-      in: query
-      name: path
-      schema:
-        type: string
-      example: /library/metadata/151671
-      description: Internal PMS path of the media to transcode.
-    '11':
-      in: query
-      name: hasMDE
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-      example: 1
-      description: Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
-    '34':
-      in: header
-      name: X-Plex-Platform-Version
-      schema:
-        type: string
-      example: 135
-      description: Client Platform Version
-    '22':
-      in: query
-      name: secondsPerSegment
-      schema:
-        type: integer
-      example: 5
-      description: Number of seconds to include in each transcoded segment
-    '16':
-      in: query
-      name: offset
-      schema:
-        type: number
-      example: 90.5
-      description: Offset from the start of the media (in seconds).
-    '9':
-      in: query
-      name: directStreamAudio
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-      example: 1
-      description: Indicates the client supports direct streaming the audio of the indicated content.
-    '30':
-      in: header
-      name: X-Plex-Client-Profile-Name
-      schema:
-        type: string
-      example: generic
-      description: Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
-    '10':
-      in: query
-      name: disableResolutionRotation
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-      example: 1
-      description: Indicates if resolution should be adjusted for orientation.
-    '3':
-      in: query
-      name: audioBoost
-      schema:
-        type: integer
-        minimum: 1
-      example: 50
-      description: Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
-    '2':
-      in: query
-      name: advancedSubtitles
-      schema:
-        type: string
-        enum:
-        - burn
-        - text
-        - unknown
-      example: burn
-      description: 'Indicates how  incompatible advanced subtitles (such as ass/ssa) should be included: * ''burn'' - Burn incompatible advanced text subtitles into the video stream * ''text'' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
-
-        '
-    '32':
-      in: header
-      name: X-Plex-Model
-      schema:
-        type: string
-      example: standalone
-      description: Model of the device the client is running on
-    '23':
-      in: query
-      name: subtitleSize
-      schema:
-        type: integer
-        minimum: 1
-      example: 50
-      description: Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
-    '17':
-      in: query
-      name: partIndex
-      schema:
-        type: integer
-      example: 0
-      description: Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
-    '26':
-      in: query
-      name: videoQuality
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 99
-      example: 50
-      description: Target photo quality.
-    '33':
-      in: header
-      name: X-Plex-Platform
-      schema:
-        type: string
-      example: Chrome
-      description: Client Platform
-    '7':
-      in: query
-      name: directPlay
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-      example: 1
-      description: Indicates the client supports direct playing the indicated content.
-    '24':
-      in: query
-      name: subtitles
-      schema:
-        type: string
-        enum:
-        - auto
-        - burn
-        - none
-        - sidecar
-        - embedded
-        - segmented
-        - unknown
-      example: Burn
-      description: 'Indicates how subtitles should be included: * ''auto'' - Compute the appropriate subtitle setting automatically * ''burn'' - Burn the selected subtitle; auto if no selected subtitle * ''none'' - Ignore all subtitle streams * ''sidecar'' - The selected subtitle should be provided as a sidecar * ''embedded'' - The selected subtitle should be provided as an embedded stream * ''segmented'' - The selected subtitle should be provided as a segmented stream
-
-        '
-    '19':
-      in: query
-      name: peakBitrate
-      schema:
-        type: integer
-        minimum: 0
-      example: 12000
-      description: Maximum bitrate (in kbps) to use in ABR.
-    '31':
-      in: header
-      name: X-Plex-Device
-      schema:
-        type: string
-      example: Windows
-      description: Device the client is running on
-    '35':
-      in: header
-      name: X-Plex-Session-Identifier
-      schema:
-        type: string
-      description: Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
   schemas:
-    filter:
-      allOf:
-      - $ref: '#/components/schemas/directory'
-      - type: object
-        description: 'Each `Filter` object contains a description of the filter. Note that it is not an exhaustive list of the full media query language, but an important subset useful for top-level API.
-
-          '
-        properties:
-          filter:
-            type: string
-            description: This represents the filter name used for the filter, which can be used to construct complex media queries with.
-          filterType:
-            type: string
-            description: This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
-          key:
-            type: string
-            description: This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
-          title:
-            type: string
-            description: The title for the filter.
-    properties-MediaContainer:
-      type: object
-      properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-        Metadata:
-          type: array
-          items:
-            $ref: '#/components/schemas/metadata'
-      additionalProperties: true
-    tag:
-      description: 'A variety of extra information about a metadata item is included as tags. These tags use their own element names such as `Genre`, `Writer`, `Directory`, and `Role`. Individual tag types may introduce their own extra attributes.
-
-        '
-      type: object
-      properties:
-        id:
-          type: integer
-        tag:
-          description: The value of the tag (the name)
-          example: Shaun Lawton
-        tagKey:
-          description: Plex identifier for this tag which can be used to fetch additional information from plex.tv
-          example: 5d3ee12c4cde6a001c3e0b27
-        tagType:
-          type: integer
-        filter:
-          description: A filter parameter that can be used to query for more content that matches this tag value.
-          example: actor=49
-        role:
-          description: The role this actor played
-          example: Secretary
-        thumb:
-          example: http://image.tmdb.org/t/p/original/lcJ8qM51ClAR2UzXU1mkZGfnn3o.jpg
-        context:
-          type: string
-        ratingKey:
-          type: string
-        confidence:
-          type: number
-          description: Measure of the confidence of an automatic tag
-    stream:
-      description: '`Stream` represents a particular stream from a media item, such as the video stream, audio stream, or subtitle stream. The stream may either be part of the file represented by the parent `Part` or, especially for subtitles, an external file. The stream contains more detailed information about the specific stream. For example, a video may include the `aspectRatio` at the `Media` level, but detailed information about the video stream like the color space will be included on the `Stream` for the video stream.  Note that photos do not have streams (mostly as an optimization).
-
-        '
-      type: object
-      properties:
-        audioChannelLayout:
-          example: stereo
-        bitDepth:
-          type: integer
-          example: 8
-        bitrate:
-          type: integer
-          example: 5466
-        canAutoSync:
-          type: boolean
-          description: For subtitle streams only. If `true` then the server can attempt to automatically sync the subtitle timestamps with the video.
-          example: true
-        chromaLocation:
-          example: topleft
-        chromaSubsampling:
-          example: '4:2:0'
-        codec:
-          description: The codec of the stream, such as `h264` or `aac`
-          example: h264
-        colorPrimaries:
-          example: bt709
-        colorRange:
-          example: tv
-        colorSpace:
-          example: bt709
-        colorTrc:
-          example: bt709
-        default:
-          type: boolean
-          example: true
-        displayTitle:
-          description: A friendly name for the stream, often comprised of the language and codec information
-          example: English (H.264 Main)
-        frameRate:
-          type: number
-          example: 23.976
-        hasScalingMatrix:
-          example: false
-        height:
-          type: integer
-          example: 544
-        id:
-          type: integer
-          example: 1
-        index:
-          type: integer
-          description: If the stream is part of the `Part` and not an external resource, the index of the stream within that part
-          example: 0
-        key:
-          description: If the stream is independently streamable, the key from which it can be streamed
-          example: /library/streams/1
-        language:
-          example: English
-        languageCode:
-          description: The three character language code for the stream contents
-          example: eng
-        level:
-          type: integer
-          example: 31
-        profile:
-          example: main
-        refFrames:
-          type: integer
-          example: 2
-        samplingRate:
-          type: integer
-          example: 48000
-        selected:
-          type: boolean
-        streamIdentifier:
-          type: integer
-          example: 1
-        streamType:
-          type: integer
-          description: A number indicating the type of the stream. `1` for video, `2` for audio, `3` for subtitles, `4` for lyrics
-          example: 1
-        width:
-          type: integer
-          example: 1280
-      additionalProperties: true
-    directory:
-      type: object
-      properties:
-        hubKey:
-          type: string
-        key:
-          type: string
-        title:
-          type: string
-        thumb:
-          type: string
-        art:
-          type: string
-        share:
-          type: integer
-        hasStoreServices:
-          type: boolean
-        hasPrefs:
-          type: boolean
-        identifier:
-          type: string
-        titleBar:
-          type: string
-        lastAccessedAt:
-          type: integer
-        type:
-          type: string
-        content:
-          type: boolean
-        filter:
-          type: string
-        Pivot:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              key:
-                type: string
-              type:
-                type: string
-              title:
-                type: string
-              context:
-                type: string
-              symbol:
-                type: string
-      additionalProperties: true
-    MediaContainer:
-      type: object
-      properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
-    media:
-      description: '`Media` represents an one or more media files (parts) and is a child of a metadata item. There aren''t necessarily any guaranteed attributes on media elements since the attributes will vary based on the type. The possible attributes are not documented here, but they typically have self-evident names. High-level media information that can be used for badging and flagging, such as `videoResolution` and codecs, is included on the media element.
-
-        '
-      type: object
-      properties:
-        aspectRatio:
-          type: number
-          example: 2.35
-        audioChannels:
-          type: integer
-          example: 2
-        audioCodec:
-          example: aac
-        audioProfile:
-          example: lc
-        bitrate:
-          type: integer
-          example: 5612
-        container:
-          example: mov
-        duration:
-          type: integer
-          example: 150192
-        has64bitOffsets:
-          type: boolean
-          example: false
-        hasVoiceActivity:
-          type: boolean
-          example: true
-        height:
-          type: integer
-          example: 544
-        id:
-          type: integer
-          example: 1
-        optimizedForStreaming:
-          type: boolean
-          example: false
-        videoCodec:
-          example: h264
-        videoFrameRate:
-          example: 24p
-        videoProfile:
-          example: main
-        videoResolution:
-          example: '720'
-        width:
-          type: integer
-          example: 1280
-        Part:
-          type: array
-          items:
-            $ref: '#/components/schemas/part'
-      additionalProperties: true
-    image:
-      description: 'Images such as movie posters and background artwork are represented by Image elements.
-
-        '
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - background
-          - banner
-          - clearLogo
-          - coverPoster
-          - snapshot
-          description: Describes both the purpose and intended presentation of the image.
-        url:
-          type: string
-          description: The relative path or absolute url for the image.
-        alt:
-          type: string
-          description: Title to use for accessibility.
     sort:
       allOf:
       - $ref: '#/components/schemas/directory'
@@ -1450,145 +861,6 @@ components:
           firstCharacterKey:
             type: string
             description: The key to use to get items sorted by this field and indexed by the first character
-    mediaContainerWithDecision:
-      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
-
-
-        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
-
-        '
-      type: object
-      properties:
-        MediaContainer:
-          allOf:
-          - $ref: '#/components/schemas/properties-MediaContainer'
-          - type: object
-            properties:
-              mdeDecisionCode:
-                type: integer
-                description: The code indicating the status of evaluation of playback when client indicates `hasMDE=1`
-              mdeDecisionText:
-                type: string
-                description: Descriptive text for the above code
-              availableBandwidth:
-                type: integer
-                description: The maximum available bitrate when the decision was rendered.
-              generalDecisionCode:
-                type: integer
-                description: The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
-              generalDecisionText:
-                type: string
-              directPlayDecisionCode:
-                type: integer
-              directPlayDecisionText:
-                type: string
-              transcodeDecisionCode:
-                type: integer
-              transcodeDecisionText:
-                type: string
-              Metadata:
-                type: array
-                items:
-                  allOf:
-                  - $ref: '#/components/schemas/metadata'
-                  - type: object
-                    properties:
-                      Media:
-                        type: array
-                        items:
-                          allOf:
-                          - $ref: '#/components/schemas/media'
-                          - type: object
-                            properties:
-                              abr:
-                                type: boolean
-                              resourceSession:
-                                type: string
-                              selected:
-                                type: boolean
-                              Part:
-                                type: array
-                                items:
-                                  allOf:
-                                  - $ref: '#/components/schemas/part'
-                                  - type: object
-                                    properties:
-                                      decision:
-                                        type: string
-                                        enum:
-                                        - directplay
-                                        - transcode
-                                        - none
-                                      selected:
-                                        type: boolean
-                                      Stream:
-                                        type: array
-                                        items:
-                                          allOf:
-                                          - $ref: '#/components/schemas/stream'
-                                          - type: object
-                                            properties:
-                                              location:
-                                                type: string
-                                                enum:
-                                                - direct
-                                                - sidecar-subs
-                                                - segments-video
-                                                - segments-audio
-                                                - segments-av
-                                                - segments-subs
-                                                - embedded
-                                                - sidecar
-                                              decision:
-                                                type: string
-                                                enum:
-                                                - copy
-                                                - transcode
-                                                - burn
-                                                - unavailable
-                                                - ignore
-                                                - none
-    part:
-      description: '`Part` represents a particular file or "part" of a media item. The part is the playable unit of the media hierarchy. Suppose that a movie library contains a movie that is broken up into files, reminiscent of a movie split across two BDs. The metadata item represents information about the movie, the media item represents this instance of the movie at this resolution and quality, and the part items represent the two playable files.  If another media were added which contained the joining of these two parts transcoded down to a lower resolution, then this metadata would contain 2 medias, one with 2 parts and one with 1 part.
-
-        '
-      type: object
-      properties:
-        audioProfile:
-          example: lc
-        container:
-          description: The container of the media file, such as `mp4` or `mkv`
-          example: mov
-        duration:
-          type: integer
-          description: The duration of the media item, in milliseconds
-          example: 150192
-        file:
-          description: The local file path at which the part is stored on the server
-          example: /home/schuyler/Videos/Trailers/Cloud Atlas (2012).mov
-        has64bitOffsets:
-          type: boolean
-          example: false
-        id:
-          type: integer
-          example: 1
-        key:
-          description: The key from which the media can be streamed
-          example: /library/parts/1/1531779263/file.mov
-        optimizedForStreaming:
-          type: boolean
-          example: false
-        size:
-          type: integer
-          description: The size of the media, in bytes
-          example: 105355654
-        videoProfile:
-          example: main
-        Stream:
-          type: array
-          items:
-            $ref: '#/components/schemas/stream'
-      additionalProperties: true
     metadata:
       description: 'Items in a library are referred to as "metadata items." These metadata items are distinct from "media items" which represent actual instances of media that can be consumed. Consider a TV library that has a single video file in it for a particular episode of a show. The library has a single media item, but it has three metadata items: one for the show, one for the season, and one for the episode. Consider a movie library that has two video files in it: the same movie, but two different resolutions. The library has a single metadata item for the movie, but that metadata item has two media items, one for each resolution. Additionally a "media item" will have one or more "media parts" where the the parts are intended to be watched together, such as a CD1 and CD2 parts of the same movie.
 
@@ -1801,6 +1073,734 @@ components:
           items:
             $ref: '#/components/schemas/sort'
       additionalProperties: true
+    properties-MediaContainer:
+      type: object
+      properties:
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+        Metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/metadata'
+      additionalProperties: true
+    mediaContainerWithDecision:
+      description: '`MediaContainer` is commonly found as the root of a response and is a pretty generic container. Common attributes include `identifier` and things related to paging (`offset`, `size`, `totalSize`).
+
+
+        It is also common for a `MediaContainer` to contain attributes "hoisted" from its children. If every element in the container would have had the same attribute, then that attribute can be present on the container instead of being repeated on every element. For example, an album''s list of tracks might include `parentTitle` on the container since all of the tracks have the same album title. A container may have a `source` attribute when all of the items came from the same source. Generally speaking, when looking for an attribute on an item, if the attribute wasn''t found then the container should be checked for that attribute as well.
+
+        '
+      type: object
+      properties:
+        MediaContainer:
+          allOf:
+          - $ref: '#/components/schemas/properties-MediaContainer'
+          - type: object
+            properties:
+              mdeDecisionCode:
+                type: integer
+                description: The code indicating the status of evaluation of playback when client indicates `hasMDE=1`
+              mdeDecisionText:
+                type: string
+                description: Descriptive text for the above code
+              availableBandwidth:
+                type: integer
+                description: The maximum available bitrate when the decision was rendered.
+              generalDecisionCode:
+                type: integer
+                description: The overall decision. 1xxx are playback can succeed, 2xxx are a general error (such as insufficient bandwidth), 3xxx are errors in direct play, and 4xxx are errors in transcodes. Same codes are used in all.
+              generalDecisionText:
+                type: string
+              directPlayDecisionCode:
+                type: integer
+              directPlayDecisionText:
+                type: string
+              transcodeDecisionCode:
+                type: integer
+              transcodeDecisionText:
+                type: string
+              Metadata:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/metadata'
+                  - type: object
+                    properties:
+                      Media:
+                        type: array
+                        items:
+                          allOf:
+                          - $ref: '#/components/schemas/media'
+                          - type: object
+                            properties:
+                              abr:
+                                type: boolean
+                              resourceSession:
+                                type: string
+                              selected:
+                                type: boolean
+                              Part:
+                                type: array
+                                items:
+                                  allOf:
+                                  - $ref: '#/components/schemas/part'
+                                  - type: object
+                                    properties:
+                                      decision:
+                                        type: string
+                                        enum:
+                                        - directplay
+                                        - transcode
+                                        - none
+                                      selected:
+                                        type: boolean
+                                      Stream:
+                                        type: array
+                                        items:
+                                          allOf:
+                                          - $ref: '#/components/schemas/stream'
+                                          - type: object
+                                            properties:
+                                              location:
+                                                type: string
+                                                enum:
+                                                - direct
+                                                - sidecar-subs
+                                                - segments-video
+                                                - segments-audio
+                                                - segments-av
+                                                - segments-subs
+                                                - embedded
+                                                - sidecar
+                                              decision:
+                                                type: string
+                                                enum:
+                                                - copy
+                                                - transcode
+                                                - burn
+                                                - unavailable
+                                                - ignore
+                                                - none
+    filter:
+      allOf:
+      - $ref: '#/components/schemas/directory'
+      - type: object
+        description: 'Each `Filter` object contains a description of the filter. Note that it is not an exhaustive list of the full media query language, but an important subset useful for top-level API.
+
+          '
+        properties:
+          filter:
+            type: string
+            description: This represents the filter name used for the filter, which can be used to construct complex media queries with.
+          filterType:
+            type: string
+            description: This is either `string`, `integer`, or `boolean`, and describes the type of values used for the filter.
+          key:
+            type: string
+            description: This provides the endpoint where the possible range of values for the filter can be retrieved (e.g. for a "Genre" filter, it returns a list of all the genres in the library). This will include a `type` argument that matches the metadata type of the Type element.
+          title:
+            type: string
+            description: The title for the filter.
+    media:
+      description: '`Media` represents an one or more media files (parts) and is a child of a metadata item. There aren''t necessarily any guaranteed attributes on media elements since the attributes will vary based on the type. The possible attributes are not documented here, but they typically have self-evident names. High-level media information that can be used for badging and flagging, such as `videoResolution` and codecs, is included on the media element.
+
+        '
+      type: object
+      properties:
+        aspectRatio:
+          type: number
+          example: 2.35
+        audioChannels:
+          type: integer
+          example: 2
+        audioCodec:
+          example: aac
+        audioProfile:
+          example: lc
+        bitrate:
+          type: integer
+          example: 5612
+        container:
+          example: mov
+        duration:
+          type: integer
+          example: 150192
+        has64bitOffsets:
+          type: boolean
+          example: false
+        hasVoiceActivity:
+          type: boolean
+          example: true
+        height:
+          type: integer
+          example: 544
+        id:
+          type: integer
+          example: 1
+        optimizedForStreaming:
+          type: boolean
+          example: false
+        videoCodec:
+          example: h264
+        videoFrameRate:
+          example: 24p
+        videoProfile:
+          example: main
+        videoResolution:
+          example: '720'
+        width:
+          type: integer
+          example: 1280
+        Part:
+          type: array
+          items:
+            $ref: '#/components/schemas/part'
+      additionalProperties: true
+    tag:
+      description: 'A variety of extra information about a metadata item is included as tags. These tags use their own element names such as `Genre`, `Writer`, `Directory`, and `Role`. Individual tag types may introduce their own extra attributes.
+
+        '
+      type: object
+      properties:
+        id:
+          type: integer
+        tag:
+          description: The value of the tag (the name)
+          example: Shaun Lawton
+        tagKey:
+          description: Plex identifier for this tag which can be used to fetch additional information from plex.tv
+          example: 5d3ee12c4cde6a001c3e0b27
+        tagType:
+          type: integer
+        filter:
+          description: A filter parameter that can be used to query for more content that matches this tag value.
+          example: actor=49
+        role:
+          description: The role this actor played
+          example: Secretary
+        thumb:
+          example: http://image.tmdb.org/t/p/original/lcJ8qM51ClAR2UzXU1mkZGfnn3o.jpg
+        context:
+          type: string
+        ratingKey:
+          type: string
+        confidence:
+          type: number
+          description: Measure of the confidence of an automatic tag
+    part:
+      description: '`Part` represents a particular file or "part" of a media item. The part is the playable unit of the media hierarchy. Suppose that a movie library contains a movie that is broken up into files, reminiscent of a movie split across two BDs. The metadata item represents information about the movie, the media item represents this instance of the movie at this resolution and quality, and the part items represent the two playable files.  If another media were added which contained the joining of these two parts transcoded down to a lower resolution, then this metadata would contain 2 medias, one with 2 parts and one with 1 part.
+
+        '
+      type: object
+      properties:
+        audioProfile:
+          example: lc
+        container:
+          description: The container of the media file, such as `mp4` or `mkv`
+          example: mov
+        duration:
+          type: integer
+          description: The duration of the media item, in milliseconds
+          example: 150192
+        file:
+          description: The local file path at which the part is stored on the server
+          example: /home/schuyler/Videos/Trailers/Cloud Atlas (2012).mov
+        has64bitOffsets:
+          type: boolean
+          example: false
+        id:
+          type: integer
+          example: 1
+        key:
+          description: The key from which the media can be streamed
+          example: /library/parts/1/1531779263/file.mov
+        optimizedForStreaming:
+          type: boolean
+          example: false
+        size:
+          type: integer
+          description: The size of the media, in bytes
+          example: 105355654
+        videoProfile:
+          example: main
+        Stream:
+          type: array
+          items:
+            $ref: '#/components/schemas/stream'
+      additionalProperties: true
+    MediaContainer:
+      type: object
+      properties:
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+    image:
+      description: 'Images such as movie posters and background artwork are represented by Image elements.
+
+        '
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - background
+          - banner
+          - clearLogo
+          - coverPoster
+          - snapshot
+          description: Describes both the purpose and intended presentation of the image.
+        url:
+          type: string
+          description: The relative path or absolute url for the image.
+        alt:
+          type: string
+          description: Title to use for accessibility.
+    directory:
+      type: object
+      properties:
+        hubKey:
+          type: string
+        key:
+          type: string
+        title:
+          type: string
+        thumb:
+          type: string
+        art:
+          type: string
+        share:
+          type: integer
+        hasStoreServices:
+          type: boolean
+        hasPrefs:
+          type: boolean
+        identifier:
+          type: string
+        titleBar:
+          type: string
+        lastAccessedAt:
+          type: integer
+        type:
+          type: string
+        content:
+          type: boolean
+        filter:
+          type: string
+        Pivot:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              key:
+                type: string
+              type:
+                type: string
+              title:
+                type: string
+              context:
+                type: string
+              symbol:
+                type: string
+      additionalProperties: true
+    stream:
+      description: '`Stream` represents a particular stream from a media item, such as the video stream, audio stream, or subtitle stream. The stream may either be part of the file represented by the parent `Part` or, especially for subtitles, an external file. The stream contains more detailed information about the specific stream. For example, a video may include the `aspectRatio` at the `Media` level, but detailed information about the video stream like the color space will be included on the `Stream` for the video stream.  Note that photos do not have streams (mostly as an optimization).
+
+        '
+      type: object
+      properties:
+        audioChannelLayout:
+          example: stereo
+        bitDepth:
+          type: integer
+          example: 8
+        bitrate:
+          type: integer
+          example: 5466
+        canAutoSync:
+          type: boolean
+          description: For subtitle streams only. If `true` then the server can attempt to automatically sync the subtitle timestamps with the video.
+          example: true
+        chromaLocation:
+          example: topleft
+        chromaSubsampling:
+          example: '4:2:0'
+        codec:
+          description: The codec of the stream, such as `h264` or `aac`
+          example: h264
+        colorPrimaries:
+          example: bt709
+        colorRange:
+          example: tv
+        colorSpace:
+          example: bt709
+        colorTrc:
+          example: bt709
+        default:
+          type: boolean
+          example: true
+        displayTitle:
+          description: A friendly name for the stream, often comprised of the language and codec information
+          example: English (H.264 Main)
+        frameRate:
+          type: number
+          example: 23.976
+        hasScalingMatrix:
+          example: false
+        height:
+          type: integer
+          example: 544
+        id:
+          type: integer
+          example: 1
+        index:
+          type: integer
+          description: If the stream is part of the `Part` and not an external resource, the index of the stream within that part
+          example: 0
+        key:
+          description: If the stream is independently streamable, the key from which it can be streamed
+          example: /library/streams/1
+        language:
+          example: English
+        languageCode:
+          description: The three character language code for the stream contents
+          example: eng
+        level:
+          type: integer
+          example: 31
+        profile:
+          example: main
+        refFrames:
+          type: integer
+          example: 2
+        samplingRate:
+          type: integer
+          example: 48000
+        selected:
+          type: boolean
+        streamIdentifier:
+          type: integer
+          example: 1
+        streamType:
+          type: integer
+          description: A number indicating the type of the stream. `1` for video, `2` for audio, `3` for subtitles, `4` for lyrics
+          example: 1
+        width:
+          type: integer
+          example: 1280
+      additionalProperties: true
+  parameters:
+    '33':
+      in: header
+      name: X-Plex-Platform
+      schema:
+        type: string
+      example: Chrome
+      description: Client Platform
+    '13':
+      in: query
+      name: mediaBufferSize
+      schema:
+        type: integer
+      example: 102400
+      description: Buffer size used in playback (in KB). Clients should specify a lower bound if not known exactly. This value could make the difference between transcoding and direct play on bandwidth constrained networks.
+    '31':
+      in: header
+      name: X-Plex-Device
+      schema:
+        type: string
+      example: Windows
+      description: Device the client is running on
+    '15':
+      in: query
+      name: musicBitrate
+      schema:
+        type: integer
+        minimum: 0
+      example: 5000
+      description: Target bitrate for audio only files (in kbps, used to transcode).
+    '2':
+      in: query
+      name: advancedSubtitles
+      schema:
+        type: string
+        enum:
+        - burn
+        - text
+        - unknown
+      example: burn
+      description: 'Indicates how  incompatible advanced subtitles (such as ass/ssa) should be included: * ''burn'' - Burn incompatible advanced text subtitles into the video stream * ''text'' - Transcode incompatible advanced text subtitles to a compatible text format, even if some markup is lost
+
+        '
+    '6':
+      in: query
+      name: autoAdjustSubtitle
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+      example: 1
+      description: Indicates if the server should adjust subtitles based on Voice Activity Data.
+    '26':
+      in: query
+      name: videoQuality
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 99
+      example: 50
+      description: Target photo quality.
+    '34':
+      in: header
+      name: X-Plex-Platform-Version
+      schema:
+        type: string
+      example: 135
+      description: Client Platform Version
+    '17':
+      in: query
+      name: partIndex
+      schema:
+        type: integer
+      example: 0
+      description: Index of the part to transcode. -1 or not specified indicates the server should join parts together in a transcode
+    '27':
+      in: query
+      name: videoResolution
+      schema:
+        type: string
+        pattern: ^\d[x:]\d$
+      example: 1080x1080
+      description: Target maximum video resolution.
+    '16':
+      in: query
+      name: offset
+      schema:
+        type: number
+      example: 90.5
+      description: Offset from the start of the media (in seconds).
+    '32':
+      in: header
+      name: X-Plex-Model
+      schema:
+        type: string
+      example: standalone
+      description: Model of the device the client is running on
+    '5':
+      in: query
+      name: autoAdjustQuality
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+      example: 1
+      description: Indicates the client supports ABR.
+    '35':
+      in: header
+      name: X-Plex-Session-Identifier
+      schema:
+        type: string
+      description: Unique per client playback session.  Used if a client can playback multiple items at a time (such as a browser with multiple tabs)
+    '4':
+      in: query
+      name: audioChannelCount
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 8
+      example: 5
+      description: Target video number of audio channels.
+    '25':
+      in: query
+      name: videoBitrate
+      schema:
+        type: integer
+        minimum: 0
+      example: 12000
+      description: Target video bitrate (in kbps).
+    '18':
+      in: query
+      name: path
+      schema:
+        type: string
+      example: /library/metadata/151671
+      description: Internal PMS path of the media to transcode.
+    '8':
+      in: query
+      name: directStream
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+      example: 1
+      description: Indicates the client supports direct streaming the video of the indicated content.
+    '22':
+      in: query
+      name: secondsPerSegment
+      schema:
+        type: integer
+      example: 5
+      description: Number of seconds to include in each transcoded segment
+    '14':
+      in: query
+      name: mediaIndex
+      schema:
+        type: integer
+      example: 0
+      description: Index of the media to transcode. -1 or not specified indicates let the server choose.
+    '12':
+      in: query
+      name: location
+      schema:
+        type: string
+        enum:
+        - lan
+        - wan
+        - cellular
+      example: wan
+      description: Network type of the client, can be used to help determine target bitrate.
+    '30':
+      in: header
+      name: X-Plex-Client-Profile-Name
+      schema:
+        type: string
+      example: generic
+      description: Which built in Client Profile to use in the decision. Generally should only be used to specify the Generic profile.
+    '7':
+      in: query
+      name: directPlay
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+      example: 1
+      description: Indicates the client supports direct playing the indicated content.
+    '21':
+      in: query
+      name: protocol
+      schema:
+        type: string
+        enum:
+        - http
+        - hls
+        - dash
+      example: dash
+      description: 'Indicates the network streaming protocol to be used for the transcode session: * ''http'' - include the file in the http response such as MKV streaming * ''hls'' - hls stream (RFC 8216) * ''dash'' - dash stream (ISO/IEC 23009-1:2022)
+
+        '
+    '28':
+      in: header
+      name: X-Plex-Client-Identifier
+      schema:
+        type: string
+      required: true
+      description: Unique per client.
+    '11':
+      in: query
+      name: hasMDE
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+      example: 1
+      description: Ignore client profiles when determining if direct play is possible. Only has an effect when directPlay=1 and both mediaIndex and partIndex are specified and neither are -1
+    '10':
+      in: query
+      name: disableResolutionRotation
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+      example: 1
+      description: Indicates if resolution should be adjusted for orientation.
+    '29':
+      in: header
+      name: X-Plex-Client-Profile-Extra
+      schema:
+        type: string
+      example: add-limitation(scope=videoCodec&scopeName=*&type=upperBound&name=video.frameRate&value=60&replace=true)+append-transcode-target-codec(type=videoProfile&context=streaming&videoCodec=h264%2Chevc&audioCodec=aac&protocol=dash)
+      description: See [Profile Augmentations](#section/API-Info/Profile-Augmentations) .
+    '9':
+      in: query
+      name: directStreamAudio
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+      example: 1
+      description: Indicates the client supports direct streaming the audio of the indicated content.
+    '3':
+      in: query
+      name: audioBoost
+      schema:
+        type: integer
+        minimum: 1
+      example: 50
+      description: Percentage of original audio loudness to use when transcoding (100 is equivalent to original volume, 50 is half, 200 is double, etc)
+    '24':
+      in: query
+      name: subtitles
+      schema:
+        type: string
+        enum:
+        - auto
+        - burn
+        - none
+        - sidecar
+        - embedded
+        - segmented
+        - unknown
+      example: Burn
+      description: 'Indicates how subtitles should be included: * ''auto'' - Compute the appropriate subtitle setting automatically * ''burn'' - Burn the selected subtitle; auto if no selected subtitle * ''none'' - Ignore all subtitle streams * ''sidecar'' - The selected subtitle should be provided as a sidecar * ''embedded'' - The selected subtitle should be provided as an embedded stream * ''segmented'' - The selected subtitle should be provided as a segmented stream
+
+        '
+    '23':
+      in: query
+      name: subtitleSize
+      schema:
+        type: integer
+        minimum: 1
+      example: 50
+      description: Percentage of original subtitle size to use when burning subtitles (100 is equivalent to original size, 50 is half, ect)
+    '19':
+      in: query
+      name: peakBitrate
+      schema:
+        type: integer
+        minimum: 0
+      example: 12000
+      description: Maximum bitrate (in kbps) to use in ABR.
+    '20':
+      in: query
+      name: photoResolution
+      schema:
+        type: string
+        pattern: ^\d[x:]\d$
+      example: 1080x1080
+      description: Target photo resolution.
   responses:
     '200':
       description: OK

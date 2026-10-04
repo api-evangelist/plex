@@ -335,37 +335,7 @@ paths:
                   summary: Not Found
                   value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
 components:
-  responses:
-    '200':
-      description: OK
-      content:
-        text/html:
-          examples:
-            ok:
-              summary: OK
-              value: ''
-    '400':
-      description: Bad Request
-      content:
-        text/html:
-          examples:
-            badRequest:
-              summary: A parameter has a bad value or required parameter is missing
-              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
   schemas:
-    MediaContainer:
-      type: object
-      properties:
-        identifier:
-          type: string
-        size:
-          type: integer
-        totalSize:
-          type: integer
-          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
-        offset:
-          type: integer
-          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
     serverConfiguration:
       allOf:
       - $ref: '#/components/schemas/MediaContainer'
@@ -470,6 +440,36 @@ components:
             type: string
           voiceSearch:
             type: boolean
+    MediaContainer:
+      type: object
+      properties:
+        identifier:
+          type: string
+        size:
+          type: integer
+        totalSize:
+          type: integer
+          description: The total size of objects available.  Also provided in the X-Plex-Container-Total-Size header
+        offset:
+          type: integer
+          description: The offset of where this container page starts among the total objects available.  Also provided in the X-Plex-Container-Start header
+  responses:
+    '400':
+      description: Bad Request
+      content:
+        text/html:
+          examples:
+            badRequest:
+              summary: A parameter has a bad value or required parameter is missing
+              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
+    '200':
+      description: OK
+      content:
+        text/html:
+          examples:
+            ok:
+              summary: OK
+              value: ''
   securitySchemes:
     user_token:
       type: apiKey

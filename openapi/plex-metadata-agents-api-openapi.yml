@@ -568,14 +568,30 @@ paths:
           $ref: '#/components/responses/404'
 components:
   responses:
-    '400':
-      description: Bad Request
+    '409':
+      description: Conflict
       content:
         text/html:
           examples:
-            badRequest:
-              summary: A parameter has a bad value or required parameter is missing
-              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
+            conflict:
+              summary: Conflict
+              value: <html><head><title>Conflict</title></head><body><h1>409 Conflict</h1></body></html>
+    '200':
+      description: OK
+      content:
+        text/html:
+          examples:
+            ok:
+              summary: OK
+              value: ''
+    '404':
+      description: Not Found
+      content:
+        text/html:
+          examples:
+            notFound:
+              summary: Not Found
+              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
     metadataAgentProviderManager_slash-get-responses-200:
       description: OK
       content:
@@ -609,30 +625,14 @@ components:
                     - type: 3
                     - type: 4
                     online: true
-    '200':
-      description: OK
+    '400':
+      description: Bad Request
       content:
         text/html:
           examples:
-            ok:
-              summary: OK
-              value: ''
-    '409':
-      description: Conflict
-      content:
-        text/html:
-          examples:
-            conflict:
-              summary: Conflict
-              value: <html><head><title>Conflict</title></head><body><h1>409 Conflict</h1></body></html>
-    '404':
-      description: Not Found
-      content:
-        text/html:
-          examples:
-            notFound:
-              summary: Not Found
-              value: <html><head><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>
+            badRequest:
+              summary: A parameter has a bad value or required parameter is missing
+              value: <html><head><title>Bad Request</title></head><body><h1>400 Bad Request</h1></body></html>
   schemas:
     metadataAgentProviderGroup:
       description: 'An item that describes a group of MetadataAgentProviderGroupItem objects.
@@ -653,6 +653,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/metadataAgentProviderGroupItem'
+    metadataAgentProviderGroupItem:
+      description: 'Sub-items of a MetadataAgentProviderGroup object. They represent specific MetadataAgentProvider objects.
+
+        '
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the item.
+        metadataAgentProviderGroupId:
+          type: integer
+          description: The unique identifier for the MetadataAgentProviderGroup.
+        metadataAgentProviderId:
+          type: integer
+          description: The unique identifier for the MetadataAgentProvider.
+        order:
+          type: number
+          description: The order of the item in the group.
     metadataAgentProvider:
       description: 'Describes a MetadataAgentProvider object.
 
@@ -695,24 +713,6 @@ components:
         online:
           type: boolean
           description: Indicates whether the provider is online.
-    metadataAgentProviderGroupItem:
-      description: 'Sub-items of a MetadataAgentProviderGroup object. They represent specific MetadataAgentProvider objects.
-
-        '
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The unique identifier for the item.
-        metadataAgentProviderGroupId:
-          type: integer
-          description: The unique identifier for the MetadataAgentProviderGroup.
-        metadataAgentProviderId:
-          type: integer
-          description: The unique identifier for the MetadataAgentProvider.
-        order:
-          type: number
-          description: The order of the item in the group.
     MediaContainer:
       type: object
       properties:
