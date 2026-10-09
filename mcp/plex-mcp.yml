@@ -71,3 +71,18 @@ deployment:
   probe: gated
   checked: '2026-08-12'
   source: catalog MCP census
+rfc9728:
+  endpoint: https://plex.tv/internal/mcp
+  metadata_url: https://plex.tv/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://plex.tv/internal/mcp
+    authorization_servers:
+    - https://plex.tv
+    scopes_supported:
+    - mcp
+    bearer_methods_supported:
+    - header
